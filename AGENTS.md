@@ -1,5 +1,18 @@
 # Career-Flow — AGENTS
 
+## ⚠️ Mandatory Workflow
+
+**Before performing any task, you MUST load the corresponding skill first.**
+
+1. Check the tables below to identify which skill matches the task.
+2. If the skill is in your `available_skills`, use the `skill` tool to load it.
+3. If the skill is NOT in `available_skills`, read it directly from `.agents/skills/<name>/SKILL.md`.
+4. Only then proceed with the task.
+
+Violating this rule will result in incorrect behavior. This instruction is non-negotiable.
+
+> **At the end of each interaction, you MUST list which skills were loaded (or read directly) during the session.**
+
 ## Structure
 
 Monorepo with two independent packages — no root `package.json`.
@@ -47,8 +60,6 @@ Run all commands from the respective subdirectory (`backend/` or `frontend/`).
 ## Skills (`.agents/skills/`)
 
 Skills are auto-discovered by OpenCode when working inside this repo. The agent loads the relevant one on demand.
-
-> **At the end of each interaction, the agent must list which skills were loaded during the session.**
 
 ### General
 
