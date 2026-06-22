@@ -48,6 +48,8 @@ Run all commands from the respective subdirectory (`backend/` or `frontend/`).
 
 Skills are auto-discovered by OpenCode when working inside this repo. The agent loads the relevant one on demand.
 
+> **At the end of each interaction, the agent must list which skills were loaded during the session.**
+
 ### General
 
 | Skill | When to use |
