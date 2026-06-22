@@ -1,4 +1,10 @@
 {
+  "private": true,
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "prisma:generate": "prisma generate"
+  },
   "dependencies": {
     "@prisma/client": "^6.6.0",
     "bcrypt": "^5.1.1",

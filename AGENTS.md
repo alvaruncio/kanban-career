@@ -31,7 +31,7 @@ Run all commands from the respective subdirectory (`backend/` or `frontend/`).
 | root | `docker compose up -d` | Start PostgreSQL + backend |
 | root | `docker compose up -d --build` | Rebuild and start (after dep changes) |
 | root | `docker compose down -v` | Stop and remove volumes |
-| backend | `npx nodemon server.js` | Dev server, port **3000** (without Docker) |
+| backend | `npm run dev` | Dev server (nodemon), port **3000** (without Docker) |
 | backend | `npx prisma migrate dev` | Create and apply migrations (needs Docker db running) |
 | backend | `npx prisma generate` | After editing schema |
 | backend | `npx prisma studio` | Prisma GUI (needs Docker db running) |

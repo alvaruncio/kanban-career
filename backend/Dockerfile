@@ -23,3 +23,5 @@ COPY . .
 RUN chown -R appuser:appgroup /app
 
 USER appuser
+
+CMD ["node", "server.js"]
