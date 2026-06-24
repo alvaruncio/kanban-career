@@ -19,7 +19,7 @@ Violating this rule will result in incorrect behavior. This instruction is non-n
 Monorepo with two independent packages — no root `package.json`.
 
 ```
-backend/   Express 5 + Prisma + PostgreSQL   (CommonJS)
+backend/   Express 5 + Prisma + PostgreSQL   (ESM)
 frontend/  Vite 8 + React 19 + TypeScript 6  (ESM)
 ```
 
@@ -42,8 +42,8 @@ Run all commands from the respective subdirectory (`backend/` or `frontend/`).
 
 ## Backend
 
-- CommonJS (`require` / `module.exports`). Do not use ESM `import`/`export`.
-- Express **5**, JSON body parser on `app`, health-check at `GET /`.
+- ESM (`import` / `export`). `"type": "module"` is set in `package.json`.
+- Express **5**, JSON body parser on `app`, health-check at `GET /health`.
 - Prisma **6.6**, driver: `pg` (PostgreSQL). Schema file goes in `backend/prisma/schema.prisma`.
 - `bcrypt` available for password hashing.
 

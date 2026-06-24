@@ -1,18 +1,25 @@
 {
+  "name": "CareerFlow Backend",
+  "description": "Backend of CareerFlow",
+  "author": {
+    "name": "Alvaro"
+  },
+  "type": "module",
   "private": true,
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "node --watch server.js",
     "start": "node server.js",
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "^6.6.0",
-    "bcrypt": "^5.1.1",
-    "express": "^5.2.1",
-    "pg": "^8.14.1"
+    "@prisma/client": "6.6.0",
+    "bcrypt": "5.1.1",
+    "express": "5.2.1",
+    "ms": "2.1.3",
+    "pg": "8.14.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9",
-    "prisma": "^6.6.0"
+    "prisma": "6.6.0"
   }
 }

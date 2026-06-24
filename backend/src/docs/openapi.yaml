@@ -19,15 +19,38 @@ servers:
     description: Local development
 
 tags:
+  - name: Root
+    description: Root endpoints
   - name: Health
     description: Health check endpoints
 
 paths:
+  /:
+    get:
+      operationId: root
+      summary: Root endpoint
+      description: Returns a greeting message.
+      tags:
+        - Root
+      security: []
+      responses:
+        "200":
+          description: Greeting message
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+                    example: Hello World
   /health:
     get:
       operationId: healthCheck
       summary: Health check
-      description: Returns the API health status.
+      description: Returns the API health status including uptime and timestamp.
       tags:
         - Health
       security: []
@@ -38,10 +61,22 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                  - status
+                  - uptime
+                  - timestamp
                 properties:
                   status:
                     type: string
                     example: ok
+                  uptime:
+                    type: integer
+                    description: Server uptime in seconds
+                    example: 1234
+                  timestamp:
+                    type: integer
+                    description: Current timestamp in milliseconds
+                    example: 1719240000000
         "500":
           $ref: "#/components/responses/InternalError"
 
