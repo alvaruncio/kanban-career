@@ -38,8 +38,8 @@ frontend/  Vite 8 + React 19 + TypeScript 6  (ESM)
 
 ```bash
 # 1. Clona el repositorio
-git clone https://github.com/alvaruncio/career-flow.git
-cd career-flow
+git clone git@github.com:alvaruncio/kanban-career.git
+cd kanban-career
 
 # 2. Instala dependencias del backend
 cd backend && npm install
