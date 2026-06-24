@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom'
-
-const FOOTER_LINKS = [
-  { to: '/#features', label: 'Características' },
-  { to: '/#pricing', label: 'Precios' },
-  { to: '/privacy', label: 'Privacidad' },
-  { to: '/terms', label: 'Términos' },
-  { to: '/support', label: 'Soporte' },
-]
+import { useI18nStore } from '../stores/i18nStore'
 
 export default function Footer() {
+  const { t } = useI18nStore()
+
+  const FOOTER_LINKS = [
+    { to: '/#features', label: t.nav.features },
+    { to: '/#pricing', label: t.nav.pricing },
+    { to: '/privacy', label: t.footer.privacy },
+    { to: '/terms', label: t.footer.terms },
+    { to: '/support', label: t.footer.support },
+  ]
+
   return (
     <footer className="bg-surface-container-low border-t border-outline-variant/30">
       <div className="max-w-7xl mx-auto px-gutter py-xl flex flex-col md:flex-row justify-between items-center gap-lg">
@@ -26,7 +29,7 @@ export default function Footer() {
             </Link>
           ))}
         </div>
-        <p className="font-body-sm text-body-sm text-on-surface-variant">&copy; 2026 KanbanCareer. Todos los derechos reservados.</p>
+        <p className="font-body-sm text-body-sm text-on-surface-variant">&copy; 2026 KanbanCareer. {t.footer.copyright}</p>
       </div>
     </footer>
   )

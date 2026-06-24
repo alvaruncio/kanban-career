@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useI18nStore } from '../stores/i18nStore'
-import type { Locale } from '../translations/types'
+import type { Locale } from '../locales/types'
 
 const FLAGS: Record<Locale, string> = {
   es: '🇪🇸',

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
-import type { Locale, Translation } from '../translations/types'
-import es from '../translations/es'
-import en from '../translations/en'
+import type { Locale, Translation } from '../locales/types'
+import es from '../locales/es'
+import en from '../locales/en'
 
 const translations: Record<Locale, Translation> = { es, en }
 
