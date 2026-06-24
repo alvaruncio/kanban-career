@@ -73,6 +73,7 @@ Skills are auto-discovered by OpenCode when working inside this repo. The agent 
 | `docker-expert` | Docker, Docker Compose, containerization, multi-stage builds |
 | `git-commit` | Git commits with Conventional Commits, staging, commit messages |
 | `create-readme` | Generate README.md for the project |
+| `boost-prompt` | Interactive prompt refinement: interrogate scope, deliverables, constraints; copies final markdown to clipboard |
 
 ### For the REST API (backend)
 
