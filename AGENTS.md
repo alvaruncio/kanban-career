@@ -1,4 +1,4 @@
-# Career-Flow — AGENTS
+# KanbanCareer — AGENTS
 
 ## ⚠️ Mandatory Workflow
 
@@ -50,6 +50,8 @@ Run all commands from the respective subdirectory (`backend/` or `frontend/`).
 - `bcrypt` available for password hashing.
 
 ## Frontend
+
+> **⚠️ Before any frontend design/UI task, you MUST read [`frontend/DESIGN.md`](./frontend/DESIGN.md) — all visual design must follow the design system defined there.**
 
 - ESM (`type: "module"` in `package.json`).
 - TypeScript strict: `noUnusedLocals`, `noUnusedParameters` both `true`.
