@@ -1,15 +1,15 @@
 openapi: 3.1.0
 info:
-  title: Career-Flow API
+  title: KanbanCareer API
   description: |
-    API for Career-Flow, a professional career management platform.
+    API for KanbanCareer, a professional career management platform.
 
     ## Authentication
     All protected endpoints require Bearer token authentication.
   version: 1.0.0
   contact:
-    name: Career-Flow Team
-    url: https://career-flow.app
+    name: KanbanCareer Team
+    url: https://kanbancareer.app
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT

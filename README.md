@@ -1,9 +1,9 @@
-# Career Flow
+# KanbanCareer
 
 > **Jira para tu búsqueda de empleo.**  
 > Un SaaS que transforma el caos de candidaturas en un flujo de trabajo estructurado tipo CRM/Kanban.
 
-Deja atrás Excel, Notion o listas dispersas. Career Flow centraliza todo el proceso de buscar trabajo: ofertas, empresas, entrevistas y métricas, en un solo lugar.
+Deja atrás Excel, Notion o listas dispersas. KanbanCareer centraliza todo el proceso de buscar trabajo: ofertas, empresas, entrevistas y métricas, en un solo lugar.
 
 ---
 

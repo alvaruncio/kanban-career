@@ -32,7 +32,7 @@ export default function LoginPage() {
       <div className="w-full max-w-[28rem] bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-md">
         <div className="text-center mb-lg">
           <h1 className="font-headline-md text-headline-md text-on-surface mb-1">Iniciar sesión</h1>
-          <p className="font-body-sm text-body-sm text-on-surface-variant">Accede a tu cuenta de Career Flow</p>
+          <p className="font-body-sm text-body-sm text-on-surface-variant">Accede a tu cuenta de KanbanCareer</p>
         </div>
 
         {serverError && (

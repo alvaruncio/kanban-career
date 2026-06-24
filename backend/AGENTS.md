@@ -1,4 +1,4 @@
-# Career-Flow Backend — AGENTS
+# KanbanCareer Backend — AGENTS
 
 ## Technologies
 

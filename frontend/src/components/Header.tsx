@@ -14,7 +14,7 @@ export default function Header() {
     <nav className="fixed inset-x-0 top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 h-16">
       <div className="h-full px-xl flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-          <img alt="Career Flow Logo" className="h-8 w-auto" src="/image.png" />
+          <img alt="KanbanCareer Logo" className="h-8 w-auto" src="/logo.png" />
         </Link>
 
         <div className="hidden md:flex items-center gap-1">

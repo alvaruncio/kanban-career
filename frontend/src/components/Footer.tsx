@@ -13,7 +13,7 @@ export default function Footer() {
     <footer className="bg-surface-container-low border-t border-outline-variant/30">
       <div className="max-w-7xl mx-auto px-gutter py-xl flex flex-col md:flex-row justify-between items-center gap-lg">
         <div className="flex items-center gap-2">
-          <span className="font-headline-md text-headline-md font-bold text-primary">Career Flow</span>
+          <span className="font-headline-md text-headline-md font-bold text-primary">KanbanCareer</span>
         </div>
         <div className="flex flex-wrap justify-center gap-x-lg gap-y-sm font-label-sm text-label-sm">
           {FOOTER_LINKS.map(link => (
@@ -26,7 +26,7 @@ export default function Footer() {
             </Link>
           ))}
         </div>
-        <p className="font-body-sm text-body-sm text-on-surface-variant">&copy; 2024 Career Flow. Todos los derechos reservados.</p>
+        <p className="font-body-sm text-body-sm text-on-surface-variant">&copy; 2026 KanbanCareer. Todos los derechos reservados.</p>
       </div>
     </footer>
   )
