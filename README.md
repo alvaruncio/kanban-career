@@ -22,8 +22,7 @@ frontend/  Vite 8 + React 19 + TypeScript 6  (ESM)
 - **Detalle de candidatura** — historial completo de eventos (entrevistas, pruebas técnicas, notas)
 - **Gestión de empresas** — cada empresa con su propio contexto, contacto y seguimiento
 - **Métricas** — entrevistas conseguidas, tasa de conversión, tiempo por etapa
-- **Modo offline (próximamente)** — consulta tu progreso sin conexión
-
+  
 ---
 
 ## Primeros pasos
