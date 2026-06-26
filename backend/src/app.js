@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import { api } from './routes/index.js'
 
 const app = express()
 
@@ -11,19 +12,21 @@ app.use(cors({
 
 app.use(express.json())
 
-app.get("/", (_req, res) => {
+app.get('/', (_req, res) => {
   return res.status(200).json({
-    message: "Hello World"
+    message: 'Hello World'
   })
 })
 
 app.get('/health', (_req, res) => {
-  return res.status(200).json({ 
-    status: 'ok', 
-    uptime: Math.floor(process.uptime()), 
+  return res.status(200).json({
+    status: 'ok',
+    uptime: Math.floor(process.uptime()),
     timestamp: Date.now()
   })
 })
+
+app.use('/api/v1', api)
 
 app.use((err, _req, res, _next) => {
   console.error(err.stack)

@@ -1,6 +1,6 @@
 ---
 name: git-commit
-description: 'Execute git commit with conventional commit message analysis, intelligent staging, and message generation. Use when user asks to commit changes, create a git commit, or mentions "/commit". Supports: (1) Auto-detecting type and scope from changes, (2) Generating conventional commit messages from diff, (3) Interactive commit with optional type/scope/description overrides, (4) Intelligent file staging for logical grouping'
+description: 'Analyze git diff and generate a conventional commit message. Use when user asks to commit changes, create a git commit, or mentions "/commit". Supports: (1) Auto-detecting type and scope from changes, (2) Generating conventional commit messages from diff, (3) Interactive commit with optional type/scope/description overrides, (4) Intelligent file staging for logical grouping. Returns the commit message for the user to review and execute manually.'
 license: MIT
 allowed-tools: Bash
 ---
@@ -9,7 +9,7 @@ allowed-tools: Bash
 
 ## Overview
 
-Create standardized, semantic git commits using the Conventional Commits specification. Analyze the actual diff to determine appropriate type, scope, and message.
+Analyze the working tree diff and generate a standardized conventional commit message for the user to review. The user will then execute the commit manually using the suggested message.
 
 ## Conventional Commit Format
 
@@ -90,22 +90,19 @@ Analyze the diff to determine:
 - **Scope**: What area/module is affected?
 - **Description**: One-line summary of what changed (present tense, imperative mood, <72 chars)
 
-### 4. Execute Commit
+### 4. Return Commit Message
 
-```bash
-# Single line
-git commit -m "<type>[scope]: <description>"
+Return the generated commit message to the user formatted as a conventional commit:
 
-# Multi-line with body/footer
-git commit -m "$(cat <<'EOF'
-<type>[scope]: <description>
-
-<optional body>
-
-<optional footer>
-EOF
-)"
 ```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+Do NOT execute `git commit` or `git push`. The user will review and execute the commit manually.
 
 ## Best Practices
 
@@ -117,9 +114,7 @@ EOF
 
 ## Git Safety Protocol
 
-- NEVER commit unless the user explicitly asks you to
+- NEVER execute `git commit` or `git push` — only return the suggested message
 - NEVER update git config
 - NEVER run destructive commands (--force, hard reset) without explicit request
 - NEVER skip hooks (--no-verify) unless user asks
-- NEVER force push to main/master
-- If commit fails due to hooks, fix and create NEW commit (don't amend)

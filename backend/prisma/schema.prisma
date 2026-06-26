@@ -7,12 +7,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       String @id @default(uuid())
-  email    String @unique
-  password String
-  name     String
+enum RoleUser {
+  USER
+  ADMIN
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  role      RoleUser  @default(USER)
+
+  createdBy User?     @relation("UserCreated", fields: [createdById], references: [id])
+  createdById Int?
+
+  updatedBy User?     @relation("UserUpdated", fields: [updatedById], references: [id])
+  updatedById Int?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
