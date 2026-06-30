@@ -8,6 +8,12 @@ export interface Translation {
   dashboard: Record<string, string>
   kanban: Record<string, string>
   language: Record<string, string>
+  common: {
+    loading: string
+    notFoundTitle: string
+    notFoundDescription: string
+    backToHome: string
+  }
 }
 
 export type Locale = 'es' | 'en'

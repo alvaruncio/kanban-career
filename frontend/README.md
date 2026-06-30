@@ -1,75 +1,58 @@
-# React + TypeScript + Vite
+# KanbanCareer — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> React 19 SPA for KanbanCareer — job search CRM with Kanban board, metrics, and company management.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Technology | Version | Purpose |
+|---|---|---|
+| **React** | 19 | UI library |
+| **TypeScript** | ~6.0 | Type safety (strict mode) |
+| **Vite** | 8 | Build tool & dev server |
+| **Tailwind CSS** | 4 | Utility-first styling |
+| **React Router** | 7 | Client-side routing |
+| **Zustand** | 5 | State management |
+| **React Hook Form** | 7 | Form handling |
+| **Axios** | 1 | HTTP client |
+| **react-helmet-async** | 3 | SEO meta tags |
+| **React Compiler** | — | Auto-memoization (Babel plugin) |
 
-## React Compiler
+## Scripts
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+| Command | Description |
+|---|---|
+| `npm run dev` | Start Vite dev server (port 5173, proxies `/api` to `:3000`) |
+| `npm run build` | `tsc -b` (typecheck) → `vite build` (production) |
+| `npm run lint` | ESLint flat config |
+| `npm run preview` | Preview production build |
 
-Note: This will impact Vite dev & build performances.
+## Folder Structure
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── App.tsx              # Routes definition (React Router v7)
+├── main.tsx             # Entry point (BrowserRouter + HelmetProvider)
+├── assets/              # Static assets (images, icons)
+├── components/          # Shared presentational components
+├── contexts/            # React contexts (AuthContext)
+├── hooks/               # Custom hooks (usePageMeta)
+├── interfaces/          # TypeScript interfaces (api, application, auth, layout)
+├── layouts/             # Layout components (MainLayout, DashboardLayout)
+├── locales/             # i18n translations (es, en) + types
+├── pages/               # Route page components (LandingPage, LoginPage, etc.)
+├── services/            # API client (Axios instance with interceptors)
+└── stores/              # Zustand stores (applicationsStore, i18nStore)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Conventions
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **ESM** (`type: "module"` in `package.json`)
+- **TypeScript strict** — `noUnusedLocals`, `noUnusedParameters`, `verbatimModuleSyntax` (use `import type`)
+- **React Compiler** — no `useMemo`/`useCallback` where auto-memoization suffices
+- **Tailwind v4** — `@import "tailwindcss"` in CSS, no `tailwind.config.*`
+- **UI text in Spanish**, i18n via Zustand store (`useI18nStore`)
+- **SEO** — `usePageMeta` hook for per-page `<title>`, OG, Twitter Cards
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+> For detailed design system, see [`DESIGN.md`](./DESIGN.md).  
+> For agent instructions, see [`AGENTS.md`](./AGENTS.md).  
+> For root-level info (Docker, API), see [`../README.md`](../README.md).

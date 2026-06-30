@@ -103,4 +103,10 @@ export default {
     es: 'Español',
     en: 'Inglés',
   },
+  common: {
+    loading: 'Cargando…',
+    notFoundTitle: 'Página no encontrada',
+    notFoundDescription: 'La página que buscas no existe o ha sido movida.',
+    backToHome: 'Volver al inicio',
+  },
 } as const

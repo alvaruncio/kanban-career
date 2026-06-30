@@ -3,9 +3,11 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useI18nStore } from '../stores/i18nStore'
+import { usePageMeta } from '../hooks/usePageMeta'
 import type { LoginFormData } from '../interfaces/auth'
 
 export default function LoginPage() {
+  const pageMeta = usePageMeta('Iniciar sesión', 'Accede a tu cuenta de KanbanCareer para gestionar tus candidaturas.')
   const [serverError, setServerError] = useState('')
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -30,7 +32,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-surface px-gutter">
+    <>
+      {pageMeta}
+      <div className="min-h-screen flex items-center justify-center bg-surface px-gutter">
       <div className="w-full max-w-[28rem] bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-md">
         <div className="text-center mb-lg">
           <h1 className="font-headline-md text-headline-md text-on-surface mb-1">{t.login.title}</h1>
@@ -89,5 +93,6 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+    </>
   )
 }

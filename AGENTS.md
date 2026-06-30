@@ -52,7 +52,7 @@ Run all commands from the respective subdirectory (`backend/` or `frontend/`).
 
 ## Frontend
 
-> **⚠️ Before any frontend design/UI task, you MUST read [`frontend/DESIGN.md`](./frontend/DESIGN.md) — all visual design must follow the design system defined there.**
+> **⚠️ Before any frontend task, you MUST read [`frontend/AGENTS.md`](./frontend/AGENTS.md) — folder structure, architecture pattern, coding conventions, and examples.**
 
 - ESM (`type: "module"` in `package.json`).
 - TypeScript strict: `noUnusedLocals`, `noUnusedParameters` both `true`.
@@ -61,7 +61,7 @@ Run all commands from the respective subdirectory (`backend/` or `frontend/`).
 - **Tailwind v4** — use `@import "tailwindcss"` in CSS, **not** the v3 `@tailwind` directives. No `tailwind.config.*` file.
 - **React Router v7** (`react-router-dom`). Routes defined in `App.tsx`.
 - **Zustand v5** for state management, **React Hook Form v7** for forms.
-- UI text in **Spanish**.
+- UI text in **Spanish** (primary) and **English** (secondary). **Every component must use `useI18nStore`** — no hardcoded text allowed.
 
 ## Skills (`.agents/skills/`)
 
@@ -94,10 +94,12 @@ Skills are auto-discovered by OpenCode when working inside this repo. The agent 
 | Skill | When to use | Location |
 |---|---|---|
 | `react-best-practices` | Optimize renders, bundle size, data fetching, avoid waterfalls | [`SKILL.md`](.agents/skills/react-best-practices/SKILL.md) |
+| `vercel-react-best-practices` | React and Next.js performance optimization guidelines from Vercel Engineering | [`SKILL.md`](.agents/skills/react-best-practices/SKILL.md) |
 | `react-hook-form` | Build forms with React Hook Form (`useForm`, `useWatch`, validation) | [`SKILL.md`](.agents/skills/react-hook-form/SKILL.md) |
 | `tailwind-css-patterns` | Style components with Tailwind v4, responsive design, dark mode | [`SKILL.md`](.agents/skills/tailwind-css-patterns/SKILL.md) |
 | `vite` | Configure `vite.config.ts`, plugins, build, dev server proxy | [`SKILL.md`](.agents/skills/vite/SKILL.md) |
 | `composition-patterns` | Compound components, avoid boolean props, composition patterns | [`SKILL.md`](.agents/skills/composition-patterns/SKILL.md) |
+| `vercel-composition-patterns` | React composition patterns that scale, compound components, render props | [`SKILL.md`](.agents/skills/composition-patterns/SKILL.md) |
 | `frontend-design` | Visual design of components and pages with distinctive identity | [`SKILL.md`](.agents/skills/frontend-design/SKILL.md) |
 | `typescript-advanced-types` | Advanced types (generics, conditional, mapped types) | [`SKILL.md`](.agents/skills/typescript-advanced-types/SKILL.md) |
 | `accessibility` | WCAG accessibility audit and improvement | [`SKILL.md`](.agents/skills/accessibility/SKILL.md) |

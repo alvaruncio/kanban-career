@@ -86,7 +86,7 @@ Cada paquete tiene su propia configuración y scripts. Los comandos principales:
 | `frontend/` | `npm run build` | TypeScript check + build |
 | `frontend/` | `npm run lint` | ESLint |
 
-Consulta `AGENTS.md` para la lista completa de comandos, convenciones y skills disponibles.
+Consulta [`AGENTS.md`](./AGENTS.md) para la lista completa de comandos, convenciones y skills disponibles.
 
 ---
 

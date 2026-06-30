@@ -3,11 +3,13 @@ import { useForm, useWatch } from 'react-hook-form'
 import { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useI18nStore } from '../stores/i18nStore'
+import { usePageMeta } from '../hooks/usePageMeta'
 import type { RegisterFormData } from '../interfaces/auth'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function RegisterPage() {
+  const pageMeta = usePageMeta('Crear cuenta', 'Regístrate en KanbanCareer y empieza a organizar tu búsqueda de empleo.')
   const [serverError, setServerError] = useState('')
   const [passwordFocused, setPasswordFocused] = useState(false)
   const { register: registerUser } = useAuth()
@@ -46,7 +48,9 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-surface px-gutter">
+    <>
+      {pageMeta}
+      <div className="min-h-screen flex items-center justify-center bg-surface px-gutter">
       <div className="w-full max-w-[28rem] bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-md">
         <div className="text-center mb-lg">
           <h1 className="font-headline-md text-headline-md text-on-surface mb-1">{t.register.title}</h1>
@@ -156,5 +160,6 @@ export default function RegisterPage() {
         </p>
       </div>
     </div>
+    </>
   )
 }

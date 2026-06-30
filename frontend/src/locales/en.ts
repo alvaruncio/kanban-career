@@ -103,4 +103,10 @@ export default {
     es: 'Spanish',
     en: 'English',
   },
+  common: {
+    loading: 'Loading…',
+    notFoundTitle: 'Page not found',
+    notFoundDescription: 'The page you are looking for does not exist or has been moved.',
+    backToHome: 'Back to home',
+  },
 } as const
