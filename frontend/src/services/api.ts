@@ -25,6 +25,23 @@ export function getAccessToken(): string | null {
   return accessToken
 }
 
+let _onUnauthorized: (() => void) | null = null
+
+export function setOnUnauthorized(cb: (() => void) | null) {
+  _onUnauthorized = cb
+}
+
+export async function refreshToken(): Promise<string> {
+  const response = await axios.post<{ accessToken: string }>(
+    `${API_BASE}/auth/refresh`,
+    {},
+    { withCredentials: true },
+  )
+  const newToken = response.data.accessToken
+  accessToken = newToken
+  return newToken
+}
+
 function processQueue(error: unknown, token: string | null = null) {
   failedQueue.forEach(({ resolve, reject }) => {
     if (error) {
@@ -84,13 +101,7 @@ apiClient.interceptors.response.use(
     isRefreshing = true
 
     try {
-      const response = await axios.post(
-        `${API_BASE}/auth/refresh`,
-        {},
-        { withCredentials: true },
-      )
-      const newToken = response.data.accessToken as string
-      accessToken = newToken
+      const newToken = await refreshToken()
       processQueue(null, newToken)
       if (originalRequest.headers) {
         originalRequest.headers.Authorization = `Bearer ${newToken}`
@@ -99,7 +110,11 @@ apiClient.interceptors.response.use(
     } catch (refreshError) {
       processQueue(refreshError, null)
       accessToken = null
-      window.location.href = '/login'
+      if (_onUnauthorized) {
+        _onUnauthorized()
+      } else {
+        window.location.href = '/login'
+      }
       return Promise.reject(refreshError)
     } finally {
       isRefreshing = false

@@ -1,9 +1,7 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
-import axios from 'axios'
-import { api, setAccessToken } from '../services/api'
+import { useNavigate } from 'react-router-dom'
+import { api, refreshToken, setAccessToken, setOnUnauthorized } from '../services/api'
 import type { User } from '../interfaces/auth'
-
-const API_BASE = '/api/v1'
 
 interface AuthContextType {
   user: User | null
@@ -18,18 +16,17 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    async function init() {
-      try {
-        const refreshRes = await axios.post(
-          `${API_BASE}/auth/refresh`,
-          {},
-          { withCredentials: true },
-        )
-        const newToken = refreshRes.data.accessToken as string
-        setAccessToken(newToken)
+    setOnUnauthorized(() => navigate('/login'))
+    return () => setOnUnauthorized(null)
+  }, [navigate])
 
+  useEffect(() => {
+    async function restoreSession() {
+      try {
+        await refreshToken()
         const meRes = await api.get<{ user: User }>('/auth/me')
         setUser(meRes.user)
       } catch {
@@ -39,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setLoading(false)
       }
     }
-    init()
+    restoreSession()
   }, [])
 
   const login = async (email: string, password: string) => {
