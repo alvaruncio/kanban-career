@@ -20,14 +20,17 @@ backend/
 ├── server.js              # Entry point — loads env, starts server
 ├── prisma/
 │   └── schema.prisma      # Database schema
-└── src/
+    └── src/
     ├── app.js             # Express app setup (middleware, routes, error handler)
     ├── controllers/       # HTTP layer — organized by feature
     │   └── <feature>/
     │       └── <feature>.controller.js
-    ├── services/          # Business logic — organized by feature
+    ├── services/          # Business logic & use-case orchestration — organized by feature
     │   └── <feature>/
     │       └── <feature>.service.js
+    ├── repositories/      # Pure data access (Prisma CRUD) — organized by feature
+    │   └── <feature>/
+    │       └── <feature>.repository.js
     ├── routes/            # Route definitions — organized by feature
     │   ├── index.js       # Imports all routers and mounts under /api/v1
     │   └── <feature>/
@@ -55,10 +58,28 @@ docs/
 | **routes/index.js** | Imports all feature routers and mounts them under `/api/v1` |
 | **routes/\<feature\>/\<feature\>.routes.js** | Define HTTP method + path, attach validators + middlewares, call controller methods |
 | **controllers/\<feature\>/\<feature\>.controller.js** | Extract/validate input from `req`, call service methods, send `res` |
-| **services/\<feature\>/\<feature\>.service.js** | All database queries via Prisma, business logic, return transformed data |
+| **services/\<feature\>/\<feature\>.service.js** | Business logic and use-case orchestration. Coordinates repositories, external services, cache, and third-party APIs. Contains application rules. **Never accesses Prisma directly.** |
+| **repositories/\<feature\>/\<feature\>.repository.js** | Pure data access layer. Contains only database queries and persistence operations via Prisma. **No business rules, validations, permissions, or transformations.** |
 | **middlewares/\<feature\>/\<feature\>.middleware.js** | Access control & request flow: authentication, authorization, guards, rate limiting, logging |
 | **validators/\<feature\>/\<feature\>.validator.js** | Input data validation only: type checks, format, constraints on `req.body` / `req.query` / `req.params` |
 | **shared/** | Constants (e.g. `DEFAULTS`), configs, reusable types/schemas |
+
+### Dependency Flow
+
+Allowed dependency direction:
+
+```
+Controllers → Services
+Services    → Repositories, Cache, External APIs
+Repositories → Prisma
+```
+
+**Prohibited:**
+- `Controllers → Prisma` ❌
+- `Controllers → Repositories` ❌
+- `Services → Prisma` ❌
+- `Repositories → Services` ❌
+- `Repositories → Cache, External APIs` ❌
 
 ### validators vs middlewares — Decision Rule
 
@@ -98,12 +119,12 @@ See concrete examples in:
 ## Conventions
 
 - **ESM only** — `import` / `export`. No `require` or `module.exports`.
-- **Static classes** — Services and controllers use `static` methods only. Validators export middleware functions.
+- **Static classes** — Services, controllers, and repositories use `static` methods only. Validators export middleware functions.
 - **Feature-based folders** — Each layer groups files by feature (e.g. `auth/`, `user/`).
-- **Naming convention** — Files use `<feature>.<layer>.js` pattern: `user.service.js`, `user.controller.js`, `user.routes.js`, `user.middleware.js`, `user.validator.js`.
+- **Naming convention** — Files use `<feature>.<layer>.js` pattern: `user.service.js`, `user.controller.js`, `user.repository.js`, `user.routes.js`, `user.middleware.js`, `user.validator.js`. Classes use `<Feature><Layer>` pattern: `UserRepository`, `AuthService`, `AuthController`.
 - **Routes index** — `routes/index.js` is the single entry point that imports and mounts all feature routers under `/api/v1`.
 - **Validation in routes** — Validators are attached in the route definition before the controller.
-- **Services own the DB** — Controllers never call Prisma directly.
+- **Repositories own the DB** — Controllers and services never call Prisma directly. Services call repositories.
 - **Error handling** — Use the centralized error middleware in `app.js`; throw custom errors from services when needed.
 
 ## Relevant Skills
