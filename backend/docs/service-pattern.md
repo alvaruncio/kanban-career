@@ -1,9 +1,9 @@
 # Service Pattern
 
-Services handle all database interaction (Prisma) and business logic. No `req`/`res` access.
+Services handle **business logic and use-case orchestration**. They coordinate repositories, external services, cache, and third-party APIs. No `req`/`res` access, no direct Prisma calls.
 
 ```js
-import prisma from '../shared/prisma.js'
+import { JobRepository } from '../repositories/job/job.repository.js'
 
 export class JobService {
   static async getAll({ text, title, level, limit = 10, technology, offset = 0 }) {
@@ -20,20 +20,20 @@ export class JobService {
       where.data = { path: ['technology'], equals: technology }
     }
 
-    const [jobs, total] = await Promise.all([
-      prisma.job.findMany({ where, skip: offset, take: limit }),
-      prisma.job.count({ where }),
+    const [data, total] = await Promise.all([
+      JobRepository.findMany(where, { skip: offset, take: limit }),
+      JobRepository.count(where),
     ])
 
-    return { data: jobs, total }
+    return { data, total }
   }
 
   static async getById(id) {
-    return prisma.job.findUnique({ where: { id } })
+    return JobRepository.findById(id)
   }
 
   static async create(input) {
-    return prisma.job.create({ data: input })
+    return JobRepository.create(input)
   }
 }
 ```

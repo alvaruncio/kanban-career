@@ -96,11 +96,12 @@ Authentication strategy using access token (15 min, in-memory) and refresh token
 
 ## Architecture Pattern
 
-Use **classes with static methods** for both controllers and services. This avoids instantiation overhead and keeps the API stateless.
+Use **classes with static methods** for controllers, services, and repositories. This avoids instantiation overhead and keeps the API stateless.
 
 Each layer is organized **by feature** inside a subdirectory. Examples:
 
 ```
+src/repositories/auth/auth.repository.js
 src/services/auth/auth.service.js
 src/controllers/auth/auth.controller.js
 src/routes/auth/auth.routes.js
@@ -112,6 +113,7 @@ See concrete examples in:
 
 | Pattern | File |
 |---|---|
+| **Repository** | [`docs/repository-pattern.md`](docs/repository-pattern.md) |
 | **Service** | [`docs/service-pattern.md`](docs/service-pattern.md) |
 | **Controller** | [`docs/controller-pattern.md`](docs/controller-pattern.md) |
 | **Route** | [`docs/route-pattern.md`](docs/route-pattern.md) |

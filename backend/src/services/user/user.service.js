@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import prisma from '../../shared/prisma.js'
+import { UserRepository } from '../../repositories/user/user.repository.js'
 import { DEFAULTS } from '../../shared/constants.js'
 
 export class UserService {
@@ -11,27 +11,25 @@ export class UserService {
     if (role) where.role = role
 
     const [data, total] = await Promise.all([
-      prisma.user.findMany({ where, skip: offset, take: limit, orderBy: { createdAt: 'desc' } }),
-      prisma.user.count({ where }),
+      UserRepository.findMany(where, { skip: offset, take: limit, orderBy: { createdAt: 'desc' } }),
+      UserRepository.count(where),
     ])
 
     return { data, total }
   }
 
   static async getById(id) {
-    return prisma.user.findFirst({ where: { id, deletedAt: null } })
+    return UserRepository.findById(id)
   }
 
   static async create(input) {
     const hashedPassword = await bcrypt.hash(input.password, DEFAULTS.SALT_ROUNDS)
 
-    return prisma.user.create({
-      data: {
-        name: input.name,
-        email: input.email,
-        password: hashedPassword,
-        role: input.role ?? 'USER',
-      },
+    return UserRepository.create({
+      name: input.name,
+      email: input.email,
+      password: hashedPassword,
+      role: input.role ?? 'USER',
     })
   }
 
@@ -44,13 +42,10 @@ export class UserService {
     if (input.password !== undefined) {
       data.password = await bcrypt.hash(input.password, DEFAULTS.SALT_ROUNDS)
     }
-    return prisma.user.update({ where: { id }, data })
+    return UserRepository.update(id, data)
   }
 
   static async delete(id) {
-    return prisma.user.update({
-      where: { id },
-      data: { deletedAt: new Date() },
-    })
+    return UserRepository.softDelete(id)
   }
 }
