@@ -20,27 +20,33 @@ backend/
 ├── server.js              # Entry point — loads env, starts server
 ├── prisma/
 │   └── schema.prisma      # Database schema
-    └── src/
+└── src/
     ├── app.js             # Express app setup (middleware, routes, error handler)
     ├── controllers/       # HTTP layer — organized by feature
-    │   └── <feature>/
-    │       └── <feature>.controller.js
+    │   ├── auth/auth.controller.js
+    │   ├── user/user.controller.js
+    │   ├── application/application.controller.js
+    │   └── company/company.controller.js
     ├── services/          # Business logic & use-case orchestration — organized by feature
-    │   └── <feature>/
-    │       └── <feature>.service.js
+    │   ├── auth/auth.service.js
+    │   ├── user/user.service.js
+    │   ├── application/application.service.js
+    │   └── company/company.service.js
     ├── repositories/      # Pure data access (Prisma CRUD) — organized by feature
-    │   └── <feature>/
-    │       └── <feature>.repository.js
+    │   ├── auth/auth.repository.js
+    │   ├── user/user.repository.js
+    │   ├── application/application.repository.js
+    │   └── company/company.repository.js
     ├── routes/            # Route definitions — organized by feature
     │   ├── index.js       # Imports all routers and mounts under /api/v1
-    │   └── <feature>/
-    │       └── <feature>.routes.js
+    │   ├── auth/auth.routes.js
+    │   ├── user/user.routes.js
+    │   ├── application/application.routes.js
+    │   └── company/company.routes.js
     ├── middlewares/       # Access control & request flow — organized by feature
-    │   └── <feature>/
-    │       └── <feature>.middleware.js
+    │   └── auth/auth.middleware.js
     ├── validators/        # Input data validation — organized by feature
-    │   └── <feature>/
-    │       └── <feature>.validator.js
+    │   └── user/user.validator.js
     └── shared/            # Shared utilities, configs, constants, DTOs
 
 docs/

@@ -24,6 +24,12 @@ enum ApplicationStatus {
   REJECTED
 }
 
+enum ApplicationCategory {
+  FRONTEND
+  BACKEND
+  FULL_STACK
+}
+
 enum ApplicationSource {
   LINKEDIN
   INFOJOBS
@@ -85,6 +91,7 @@ model Application {
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   status          ApplicationStatus
+  category        ApplicationCategory
   applicationDate DateTime
   source          ApplicationSource
   notes           String?

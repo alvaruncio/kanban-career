@@ -35,6 +35,7 @@ src/
 │   ├── Header.tsx
 │   ├── HeroSection.tsx
 │   ├── KanbanColumn.tsx   # Reusable kanban column (prepared for drag & drop)
+│   ├── KanbanCard.tsx     # Kanban card with category chip, relative time, event icon
 │   ├── LanguageSelector.tsx
 │   ├── LoadingSkeleton.tsx # Spinner skeleton with i18n text
 │   ├── PricingCard.tsx    # Pricing card with `recommended` variant prop
@@ -46,8 +47,9 @@ src/
 │   └── usePageMeta.tsx    # Per-page SEO via <Helmet>
 ├── interfaces/            # TypeScript interfaces
 │   ├── api.ts
-│   ├── application.ts
+│   ├── application.ts     # Application, ApplicationKanbanDTO, enums (ApplicationStatus, etc.)
 │   ├── auth.ts
+│   ├── company.ts         # Company, CompaniesState
 │   └── layout.ts
 ├── layouts/               # Layout components
 │   ├── MainLayout.tsx     # Public pages (landing, login, register)
@@ -63,10 +65,16 @@ src/
 │   ├── DashboardPage.tsx  # Lazy loaded
 │   ├── KanbanPage.tsx     # Lazy loaded
 │   └── NotFoundPage.tsx   # 404 (standalone, no MainLayout)
-├── services/              # API client
-│   └── api.ts             # Axios instance with JWT interceptors
+├── repositories/          # HTTP data access layer (static classes)
+│   ├── ApplicationRepository.ts  # API calls for /applications
+│   └── CompanyRepository.ts      # API calls for /companies
+├── services/              # Business logic layer (static classes)
+│   ├── api.ts             # Axios instance with JWT interceptors
+│   ├── ApplicationService.ts    # Orchestrates application data
+│   └── CompanyService.ts        # Orchestrates company data
 └── stores/                # Zustand stores
     ├── applicationsStore.ts
+    ├── companiesStore.ts
     └── i18nStore.ts
 ```
 
@@ -76,15 +84,18 @@ src/
 - **Lazy loading** — pages behind auth (`DashboardPage`, `KanbanPage`) use `React.lazy()` + `<Suspense>` with `LoadingSkeleton`
 - **Composition over boolean props** — prefer compound components or slot props instead of boolean flags that change rendering
 - **Zustand for global state** — stores are flat, use `set()` directly, no slices
-- **Axios for HTTP** — single `api.ts` instance with request/response interceptors for JWT handling
-- **i18n via Zustand** — `useI18nStore` holds locale and translations; `t.common.*` pattern for shared strings
+- **Layered data access** — Pages/Stores → Services (business logic) → Repositories (HTTP) → `api.ts` (Axios instance with JWT interceptors)
+- **Repositories** — static classes with methods per entity (e.g., `ApplicationRepository.findAll()`). Handle only HTTP calls, no business logic.
+- **Services** — static classes that orchestrate repositories and apply business logic (e.g., `ApplicationService.getKanbanApplications()`). Pages and stores call services, never repositories directly.
+- **i18n via Zustand** — `useI18nStore` holds locale and translations; `t.key.subkey` access pattern
 
 ## Conventions
 
 ### Naming
-- **Files**: `PascalCase.tsx` for components, `camelCase.ts` for utilities/stores
-- **Exports**: named exports for shared components, default exports for pages
+- **Files**: `PascalCase.tsx` for components, `PascalCase.ts` for services/repositories classes (e.g., `ApplicationService.ts`), `camelCase.ts` for utilities/stores
+- **Exports**: named exports for shared components, default exports for pages, named classes for services/repositories
 - **Interfaces**: `interface`, not `type`, for object shapes; `I` prefix not used
+- **Services/Repositories**: classes with `static` methods, named `<Entity>Service` / `<Entity>Repository`
 
 ### Code Style
 - **ESM only** — `import`/`export`, no `require`

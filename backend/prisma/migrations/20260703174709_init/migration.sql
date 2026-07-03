@@ -5,6 +5,9 @@ CREATE TYPE "RoleUser" AS ENUM ('USER', 'ADMIN');
 CREATE TYPE "ApplicationStatus" AS ENUM ('APPLIED', 'INTERVIEW', 'OFFER', 'HIRED', 'REJECTED');
 
 -- CreateEnum
+CREATE TYPE "ApplicationCategory" AS ENUM ('FRONTEND', 'BACKEND', 'FULL_STACK');
+
+-- CreateEnum
 CREATE TYPE "ApplicationSource" AS ENUM ('LINKEDIN', 'INFOJOBS', 'INDEED', 'TECNOEMPLEO', 'COMPANY_WEBSITE', 'REFERRAL', 'OTHER');
 
 -- CreateTable
@@ -45,6 +48,7 @@ CREATE TABLE "Application" (
     "companyId" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
     "status" "ApplicationStatus" NOT NULL,
+    "category" "ApplicationCategory" NOT NULL,
     "applicationDate" TIMESTAMP(3) NOT NULL,
     "source" "ApplicationSource" NOT NULL,
     "notes" TEXT,

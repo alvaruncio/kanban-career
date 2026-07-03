@@ -1,6 +1,7 @@
 import { create } from 'zustand'
+import { ApplicationService } from '../services/ApplicationService'
 import { api } from '../services/api'
-import type { Application, ApplicationsState } from '../interfaces/application'
+import type { ApplicationKanbanDTO, ApplicationsState } from '../interfaces/application'
 
 export const useApplicationsStore = create<ApplicationsState>((set) => ({
   applications: [],
@@ -10,7 +11,7 @@ export const useApplicationsStore = create<ApplicationsState>((set) => ({
   fetchApplications: async () => {
     set({ isLoading: true, error: null })
     try {
-      const data = await api.get<Application[]>('/applications')
+      const data = await ApplicationService.getKanbanApplications()
       set({ applications: data, isLoading: false })
     } catch (err) {
       set({ error: (err as Error).message, isLoading: false })
@@ -20,7 +21,7 @@ export const useApplicationsStore = create<ApplicationsState>((set) => ({
   addApplication: async (app) => {
     set({ isLoading: true, error: null })
     try {
-      const data = await api.post<Application>('/applications', app)
+      const data = await api.post<ApplicationKanbanDTO>('/applications', app)
       set(state => ({ applications: [...state.applications, data], isLoading: false }))
     } catch (err) {
       set({ error: (err as Error).message, isLoading: false })
@@ -30,7 +31,7 @@ export const useApplicationsStore = create<ApplicationsState>((set) => ({
   updateApplication: async (id, data) => {
     set({ isLoading: true, error: null })
     try {
-      const updated = await api.patch<Application>(`/applications/${id}`, data)
+      const updated = await api.patch<ApplicationKanbanDTO>(`/applications/${id}`, data)
       set(state => ({
         applications: state.applications.map(a => a.id === id ? updated : a),
         isLoading: false,

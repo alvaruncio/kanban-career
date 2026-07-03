@@ -91,13 +91,37 @@ export default {
   },
   kanban: {
     title: 'Kanban',
+    subtitle: 'Job Search 2026',
     addApplication: '+ Add application',
+    searchPlaceholder: 'Search...',
+    filterBy: 'Filter by:',
+    company: 'Company:',
+    createCard: 'Create',
+    viewOffer: 'View offer',
     columnApplied: 'Applied',
     columnInterview: 'Interview Stage',
     columnOffer: 'Offer',
     columnHired: 'Hired',
     columnRejected: 'Rejected',
-    dragHere: 'Drag applications here',
+    dragHere: 'Drag a card here',
+    months: {
+      all: 'All months',
+    },
+    companies: {
+      all: 'All',
+    },
+    categories: {
+      frontend: 'FRONTEND',
+      backend: 'BACKEND',
+      fullStack: 'FULL_STACK',
+    },
+    timeAgo: {
+      today: 'Today',
+      yesterday: 'Yesterday',
+      tomorrow: 'Tomorrow',
+      daysAgo: '{n} days ago',
+      weekAgo: '1 week ago',
+    },
   },
   language: {
     es: 'Spanish',
