@@ -13,7 +13,7 @@ export default function Header() {
   const PUBLIC_LINKS = [
     { to: '/#features', label: t.nav.features },
     { to: '/#pricing', label: t.nav.pricing },
-    { to: '/login', label: t.nav.login },
+    { to: '/register', label: t.nav.register },
   ]
 
   const AUTH_LINKS = [

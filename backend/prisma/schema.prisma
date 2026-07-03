@@ -7,19 +7,91 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ──────────────────────────────────────────────
+// Enums
+// ──────────────────────────────────────────────
+
 enum RoleUser {
   USER
   ADMIN
 }
 
+enum ApplicationStatus {
+  APPLIED
+  INTERVIEW
+  OFFER
+  HIRED
+  REJECTED
+}
+
+enum ApplicationSource {
+  LINKEDIN
+  INFOJOBS
+  INDEED
+  TECNOEMPLEO
+  COMPANY_WEBSITE
+  REFERRAL
+  OTHER
+}
+
+// ──────────────────────────────────────────────
+// Models
+// ──────────────────────────────────────────────
+
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String
-  email     String    @unique
-  password  String
-  role      RoleUser  @default(USER)
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  password String
+  role     RoleUser @default(USER)
+
+  applications Application[]
+  companies    Company[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+}
+
+model Company {
+  id          String  @id @default(uuid())
+  name        String
+  website     String?
+  description String?
+  linkedinUrl String?
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  applications Application[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([userId])
+}
+
+model Application {
+  id             String  @id @default(uuid())
+  jobTitle       String
+  jobDescription String
+  offerUrl       String?
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Restrict)
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  status          ApplicationStatus
+  applicationDate DateTime
+  source          ApplicationSource
+  notes           String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([companyId])
 }

@@ -61,14 +61,14 @@ export class AuthService {
   static async login(email, password) {
     const user = await AuthRepository.findByEmail(email)
     if (!user) {
-      const error = new Error('Credenciales inválidas')
+      const error = new Error('Email/contraseña inválidos')
       error.status = 401
       throw error
     }
 
     const valid = await bcrypt.compare(password, user.password)
     if (!valid) {
-      const error = new Error('Credenciales inválidas')
+      const error = new Error('Email/contraseña inválidos')
       error.status = 401
       throw error
     }
