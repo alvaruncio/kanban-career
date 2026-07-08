@@ -1,9 +1,8 @@
 import { Helmet } from 'react-helmet-async'
-import type { ReactNode } from 'react'
 
 const BASE_TITLE = 'KanbanCareer'
 
-export function usePageMeta(title: string, description?: string): ReactNode {
+export function PageMeta({ title, description }: { title: string; description?: string }) {
   const fullTitle = `${title} | ${BASE_TITLE}`
   return (
     <Helmet>

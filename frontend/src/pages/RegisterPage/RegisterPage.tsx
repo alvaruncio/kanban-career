@@ -4,12 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useAuth } from '../../contexts'
 import { useI18nStore } from '../../stores'
-import { usePageMeta } from '../../hooks'
 import { registerSchema, type RegisterFormData } from '../../models'
-import { InputForm } from '../../components'
+import { InputForm, PageMeta } from '../../components'
 
 export default function RegisterPage() {
-  const pageMeta = usePageMeta('Crear cuenta', 'Regístrate en KanbanCareer y empieza a organizar tu búsqueda de empleo.')
   const [serverError, setServerError] = useState('')
   const [passwordFocused, setPasswordFocused] = useState(false)
   const { register: registerUser } = useAuth()
@@ -49,7 +47,7 @@ export default function RegisterPage() {
 
   return (
     <>
-      {pageMeta}
+      <PageMeta title="Crear cuenta" description="Regístrate en KanbanCareer y empieza a organizar tu búsqueda de empleo." />
       <div className="min-h-screen flex items-center justify-center bg-surface px-gutter">
       <div className="w-full max-w-[28rem] bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-md">
         <div className="text-center mb-lg">

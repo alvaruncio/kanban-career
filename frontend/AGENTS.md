@@ -43,14 +43,12 @@ src/
 │   ├── LoadingSkeleton/
 │   ├── PricingCard/
 │   ├── PricingSection/
+│   ├── PageMeta/           # Per-page SEO via <Helmet> (component, not hook)
 │   ├── ProtectedRoute/
 │   └── StatCard/
 ├── contexts/               # React contexts — each in subfolder
 │   ├── index.ts            # Barrel
 │   └── AuthContext/        # Auth provider (access + refresh token)
-├── hooks/                  # Custom hooks — each in subfolder
-│   ├── index.ts            # Barrel
-│   └── usePageMeta/        # Per-page SEO via <Helmet>
 ├── interfaces/             # TypeScript types/interfaces — each in subfolder
 │   ├── index.ts            # Barrel
 │   ├── api/
@@ -114,7 +112,7 @@ src/
 ### Naming
 - **Files**: `<PascalCase>.tsx` for components, `<PascalCase>.ts` for services/repositories/models, `camelCase.ts` for utilities/stores.
 - **Folders**: `<PascalCase>` matching the module name (e.g., `LoginPage/LoginPage.tsx`).
-- **Exports**: named exports for shared components (e.g., `InputForm`, `ProtectedRoute`), default exports for pages, named classes for services/repositories, named hooks (`useAuth`, `usePageMeta`).
+- **Exports**: named exports for shared components (e.g., `InputForm`, `PageMeta`, `ProtectedRoute`), default exports for pages, named classes for services/repositories.
 - **Interfaces**: `interface`, not `type`, for object shapes; `I` prefix not used.
 - **Barrels**: each category has `index.ts` that re-exports every entity (value + type separately with `export type` for type-only).
 
@@ -139,7 +137,7 @@ src/
 - **Lazy imports** use full internal path, not barrel: `lazy(() => import('./pages/DashboardPage/DashboardPage'))`.
 
 ### SEO
-- **`usePageMeta` hook** — sets `<title>`, OG tags, Twitter Cards per page.
+- **`<PageMeta>` component** — sets `<title>`, OG tags, Twitter Cards per page. Import via `{ PageMeta }` from `../../components`. Use as JSX: `<PageMeta title="..." description="..." />`.
 - **JSON-LD** — structured data in `index.html` for SoftwareApplication + Organization.
 - **robots.txt + sitemap.xml** — in `public/`, block private routes.
 

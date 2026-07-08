@@ -4,12 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useAuth } from '../../contexts'
 import { useI18nStore } from '../../stores'
-import { usePageMeta } from '../../hooks'
 import { loginSchema, type LoginFormData } from '../../models'
-import { InputForm } from '../../components'
+import { InputForm, PageMeta } from '../../components'
 
 export default function LoginPage() {
-  const pageMeta = usePageMeta('Iniciar sesión', 'Accede a tu cuenta de KanbanCareer para gestionar tus candidaturas.')
   const [serverError, setServerError] = useState('')
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -36,7 +34,7 @@ export default function LoginPage() {
 
   return (
     <>
-      {pageMeta}
+      <PageMeta title="Iniciar sesión" description="Accede a tu cuenta de KanbanCareer para gestionar tus candidaturas." />
       <div className="min-h-screen flex items-center justify-center bg-surface px-gutter">
       <div className="w-full max-w-[28rem] bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-md">
         <div className="text-center mb-lg">

@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 import { useI18nStore } from '../../stores'
 import { useApplicationsStore } from '../../stores'
 import { useCompaniesStore } from '../../stores'
-import { usePageMeta } from '../../hooks'
-import { KanbanColumn, KanbanCard } from '../../components'
+import { KanbanColumn, KanbanCard, PageMeta } from '../../components'
 import { APPLICATION_STATUS } from '../../interfaces'
 
 const KANBAN_COLUMNS_CONFIG = [
@@ -15,7 +14,6 @@ const KANBAN_COLUMNS_CONFIG = [
 ]
 
 export default function KanbanPage() {
-  const pageMeta = usePageMeta('Kanban', 'Tablero kanban para gestionar visualmente tus candidaturas por etapas.')
   const { t, locale } = useI18nStore()
 
   const { applications, fetchApplications } = useApplicationsStore()
@@ -59,7 +57,7 @@ export default function KanbanPage() {
 
   return (
     <>
-      {pageMeta}
+      <PageMeta title="Kanban" description="Tablero kanban para gestionar visualmente tus candidaturas por etapas." />
       <div className="flex flex-col min-h-0 h-full bg-background">
         <header className="h-16 border-b border-outline-variant bg-surface flex items-center justify-between px-lg flex-shrink-0">
           <div className="flex items-center gap-sm mr-lg">

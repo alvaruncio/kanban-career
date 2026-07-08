@@ -1,6 +1,5 @@
 import { useI18nStore } from '../../stores'
-import { usePageMeta } from '../../hooks'
-import { StatCard } from '../../components'
+import { StatCard, PageMeta } from '../../components'
 
 const STATS_CONFIG = [
   { value: '12', color: 'bg-primary', labelKey: 'activeApplications' as const },
@@ -10,7 +9,6 @@ const STATS_CONFIG = [
 ]
 
 export default function DashboardPage() {
-  const pageMeta = usePageMeta('Dashboard', 'Panel de control con el resumen de tus candidaturas activas y entrevistas.')
   const { t } = useI18nStore()
 
   const stats = STATS_CONFIG.map(stat => ({
@@ -20,7 +18,7 @@ export default function DashboardPage() {
 
   return (
     <>
-      {pageMeta}
+      <PageMeta title="Dashboard" description="Panel de control con el resumen de tus candidaturas activas y entrevistas." />
       <div className="space-y-lg">
       <h1 className="font-headline-lg text-headline-lg text-on-surface">{t.dashboard.title}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-md">

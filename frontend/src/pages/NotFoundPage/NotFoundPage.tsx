@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom'
-import { usePageMeta } from '../../hooks'
 import { useI18nStore } from '../../stores'
+import { PageMeta } from '../../components'
 
 export default function NotFoundPage() {
   const { t } = useI18nStore()
-  const pageMeta = usePageMeta(t.common.notFoundTitle, t.common.notFoundDescription)
 
   return (
     <>
-      {pageMeta}
+      <PageMeta title={t.common.notFoundTitle} description={t.common.notFoundDescription} />
       <div className="min-h-screen flex items-center justify-center bg-surface">
         <div className="text-center px-gutter py-xl w-full max-w-[32rem]">
           <p className="font-mono-sm text-mono-sm text-primary font-semibold mb-sm">404</p>
