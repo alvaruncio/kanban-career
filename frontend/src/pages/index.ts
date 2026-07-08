@@ -1,0 +1,6 @@
+export { default as DashboardPage } from './DashboardPage/DashboardPage'
+export { default as KanbanPage } from './KanbanPage/KanbanPage'
+export { default as LandingPage } from './LandingPage/LandingPage'
+export { default as LoginPage } from './LoginPage/LoginPage'
+export { default as NotFoundPage } from './NotFoundPage/NotFoundPage'
+export { default as RegisterPage } from './RegisterPage/RegisterPage'

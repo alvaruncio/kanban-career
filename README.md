@@ -22,7 +22,37 @@ frontend/  Vite 8 + React 19 + TypeScript 6  (ESM)
 - **Detalle de candidatura** — historial completo de eventos (entrevistas, pruebas técnicas, notas)
 - **Gestión de empresas** — cada empresa con su propio contexto, contacto y seguimiento
 - **Métricas** — entrevistas conseguidas, tasa de conversión, tiempo por etapa
-  
+
+---
+
+## Arquitectura
+
+### Backend — Capas por feature
+
+```
+Controllers → Services → Repositories → Prisma
+```
+
+Services destructure solo los campos que necesitan del body (ej. `register({ name, email, password })`), ignorando `confirmPassword` u otros campos auxiliares que solo valida el validator.
+
+### Frontend — Barrel system + Zod forms
+
+```
+src/
+├── components/     # Cada componente en su subcarpeta, barrel index.ts
+├── models/         # Schemas Zod por feature, export type inferido
+├── pages/          # Cada página en su subcarpeta, barrel index.ts
+├── services/       # Cada servicio en su subcarpeta, barrel index.ts
+├── stores/         # Cada store en su subcarpeta, barrel index.ts
+├── ...
+```
+
+**Formularios:** toda validación con Zod + `zodResolver` + `<InputForm>` genérico. Tipos inferidos con `z.infer`. Sin tipos duplicados en `interfaces/`.
+
+**Barrels:** imports entre hermanos van por barrel (`../../components`, `../../services`), nunca directo al archivo. Lazy imports en `App.tsx` usan path completo (`./pages/DashboardPage/DashboardPage`).
+
+**i18n:** traducciones con tipado explícito por sección (no `Record<string, string>`).
+
 ---
 
 ## Primeros pasos

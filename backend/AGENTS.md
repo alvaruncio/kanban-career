@@ -133,6 +133,7 @@ See concrete examples in:
 - **Routes index** — `routes/index.js` is the single entry point that imports and mounts all feature routers under `/api/v1`.
 - **Validation in routes** — Validators are attached in the route definition before the controller.
 - **Repositories own the DB** — Controllers and services never call Prisma directly. Services call repositories.
+- **Service method destructuring** — Service methods that receive full `req.body` must destructure only the fields they need (e.g., `register({ name, email, password })`) to ignore irrelevant fields like `confirmPassword`.
 - **Error handling** — Use the centralized error middleware in `app.js`; throw custom errors from services when needed.
 
 ## Relevant Skills

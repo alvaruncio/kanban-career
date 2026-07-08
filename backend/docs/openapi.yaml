@@ -514,6 +514,7 @@ components:
         - name
         - email
         - password
+        - confirmPassword
       properties:
         name:
           type: string
@@ -528,6 +529,11 @@ components:
           format: password
           minLength: 8
           description: Must contain uppercase, lowercase, digit, and symbol
+        confirmPassword:
+          type: string
+          format: password
+          minLength: 8
+          description: Must match password
         role:
           $ref: "#/components/schemas/RoleUser"
 

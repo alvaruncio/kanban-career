@@ -16,7 +16,8 @@
 | **Tailwind CSS** | 4 | Utility-first CSS (no `tailwind.config.*`, uses `@import "tailwindcss"`) |
 | **React Router** | 7 | Client-side routing with `react-router-dom` |
 | **Zustand** | 5 | State management |
-| **React Hook Form** | 7 | Forms with `useForm`, `useWatch`, validation |
+| **React Hook Form** | 7 | Forms with `useForm`, `useWatch`, `Controller`, validation |
+| **Zod** | 3 | Schema validation (`@hookform/resolvers` for RHF integration) |
 | **Axios** | 1 | HTTP client with interceptors |
 | **react-helmet-async** | 3 | SEO meta tags management |
 | **React Compiler** | — | Auto-memoization; do NOT use `useMemo`/`useCallback` where compiler suffices |
@@ -25,111 +26,138 @@
 
 ```
 src/
-├── App.tsx                # Route definitions (React Router v7)
-├── main.tsx               # Entry — wraps App in StrictMode + HelmetProvider + BrowserRouter
-├── index.css              # Global styles + Tailwind v4 import
-├── App.css                # App-specific styles
-├── assets/                # Static assets
-├── components/            # Shared presentational components
-│   ├── Footer.tsx
-│   ├── Header.tsx
-│   ├── HeroSection.tsx
-│   ├── KanbanColumn.tsx   # Reusable kanban column (prepared for drag & drop)
-│   ├── KanbanCard.tsx     # Kanban card with category chip, relative time, event icon
-│   ├── LanguageSelector.tsx
-│   ├── LoadingSkeleton.tsx # Spinner skeleton with i18n text
-│   ├── PricingCard.tsx    # Pricing card with `recommended` variant prop
-│   ├── PricingSection.tsx
-│   └── StatCard.tsx       # Reusable stat card
-├── contexts/              # React contexts
-│   └── AuthContext.tsx     # Auth provider (access + refresh token)
-├── hooks/                 # Custom hooks
-│   └── usePageMeta.tsx    # Per-page SEO via <Helmet>
-├── interfaces/            # TypeScript interfaces
-│   ├── api.ts
-│   ├── application.ts     # Application, ApplicationKanbanDTO, enums (ApplicationStatus, etc.)
-│   ├── auth.ts
-│   ├── company.ts         # Company, CompaniesState
-│   └── layout.ts
-├── layouts/               # Layout components
-│   ├── MainLayout.tsx     # Public pages (landing, login, register)
-│   └── DashboardLayout.tsx # Protected pages (dashboard, kanban)
-├── locales/               # i18n translations
-│   ├── types.ts           # Translation interface
-│   ├── es.ts              # Spanish translations
-│   └── en.ts              # English translations
-├── pages/                 # Route page components
-│   ├── LandingPage.tsx
-│   ├── LoginPage.tsx
-│   ├── RegisterPage.tsx
-│   ├── DashboardPage.tsx  # Lazy loaded
-│   ├── KanbanPage.tsx     # Lazy loaded
-│   └── NotFoundPage.tsx   # 404 (standalone, no MainLayout)
-├── repositories/          # HTTP data access layer (static classes)
-│   ├── ApplicationRepository.ts  # API calls for /applications
-│   └── CompanyRepository.ts      # API calls for /companies
-├── services/              # Business logic layer (static classes)
-│   ├── api.ts             # Axios instance with JWT interceptors
-│   ├── ApplicationService.ts    # Orchestrates application data
-│   └── CompanyService.ts        # Orchestrates company data
-└── stores/                # Zustand stores
-    ├── applicationsStore.ts
-    ├── companiesStore.ts
-    └── i18nStore.ts
+├── App.tsx                 # Route definitions (React Router v7)
+├── main.tsx                # Entry — wraps App in StrictMode + HelmetProvider + BrowserRouter
+├── index.css               # Global styles + Tailwind v4 import
+├── App.css                 # App-specific styles
+├── assets/                 # Static assets
+├── components/             # Each component in its own subfolder
+│   ├── index.ts            # Barrel — re-exports all components
+│   ├── Footer/             # Named export (default)
+│   ├── Header/
+│   ├── HeroSection/
+│   ├── InputForm/          # Generic typed form input with Controller (named export)
+│   ├── KanbanCard/
+│   ├── KanbanColumn/
+│   ├── LanguageSelector/
+│   ├── LoadingSkeleton/
+│   ├── PricingCard/
+│   ├── PricingSection/
+│   ├── ProtectedRoute/
+│   └── StatCard/
+├── contexts/               # React contexts — each in subfolder
+│   ├── index.ts            # Barrel
+│   └── AuthContext/        # Auth provider (access + refresh token)
+├── hooks/                  # Custom hooks — each in subfolder
+│   ├── index.ts            # Barrel
+│   └── usePageMeta/        # Per-page SEO via <Helmet>
+├── interfaces/             # TypeScript types/interfaces — each in subfolder
+│   ├── index.ts            # Barrel
+│   ├── api/
+│   ├── application/
+│   ├── auth/
+│   ├── company/
+│   └── layout/
+├── layouts/                # Layout components — each in subfolder
+│   ├── index.ts            # Barrel
+│   ├── MainLayout/         # Public pages (landing, login, register)
+│   └── DashboardLayout/    # Protected pages (dashboard, kanban)
+├── locales/                # i18n translations — each in subfolder
+│   ├── index.ts            # Barrel
+│   ├── types/              # Translation interface (tipado explícito por sección)
+│   ├── es/                 # Spanish translations
+│   └── en/                 # English translations
+├── models/                 # Zod schemas — each in subfolder
+│   ├── index.ts            # Barrel
+│   ├── loginSchema/
+│   └── registerSchema/
+├── pages/                  # Route page components — each in subfolder
+│   ├── index.ts            # Barrel
+│   ├── DashboardPage/      # Lazy loaded
+│   ├── KanbanPage/         # Lazy loaded
+│   ├── LandingPage/
+│   ├── LoginPage/
+│   ├── NotFoundPage/       # 404 (standalone, no layout)
+│   └── RegisterPage/
+├── repositories/           # HTTP data access layer — each in subfolder
+│   ├── index.ts            # Barrel
+│   ├── ApplicationRepository/
+│   └── CompanyRepository/
+├── services/               # Business logic + Axios config — each in subfolder
+│   ├── index.ts            # Barrel
+│   ├── api/                # Axios instance with JWT interceptors
+│   ├── ApplicationService/
+│   └── CompanyService/
+└── stores/                 # Zustand stores — each in subfolder
+    ├── index.ts            # Barrel
+    ├── applicationsStore/
+    ├── companiesStore/
+    └── i18nStore/
 ```
 
 ## Architecture Pattern
 
-- **Component-per-file** — each `.tsx` file exports one component (default export for pages, named export for shared components)
-- **Lazy loading** — pages behind auth (`DashboardPage`, `KanbanPage`) use `React.lazy()` + `<Suspense>` with `LoadingSkeleton`
-- **Composition over boolean props** — prefer compound components or slot props instead of boolean flags that change rendering
-- **Zustand for global state** — stores are flat, use `set()` directly, no slices
-- **Layered data access** — Pages/Stores → Services (business logic) → Repositories (HTTP) → `api.ts` (Axios instance with JWT interceptors)
+- **Component-per-subfolder** — each `.tsx` or `.ts` module lives in its own subfolder (e.g., `LoginPage/LoginPage.tsx`), with a barrel `index.ts` at the category level that re-exports every module.
+- **Barrel system** — every category (`components/`, `pages/`, `services/`, etc.) has an `index.ts` that re-exports all entities. Imports between sibling modules go through the barrel (e.g., `../../components`), never direct to the file.
+- **Lazy loading** — pages behind auth (`DashboardPage`, `KanbanPage`) use `React.lazy()` with a **full internal path** (not the barrel) in `App.tsx`: `lazy(() => import('./pages/DashboardPage/DashboardPage'))`. Their barrel re-export exists but is used by siblings, not by App.
+- **Composition over boolean props** — prefer compound components or slot props instead of boolean flags that change rendering.
+- **Zustand for global state** — stores are flat, use `set()` directly, no slices.
+- **Layered data access** — Pages/Stores → Services (business logic) → Repositories (HTTP) → `api.ts` (Axios instance with JWT interceptors).
 - **Repositories** — static classes with methods per entity (e.g., `ApplicationRepository.findAll()`). Handle only HTTP calls, no business logic.
 - **Services** — static classes that orchestrate repositories and apply business logic (e.g., `ApplicationService.getKanbanApplications()`). Pages and stores call services, never repositories directly.
-- **i18n via Zustand** — `useI18nStore` holds locale and translations; `t.key.subkey` access pattern
+- **i18n via Zustand** — `useI18nStore` holds locale and translations; `t.key.subkey` access pattern.
+- **Forms with Zod** — all forms use `react-hook-form` with `zodResolver` and a pre-defined Zod schema. Inline validation via `register()` with raw `<input>` is deprecated in favor of the generic `<InputForm>` component. Types are inferred with `z.infer<typeof schema>`.
+- **Generic InputForm** — `<InputForm<T extends FieldValues>>` accepts `name: Path<T>`, `control: Control<T>`, optional `onFocus`/`onBlur` callbacks. Validation errors come from Zod via `errors.fieldName`.
 
 ## Conventions
 
 ### Naming
-- **Files**: `PascalCase.tsx` for components, `PascalCase.ts` for services/repositories classes (e.g., `ApplicationService.ts`), `camelCase.ts` for utilities/stores
-- **Exports**: named exports for shared components, default exports for pages, named classes for services/repositories
-- **Interfaces**: `interface`, not `type`, for object shapes; `I` prefix not used
-- **Services/Repositories**: classes with `static` methods, named `<Entity>Service` / `<Entity>Repository`
+- **Files**: `<PascalCase>.tsx` for components, `<PascalCase>.ts` for services/repositories/models, `camelCase.ts` for utilities/stores.
+- **Folders**: `<PascalCase>` matching the module name (e.g., `LoginPage/LoginPage.tsx`).
+- **Exports**: named exports for shared components (e.g., `InputForm`, `ProtectedRoute`), default exports for pages, named classes for services/repositories, named hooks (`useAuth`, `usePageMeta`).
+- **Interfaces**: `interface`, not `type`, for object shapes; `I` prefix not used.
+- **Barrels**: each category has `index.ts` that re-exports every entity (value + type separately with `export type` for type-only).
 
 ### Code Style
-- **ESM only** — `import`/`export`, no `require`
-- **`import type`** required for type-only imports (enforced by `verbatimModuleSyntax`)
-- **No unused locals/params** — both flags are `true` in tsconfig
-- **React Compiler** — trust the compiler for memoization; only use `useMemo`/`useCallback` when the compiler cannot handle the pattern (e.g., stable references passed to third-party libs that rely on referential identity)
-- **No `any`** — prefer `unknown` with type guards
-- **Minimal comments** — code should be self-documenting
+- **ESM only** — `import`/`export`, no `require`.
+- **`import type`** required for type-only imports (enforced by `verbatimModuleSyntax`).
+- **No unused locals/params** — both flags are `true` in tsconfig.
+- **React Compiler** — trust the compiler for memoization; only use `useMemo`/`useCallback` when the compiler cannot handle the pattern.
+- **No `any`** — prefer `unknown` with type guards.
+- **Minimal comments** — code should be self-documenting.
 
 ### Styling
-- **Tailwind v4 utilities only** — no custom CSS classes unless unavoidable
-- **Design tokens** defined in `DESIGN.md` (palette, typography, spacing, rounded, elevation)
-- **Dark mode** via Tailwind v4 `@variant dark` or `class` strategy
-- **Responsive** — mobile-first with Tailwind breakpoints (`sm:`, `md:`, `lg:`, `xl:`)
+- **Tailwind v4 utilities only** — no custom CSS classes unless unavoidable.
+- **Design tokens** defined in `DESIGN.md` (palette, typography, spacing, rounded, elevation).
+- **Dark mode** via Tailwind v4 `@variant dark` or `class` strategy.
+- **Responsive** — mobile-first with Tailwind breakpoints (`sm:`, `md:`, `lg:`, `xl:`).
 
 ### Routing
-- **React Router v7** — routes defined in `App.tsx`
-- **Layout nesting** — public routes under `MainLayout`, protected under `DashboardLayout`
-- **404** — catch-all route rendering `NotFoundPage` (standalone, no layout)
+- **React Router v7** — routes defined in `App.tsx`.
+- **Layout nesting** — public routes under `MainLayout`, protected under `DashboardLayout`.
+- **404** — catch-all route rendering `NotFoundPage` (standalone, no layout).
+- **Lazy imports** use full internal path, not barrel: `lazy(() => import('./pages/DashboardPage/DashboardPage'))`.
 
 ### SEO
-- **`usePageMeta` hook** — sets `<title>`, OG tags, Twitter Cards per page
-- **JSON-LD** — structured data in `index.html` for SoftwareApplication + Organization
-- **robots.txt + sitemap.xml** — in `public/`, block private routes
+- **`usePageMeta` hook** — sets `<title>`, OG tags, Twitter Cards per page.
+- **JSON-LD** — structured data in `index.html` for SoftwareApplication + Organization.
+- **robots.txt + sitemap.xml** — in `public/`, block private routes.
 
 ### i18n
 - UI text in **Spanish** (primary) and **English** (secondary). **Every component must use `useI18nStore`** — no hardcoded text allowed.
-- **`useI18nStore`** — `t.key.subkey` access pattern (e.g., `t.common.loading`)
-- **Locale files** — `es.ts`, `en.ts`, `types.ts` (interface `Translation`)
+- **`useI18nStore`** — `t.key.subkey` access pattern (e.g., `t.common.loading`).
+- **Locale files** — `es.ts`, `en.ts`, `types.ts` (interface `Translation` with explicit typed objects per section, not `Record<string, string>`).
+
+### Forms
+- **Every form** must use a Zod schema + `zodResolver` + `<InputForm>` for inputs.
+- **Schema files** go in `src/models/<name>Schema/<name>Schema.ts` — exported from `src/models/index.ts`.
+- **Types** are inferred with `z.infer<typeof schema>` — do NOT duplicate types in `interfaces/`.
+- **Custom onFocus/onBlur** for dropdown panels: pass via `<InputForm onFocus={...} onBlur={...}>`.
 
 ### Performance
-- **Lazy loading** for auth-guarded pages
-- **`content-visibility: auto`** on scrollable containers with many children (e.g., kanban columns)
-- **Arrays/objects as module constants** — extract static config arrays (e.g., `KANBAN_COLUMNS_CONFIG`, `STATS_CONFIG`) outside components to avoid re-creation
+- **Lazy loading** for auth-guarded pages.
+- **`content-visibility: auto`** on scrollable containers with many children (e.g., kanban columns).
+- **Arrays/objects as module constants** — extract static config arrays outside components to avoid re-creation.
 
 ## Relevant Skills
 

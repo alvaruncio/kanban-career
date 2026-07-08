@@ -1,17 +1,12 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { AuthProvider } from './contexts/AuthContext'
-import MainLayout from './layouts/MainLayout'
-import DashboardLayout from './layouts/DashboardLayout'
-import ProtectedRoute from './components/ProtectedRoute'
-import LandingPage from './pages/LandingPage'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import NotFoundPage from './pages/NotFoundPage'
-import LoadingSkeleton from './components/LoadingSkeleton'
+import { AuthProvider } from './contexts'
+import { MainLayout, DashboardLayout } from './layouts'
+import { ProtectedRoute, LoadingSkeleton } from './components'
+import { LandingPage, LoginPage, RegisterPage, NotFoundPage } from './pages'
 
-const DashboardPage = lazy(() => import('./pages/DashboardPage'))
-const KanbanPage = lazy(() => import('./pages/KanbanPage'))
+const DashboardPage = lazy(() => import('./pages/DashboardPage/DashboardPage'))
+const KanbanPage = lazy(() => import('./pages/KanbanPage/KanbanPage'))
 
 function App() {
 

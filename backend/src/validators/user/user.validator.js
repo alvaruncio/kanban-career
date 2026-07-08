@@ -25,6 +25,14 @@ export function validateCreateUser(req, res, next) {
     }
   }
 
+  const confirmPassword = req.body.confirmPassword?.trim()
+
+  if (!confirmPassword || typeof confirmPassword !== 'string') {
+    errors.push('Debes confirmar la contraseña')
+  } else if (password !== confirmPassword) {
+    errors.push('Las contraseñas no coinciden')
+  }
+
   if (errors.length > 0) {
     return res.status(400).json({ error: 'Validation failed', details: errors })
   }

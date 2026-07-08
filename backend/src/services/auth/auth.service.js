@@ -31,19 +31,19 @@ export class AuthService {
     }
   }
 
-  static async register(input) {
-    const existing = await AuthRepository.findByEmail(input.email)
+  static async register({ name, email, password }) {
+    const existing = await AuthRepository.findByEmail(email)
     if (existing) {
       const error = new Error('El email ya está registrado')
       error.status = 409
       throw error
     }
 
-    const hashedPassword = await bcrypt.hash(input.password, DEFAULTS.SALT_ROUNDS)
+    const hashedPassword = await bcrypt.hash(password, DEFAULTS.SALT_ROUNDS)
 
     const user = await AuthRepository.create({
-      name: input.name,
-      email: input.email,
+      name,
+      email,
       password: hashedPassword,
     })
 
