@@ -65,7 +65,6 @@ export interface ApplicationsState {
   isLoading: boolean
   error: string | null
   fetchApplications: () => Promise<void>
-  addApplication: (app: CreateApplicationDTO) => Promise<void>
   updateApplication: (id: string, data: Partial<Application>) => Promise<void>
   deleteApplication: (id: string) => Promise<void>
 }

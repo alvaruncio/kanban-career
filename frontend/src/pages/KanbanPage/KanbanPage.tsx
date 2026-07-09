@@ -4,6 +4,8 @@ import { useApplicationsStore } from '../../stores'
 import { useCompaniesStore } from '../../stores'
 import { KanbanColumn, KanbanCard, PageMeta, ApplicationFormModal } from '../../components'
 import { APPLICATION_STATUS } from '../../interfaces'
+import { ApplicationService } from '../../services'
+import type { ApplicationFormData } from '../../models'
 
 const KANBAN_COLUMNS_CONFIG = [
   { status: APPLICATION_STATUS.APPLIED,   color: 'bg-primary',             labelKey: 'columnApplied'  as const, showCreate: true  },
@@ -28,6 +30,22 @@ export default function KanbanPage() {
   const [selectedMonth, setSelectedMonth] = useState('')
   const [selectedCompany, setSelectedCompany] = useState('all')
   const [modalOpen, setModalOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [serverError, setServerError] = useState('')
+
+  const handleCreateApplication = async (data: ApplicationFormData) => {
+    setServerError('')
+    setIsSubmitting(true)
+    try {
+      await ApplicationService.create(data)
+      await fetchApplications()
+      setModalOpen(false)
+    } catch (err) {
+      setServerError((err as Error).message)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   const monthValues = [...new Set(applications.map(a => a.applicationDate.slice(0, 7)))].sort().reverse()
   const formatter = new Intl.DateTimeFormat(locale === 'es' ? 'es-ES' : 'en-US', { year: 'numeric', month: 'long' })
@@ -148,7 +166,9 @@ export default function KanbanPage() {
       <ApplicationFormModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSuccess={() => fetchApplications()}
+        onSubmit={handleCreateApplication}
+        isSubmitting={isSubmitting}
+        serverError={serverError}
       />
     </>
   )

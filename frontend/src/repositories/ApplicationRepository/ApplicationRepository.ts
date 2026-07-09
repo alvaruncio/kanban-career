@@ -1,12 +1,13 @@
 import { api } from '../../services'
-import type { ApplicationKanbanDTO, CreateApplicationDTO } from '../../interfaces'
+import type { ApplicationKanbanDTO } from '../../interfaces'
+import type { ApplicationFormData } from '../../models'
 
 export class ApplicationRepository {
   static async findAll(): Promise<ApplicationKanbanDTO[]> {
     return api.get<ApplicationKanbanDTO[]>('/applications')
   }
 
-  static async create(data: CreateApplicationDTO): Promise<ApplicationKanbanDTO> {
+  static async create(data: ApplicationFormData): Promise<ApplicationKanbanDTO> {
     return api.post<ApplicationKanbanDTO>('/applications', data)
   }
 }

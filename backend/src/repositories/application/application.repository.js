@@ -12,4 +12,8 @@ export class ApplicationRepository {
       orderBy: { applicationDate: 'desc' },
     })
   }
+
+  static async create(data) {
+    return prisma.application.create({ data })
+  }
 }

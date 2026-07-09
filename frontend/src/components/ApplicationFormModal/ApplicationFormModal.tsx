@@ -1,45 +1,24 @@
-import { useState, useEffect } from 'react'
+import { useI18nStore, useCompaniesStore } from '../../stores'
 import { Modal } from '../Modal/Modal'
 import { ApplicationForm } from '../ApplicationForm/ApplicationForm'
-import { useI18nStore, useApplicationsStore, useCompaniesStore } from '../../stores'
+import type { ApplicationFormData } from '../../models'
 
 interface Props {
   open: boolean
   onClose: () => void
-  onSuccess?: () => void
+  onSubmit: (data: ApplicationFormData) => Promise<void>
+  isSubmitting: boolean
+  serverError: string
 }
 
-export function ApplicationFormModal({ open, onClose, onSuccess }: Props) {
+export function ApplicationFormModal({ open, onClose, onSubmit, isSubmitting, serverError }: Props) {
   const { t } = useI18nStore()
-  const { addApplication } = useApplicationsStore()
-  const { companies, fetchCompanies } = useCompaniesStore()
-  const [serverError, setServerError] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  useEffect(() => {
-    if (open && companies.length === 0) {
-      fetchCompanies()
-    }
-  }, [open, companies.length, fetchCompanies])
-
-  const handleSubmit = async (data: Parameters<typeof addApplication>[0]) => {
-    setServerError('')
-    setIsSubmitting(true)
-    try {
-      await addApplication(data)
-      onSuccess?.()
-      onClose()
-    } catch (err) {
-      setServerError((err as Error).message)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+  const { companies } = useCompaniesStore()
 
   return (
     <Modal open={open} onClose={onClose} title={t.applicationForm.title}>
       <ApplicationForm
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
         isSubmitting={isSubmitting}
         submitLabel={t.applicationForm.submit}
         cancelLabel={t.applicationForm.cancel}

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { ApplicationService, api } from '../../services'
-import type { ApplicationKanbanDTO, ApplicationsState, CreateApplicationDTO } from '../../interfaces'
+import type { ApplicationKanbanDTO, ApplicationsState } from '../../interfaces'
 
 export const useApplicationsStore = create<ApplicationsState>((set) => ({
   applications: [],
@@ -12,16 +12,6 @@ export const useApplicationsStore = create<ApplicationsState>((set) => ({
     try {
       const data = await ApplicationService.getKanbanApplications()
       set({ applications: data, isLoading: false })
-    } catch (err) {
-      set({ error: (err as Error).message, isLoading: false })
-    }
-  },
-
-  addApplication: async (app: CreateApplicationDTO) => {
-    set({ isLoading: true, error: null })
-    try {
-      const data = await ApplicationService.create(app)
-      set(state => ({ applications: [...state.applications, data], isLoading: false }))
     } catch (err) {
       set({ error: (err as Error).message, isLoading: false })
     }
