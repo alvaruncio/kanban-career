@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { CompanyController } from '../../controllers/company/company.controller.js'
-import { requireAuth } from '../../middlewares/auth/auth.middleware.js'
+import { CompanyController } from '../../controllers/index.js'
+import { requireAuth } from '../../middlewares/index.js'
 
 export const companiesRouter = Router()
 

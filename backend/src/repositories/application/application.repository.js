@@ -1,4 +1,4 @@
-import prisma from '../../shared/prisma.js'
+import { prisma } from '../../shared/index.js'
 
 export class ApplicationRepository {
   static async findAllByUserId(userId) {

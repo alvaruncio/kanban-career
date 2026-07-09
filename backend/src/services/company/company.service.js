@@ -1,4 +1,4 @@
-import { CompanyRepository } from '../../repositories/company/company.repository.js'
+import { CompanyRepository } from '../../repositories/index.js'
 
 export class CompanyService {
   static async getAll(userId) {

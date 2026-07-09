@@ -1,9 +1,10 @@
 import { z } from 'zod'
 
 export const loginSchema = z.object({
-  email: z
-    .email('Email no válido')
-    .min(1, 'El correo es obligatorio'),
+  email: z.email({
+    pattern: z.regexes.rfc5322Email,
+    error: 'Email no válido',
+  }).min(1, 'El correo es obligatorio'),
   password: z
     .string()
     .min(1, 'La contraseña es obligatoria')

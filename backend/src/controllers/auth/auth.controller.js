@@ -1,4 +1,4 @@
-import { AuthService } from '../../services/auth/auth.service.js'
+import { AuthService } from '../../services/index.js'
 
 export class AuthController {
   static async register(req, res) {

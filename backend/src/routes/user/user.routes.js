@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { UserController } from '../../controllers/user/user.controller.js'
-import { validateCreateUser } from '../../validators/user/user.validator.js'
-import { requireAuth, requireAdmin, requireSelfOrAdmin } from '../../middlewares/auth/auth.middleware.js'
+import { UserController } from '../../controllers/index.js'
+import { validateCreateUser } from '../../validators/index.js'
+import { requireAuth, requireAdmin, requireSelfOrAdmin } from '../../middlewares/index.js'
 
 export const usersRouter = Router()
 

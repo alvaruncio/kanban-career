@@ -1,4 +1,4 @@
-import { ApplicationService } from '../../services/application/application.service.js'
+import { ApplicationService } from '../../services/index.js'
 
 export class ApplicationController {
   static async getAll(req, res) {

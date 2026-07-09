@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { AuthRepository } from '../../repositories/auth/auth.repository.js'
-import { config } from '../../shared/config.js'
-import { DEFAULTS, AUTH } from '../../shared/constants.js'
+import { AuthRepository } from '../../repositories/index.js'
+import { config } from '../../shared/index.js'
+import { DEFAULTS, AUTH } from '../../shared/index.js'
 
 export class AuthService {
   static #generateAccessToken(user) {

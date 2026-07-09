@@ -1,4 +1,4 @@
-import prisma from '../../shared/prisma.js'
+import { prisma } from '../../shared/index.js'
 
 export class UserRepository {
   static async findMany(where, { skip, take, orderBy }) {

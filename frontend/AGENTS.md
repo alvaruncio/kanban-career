@@ -17,7 +17,7 @@
 | **React Router** | 7 | Client-side routing with `react-router-dom` |
 | **Zustand** | 5 | State management |
 | **React Hook Form** | 7 | Forms with `useForm`, `useWatch`, `Controller`, validation |
-| **Zod** | 3 | Schema validation (`@hookform/resolvers` for RHF integration) |
+| **Zod** | 4.4 | Schema validation (vía `z.email()`, `z.regexes`) |
 | **Axios** | 1 | HTTP client with interceptors |
 | **react-helmet-async** | 3 | SEO meta tags management |
 | **React Compiler** | — | Auto-memoization; do NOT use `useMemo`/`useCallback` where compiler suffices |

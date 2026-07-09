@@ -5,9 +5,10 @@ export const registerSchema = z.object({
     .string()
     .min(1, 'El nombre es obligatorio')
     .min(3, 'El nombre debe tener al menos 3 caracteres'),
-  email: z
-    .email('Email no válido')
-    .min(1, 'El correo es obligatorio'),
+  email: z.email({
+    pattern: z.regexes.rfc5322Email,
+    error: 'Email no válido',
+  }).min(1, 'El correo es obligatorio'),
   password: z
     .string()
     .min(1, 'La contraseña es obligatoria')

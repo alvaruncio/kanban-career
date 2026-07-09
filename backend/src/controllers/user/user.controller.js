@@ -1,5 +1,5 @@
-import { UserService } from '../../services/user/user.service.js'
-import { DEFAULTS } from '../../shared/constants.js'
+import { UserService } from '../../services/index.js'
+import { DEFAULTS } from '../../shared/index.js'
 
 export class UserController {
   static async getAll(req, res) {

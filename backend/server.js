@@ -1,4 +1,4 @@
-import { config } from './src/shared/config.js'
+import { config } from './src/shared/index.js'
 import app from './src/app.js'
 
 const server = app.listen(config.port, () => {

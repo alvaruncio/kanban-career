@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
-import { UserRepository } from '../../repositories/user/user.repository.js'
-import { DEFAULTS } from '../../shared/constants.js'
+import { UserRepository } from '../../repositories/index.js'
+import { DEFAULTS } from '../../shared/index.js'
 
 export class UserService {
   static async getAll({ name, email, role, limit = DEFAULTS.LIMIT_PAGINATION, offset = DEFAULTS.LIMIT_OFFSET }) {

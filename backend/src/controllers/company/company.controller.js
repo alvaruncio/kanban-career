@@ -1,4 +1,4 @@
-import { CompanyService } from '../../services/company/company.service.js'
+import { CompanyService } from '../../services/index.js'
 
 export class CompanyController {
   static async getAll(req, res) {

@@ -4,7 +4,7 @@ import { dirname, resolve } from 'node:path'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 try {
-  process.loadEnvFile(resolve(__dirname, '../../../.env'))
+  process.loadEnvFile(resolve(__dirname, '../../../../.env'))
 } catch {
   // .env no encontrado; puede que las variables vía entorno (Docker)
 }

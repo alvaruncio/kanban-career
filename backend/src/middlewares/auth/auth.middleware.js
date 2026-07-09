@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { config } from '../../shared/config.js'
+import { config } from '../../shared/index.js'
 
 export const requireAuth = (req, res, next) => {
   const header = req.headers.authorization

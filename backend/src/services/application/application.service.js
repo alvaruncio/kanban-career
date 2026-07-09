@@ -1,4 +1,4 @@
-import { ApplicationRepository } from '../../repositories/application/application.repository.js'
+import { ApplicationRepository } from '../../repositories/index.js'
 
 export class ApplicationService {
   static async getAll(userId) {
