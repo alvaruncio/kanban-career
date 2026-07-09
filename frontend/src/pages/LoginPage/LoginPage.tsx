@@ -16,7 +16,7 @@ export default function LoginPage() {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
@@ -27,8 +27,8 @@ export default function LoginPage() {
     try {
       await login(data.email, data.password)
       navigate('/dashboard')
-    } catch (err) {
-      setServerError((err as Error).message)
+    } catch {
+      setServerError(t.login.invalidCredentials)
     }
   }
 
@@ -55,7 +55,6 @@ export default function LoginPage() {
             label={t.login.email}
             type="email"
             placeholder={t.login.emailPlaceholder}
-            error={errors.email}
           />
           <InputForm
             name="password"
@@ -63,7 +62,6 @@ export default function LoginPage() {
             label={t.login.password}
             type="password"
             placeholder="••••••••"
-            error={errors.password}
           />
           <button
             type="submit"

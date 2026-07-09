@@ -25,6 +25,17 @@ export const APPLICATION_SOURCE = {
 } as const
 export type ApplicationSource = (typeof APPLICATION_SOURCE)[keyof typeof APPLICATION_SOURCE]
 
+export interface CreateApplicationDTO {
+  jobTitle: string
+  offerUrl: string
+  companyId: string
+  category: ApplicationCategory
+  source: ApplicationSource
+  applicationDate: string
+  jobDescription?: string | null
+  notes?: string | null
+}
+
 export interface Application {
   id: string
   jobTitle: string
@@ -54,7 +65,7 @@ export interface ApplicationsState {
   isLoading: boolean
   error: string | null
   fetchApplications: () => Promise<void>
-  addApplication: (app: Omit<Application, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>
+  addApplication: (app: CreateApplicationDTO) => Promise<void>
   updateApplication: (id: string, data: Partial<Application>) => Promise<void>
   deleteApplication: (id: string) => Promise<void>
 }

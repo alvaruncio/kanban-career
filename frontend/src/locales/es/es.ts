@@ -55,6 +55,7 @@ export default {
     submitting: 'Iniciando sesión…',
     noAccount: '¿No tienes cuenta?',
     register: 'Regístrate',
+    invalidCredentials: 'Email/contraseña inválidos',
   },
   register: {
     title: 'Crear cuenta',
@@ -128,6 +129,18 @@ export default {
   language: {
     es: 'Español',
     en: 'Inglés',
+  },
+  applicationForm: {
+    title: 'Nueva aplicación',
+    submit: 'Crear',
+    cancel: 'Cancelar',
+    companyPlaceholder: 'Selecciona una compañía',
+    categoryPlaceholder: 'Selecciona categoría',
+    sourcePlaceholder: 'Selecciona fuente',
+    jobDescriptionLabel: 'Descripción (opcional)',
+    jobDescriptionPlaceholder: 'Descripción del puesto...',
+    notes: 'Notas (opcional)',
+    notesPlaceholder: 'Notas adicionales...',
   },
   common: {
     loading: 'Cargando…',

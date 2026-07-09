@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useI18nStore } from '../../stores'
 import { useApplicationsStore } from '../../stores'
 import { useCompaniesStore } from '../../stores'
-import { KanbanColumn, KanbanCard, PageMeta } from '../../components'
+import { KanbanColumn, KanbanCard, PageMeta, ApplicationFormModal } from '../../components'
 import { APPLICATION_STATUS } from '../../interfaces'
 
 const KANBAN_COLUMNS_CONFIG = [
@@ -27,6 +27,7 @@ export default function KanbanPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedMonth, setSelectedMonth] = useState('')
   const [selectedCompany, setSelectedCompany] = useState('all')
+  const [modalOpen, setModalOpen] = useState(false)
 
   const monthValues = [...new Set(applications.map(a => a.applicationDate.slice(0, 7)))].sort().reverse()
   const formatter = new Intl.DateTimeFormat(locale === 'es' ? 'es-ES' : 'en-US', { year: 'numeric', month: 'long' })
@@ -129,6 +130,7 @@ export default function KanbanPage() {
                 count={col.applications.length}
                 color={col.color}
                 showCreateButton={col.showCreate}
+                onCreate={() => setModalOpen(true)}
               >
                 {col.applications.map(app => (
                   <KanbanCard
@@ -142,6 +144,12 @@ export default function KanbanPage() {
           </div>
         </div>
       </div>
+
+      <ApplicationFormModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSuccess={() => fetchApplications()}
+      />
     </>
   )
 }

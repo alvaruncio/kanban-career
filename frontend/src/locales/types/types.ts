@@ -3,7 +3,7 @@ export interface Translation {
   footer: Record<string, string>
   hero: Record<string, string>
   pricing: Record<string, string>
-  login: Record<string, string>
+  login: Record<string, string> & { invalidCredentials: string }
   register: {
     title: string
     subtitle: string
@@ -62,6 +62,18 @@ export interface Translation {
       daysAgo: string
       weekAgo: string
     }
+  }
+  applicationForm: {
+    title: string
+    submit: string
+    cancel: string
+    companyPlaceholder: string
+    categoryPlaceholder: string
+    sourcePlaceholder: string
+    jobDescriptionLabel: string
+    jobDescriptionPlaceholder: string
+    notes: string
+    notesPlaceholder: string
   }
   language: Record<string, string>
   common: {

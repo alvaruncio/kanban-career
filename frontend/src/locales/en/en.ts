@@ -55,6 +55,7 @@ export default {
     submitting: 'Logging in…',
     noAccount: "Don't have an account?",
     register: 'Sign up',
+    invalidCredentials: 'Invalid email/password',
   },
   register: {
     title: 'Create account',
@@ -128,6 +129,18 @@ export default {
   language: {
     es: 'Spanish',
     en: 'English',
+  },
+  applicationForm: {
+    title: 'New application',
+    submit: 'Create',
+    cancel: 'Cancel',
+    companyPlaceholder: 'Select a company',
+    categoryPlaceholder: 'Select category',
+    sourcePlaceholder: 'Select source',
+    jobDescriptionLabel: 'Description (optional)',
+    jobDescriptionPlaceholder: 'Job description...',
+    notes: 'Notes (optional)',
+    notesPlaceholder: 'Additional notes...',
   },
   common: {
     loading: 'Loading…',
