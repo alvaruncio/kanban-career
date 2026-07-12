@@ -1,3 +1,5 @@
+[![CI - Alvaro Rodriguez Suarez](https://github.com/alvaruncio/kanban-career/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/alvaruncio/kanban-career/actions/workflows/ci.yml)
+
 # KanbanCareer
 
 > **Jira para tu búsqueda de empleo.**  
