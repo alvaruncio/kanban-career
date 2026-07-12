@@ -55,5 +55,8 @@ jobs:
         
         -   name: Run lint
             run: npm run lint
-            
+        
+        -   name: Build
+            run: npm run build
+        
         # AÑADIR PASO PARA EJECUTAR TESTS CON PLAYWRIGHT CUANDO SE CREEN
