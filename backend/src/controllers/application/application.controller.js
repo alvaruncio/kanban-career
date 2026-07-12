@@ -12,4 +12,14 @@ export class ApplicationController {
     const application = await ApplicationService.create({ userId, ...req.body })
     return res.status(201).json(application)
   }
+
+  static async update(req, res) {
+    const userId = req.user.id
+    const { id } = req.params
+    const application = await ApplicationService.update(id, userId, req.body)
+    if (!application) {
+      return res.status(404).json({ error: 'Candidatura no encontrada' })
+    }
+    return res.json(application)
+  }
 }

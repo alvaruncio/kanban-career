@@ -1,7 +1,11 @@
 import { Children, type ReactNode } from 'react'
+import { useDroppable } from '@dnd-kit/react'
+import { CollisionPriority } from '@dnd-kit/abstract'
 import { useI18nStore } from '../../stores'
+import type { ApplicationStatus } from '../../interfaces'
 
 interface KanbanColumnProps {
+  id: ApplicationStatus
   label: string
   count: number
   color: string
@@ -10,12 +14,18 @@ interface KanbanColumnProps {
   children?: ReactNode
 }
 
-export default function KanbanColumn({ label, count, color, showCreateButton, onCreate, children }: KanbanColumnProps) {
+export default function KanbanColumn({ id, label, count, color, showCreateButton, onCreate, children }: KanbanColumnProps) {
   const { t } = useI18nStore()
+  const { ref, isDropTarget } = useDroppable({
+    id,
+    collisionPriority: CollisionPriority.Low,
+  })
 
   return (
     <div
-      className="w-80 flex-shrink-0 flex flex-col max-h-full bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm"
+      ref={ref}
+      data-column-id={id}
+      className={`w-80 flex-shrink-0 flex flex-col max-h-full bg-surface-container-lowest rounded-xl border shadow-sm transition-colors ${isDropTarget ? 'border-primary bg-primary-container/10' : 'border-outline-variant'}`}
       style={{ minWidth: 320 }}
     >
       <div className="p-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low rounded-t-xl">
@@ -28,7 +38,7 @@ export default function KanbanColumn({ label, count, color, showCreateButton, on
           <span className="material-symbols-outlined text-sm">more_horiz</span>
         </button>
       </div>
-      <div className="flex-1 overflow-y-auto p-sm flex flex-col gap-sm kanban-scroll">
+      <div data-column-scroll className="flex-1 overflow-y-auto p-sm flex flex-col gap-sm kanban-scroll">
         {showCreateButton && (
           <button
             onClick={onCreate}

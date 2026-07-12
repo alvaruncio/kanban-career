@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
-import { useI18nStore } from '../../stores'
-import { useApplicationsStore } from '../../stores'
-import { useCompaniesStore } from '../../stores'
-import { KanbanColumn, KanbanCard, PageMeta, ApplicationFormModal } from '../../components'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { DragDropProvider, DragOverlay } from '@dnd-kit/react'
+import { useI18nStore, useApplicationsStore, useCompaniesStore } from '../../stores'
+import { KanbanColumn, KanbanCard, SortableKanbanCard, PageMeta, ApplicationFormModal } from '../../components'
 import { APPLICATION_STATUS } from '../../interfaces'
-import { ApplicationService } from '../../services'
+import { ApplicationService, api } from '../../services'
 import type { ApplicationFormData } from '../../models'
+import type { ApplicationKanbanDTO, ApplicationStatus } from '../../interfaces'
 
 const KANBAN_COLUMNS_CONFIG = [
   { status: APPLICATION_STATUS.APPLIED,   color: 'bg-primary',             labelKey: 'columnApplied'  as const, showCreate: true  },
@@ -14,6 +14,9 @@ const KANBAN_COLUMNS_CONFIG = [
   { status: APPLICATION_STATUS.HIRED,     color: 'bg-secondary-fixed-dim', labelKey: 'columnHired'     as const, showCreate: false },
   { status: APPLICATION_STATUS.REJECTED,  color: 'bg-error',              labelKey: 'columnRejected'  as const, showCreate: false },
 ]
+
+const ALL_COLUMNS = [APPLICATION_STATUS.APPLIED, APPLICATION_STATUS.INTERVIEW, APPLICATION_STATUS.OFFER, APPLICATION_STATUS.HIRED, APPLICATION_STATUS.REJECTED] as const
+const emptyRecord = () => Object.fromEntries(ALL_COLUMNS.map(s => [s, [] as string[]])) as Record<ApplicationStatus, string[]>
 
 export default function KanbanPage() {
   const { t, locale } = useI18nStore()
@@ -32,6 +35,12 @@ export default function KanbanPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [serverError, setServerError] = useState('')
+
+  const [items, setItems] = useState<Record<ApplicationStatus, string[]>>(emptyRecord)
+  const [activeApp, setActiveApp] = useState<ApplicationKanbanDTO | null>(null)
+  const isDraggingRef = useRef(false)
+  const blockFilterSync = useRef(false)
+  const lastDragOverRef = useRef({ column: '', index: -1 })
 
   const handleCreateApplication = async (data: ApplicationFormData) => {
     setServerError('')
@@ -57,7 +66,7 @@ export default function KanbanPage() {
 
   const companyOptions = companies.map(c => ({ value: c.name, id: c.id }))
 
-  const filtered = applications.filter(app => {
+  const filtered = useMemo(() => applications.filter(app => {
     const matchesMonth = !selectedMonth || app.applicationDate.slice(0, 7) === selectedMonth
     const matchesCompany = selectedCompany === 'all' || app.company.name === selectedCompany
     const q = searchQuery.toLowerCase()
@@ -66,12 +75,29 @@ export default function KanbanPage() {
       || app.company.name.toLowerCase().includes(q)
       || app.category.toLowerCase().includes(q)
     return matchesMonth && matchesCompany && matchesSearch
-  })
+  }), [applications, selectedMonth, selectedCompany, searchQuery])
+
+  useEffect(() => {
+    if (isDraggingRef.current || blockFilterSync.current) return
+    const newItems = emptyRecord()
+    for (const app of filtered) {
+      newItems[app.status].push(app.id)
+    }
+    setItems(newItems)
+  }, [filtered])
+
+  const appById = useMemo(() => {
+    const map = new Map<string, ApplicationKanbanDTO>()
+    for (const app of filtered) {
+      map.set(app.id, app)
+    }
+    return map
+  }, [filtered])
 
   const COLUMNS = KANBAN_COLUMNS_CONFIG.map(col => ({
     ...col,
     label: t.kanban[col.labelKey],
-    applications: filtered.filter(app => app.status === col.status),
+    appIds: items[col.status] ?? [],
   }))
 
   return (
@@ -139,28 +165,144 @@ export default function KanbanPage() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-x-auto overflow-y-hidden p-lg kanban-scroll">
-          <div className="flex gap-lg h-full items-start">
-            {COLUMNS.map(col => (
-              <KanbanColumn
-                key={col.status}
-                label={col.label}
-                count={col.applications.length}
-                color={col.color}
-                showCreateButton={col.showCreate}
-                onCreate={() => setModalOpen(true)}
-              >
-                {col.applications.map(app => (
-                  <KanbanCard
-                    key={app.id}
-                    application={app}
-                    isRejected={app.status === APPLICATION_STATUS.REJECTED}
-                  />
-                ))}
-              </KanbanColumn>
-            ))}
+        <DragDropProvider
+          onDragStart={(event) => {
+            const source = event.operation.source
+            if (!source) return
+            isDraggingRef.current = true
+            blockFilterSync.current = false
+            lastDragOverRef.current = { column: '', index: -1 }
+            const app = applications.find(a => a.id === source.id)
+            setActiveApp(app ?? null)
+          }}
+          onDragOver={(event) => {
+            const { source, target } = event.operation
+            if (!source || !target) return
+
+            const sourceId = source.id as string
+            const columnId = target.id as ApplicationStatus
+
+            const apps = useApplicationsStore.getState().applications
+            const sourceApp = apps.find(a => a.id === sourceId)
+            if (!sourceApp || sourceApp.status !== columnId) return
+
+            const columnEl = document.querySelector(`[data-column-id="${columnId}"]`)
+            if (!columnEl) return
+
+            const scrollEl = columnEl.querySelector('[data-column-scroll]')
+            if (!scrollEl) return
+
+            const cardEls = [...scrollEl.querySelectorAll(':scope > [data-draggable-id]')] as HTMLElement[]
+            if (cardEls.length === 0) return
+
+            const cursorY = event.operation.position.current.y
+
+            let insertIndex = cardEls.length
+            for (let i = 0; i < cardEls.length; i++) {
+              const rect = cardEls[i].getBoundingClientRect()
+              if (cursorY < rect.top + rect.height / 2) {
+                insertIndex = i
+                break
+              }
+            }
+
+            if (lastDragOverRef.current.column === columnId && lastDragOverRef.current.index === insertIndex) return
+            lastDragOverRef.current = { column: columnId, index: insertIndex }
+
+            setItems(prev => {
+              const currentIds = [...prev[columnId]]
+              const currentIndex = currentIds.indexOf(sourceId)
+              if (currentIndex === -1) return prev
+
+              let targetIndex = insertIndex
+              if (targetIndex > currentIndex) targetIndex--
+              if (targetIndex === currentIndex) return prev
+
+              currentIds.splice(currentIndex, 1)
+              currentIds.splice(targetIndex, 0, sourceId)
+              return { ...prev, [columnId]: currentIds }
+            })
+          }}
+          onDragEnd={(event) => {
+            setActiveApp(null)
+
+            if (event.canceled) return
+
+            const { source, target } = event.operation
+            if (!source || !target) return
+
+            const id = source.id as string
+            const destGroup = target.id as ApplicationStatus
+
+            const apps = useApplicationsStore.getState().applications
+            const app = apps.find(a => a.id === id)
+            if (!app) return
+
+            const initialGroup = app.status
+            if (initialGroup === destGroup) return
+
+            setItems(prev => {
+              if (!prev[initialGroup].includes(id)) return prev
+              const next = { ...prev }
+              next[initialGroup] = prev[initialGroup].filter(x => x !== id)
+              next[destGroup] = [...prev[destGroup], id]
+              return next
+            })
+
+            blockFilterSync.current = true
+            requestAnimationFrame(() => { blockFilterSync.current = false })
+
+            useApplicationsStore.setState(state => ({
+              applications: state.applications.map(a =>
+                a.id === id ? { ...a, status: destGroup } : a
+              ),
+            }))
+
+            api.patch(`/applications/${id}`, { status: destGroup }).catch(() => {})
+
+            isDraggingRef.current = false
+          }}
+        >
+          <div className="flex-1 overflow-x-auto overflow-y-hidden p-lg kanban-scroll">
+            <div className="flex gap-lg h-full items-start">
+              {COLUMNS.map(col => (
+                <KanbanColumn
+                  key={col.status}
+                  id={col.status}
+                  label={col.label}
+                  count={col.appIds.length}
+                  color={col.color}
+                  showCreateButton={col.showCreate}
+                  onCreate={() => setModalOpen(true)}
+                >
+                  {col.appIds.map((appId) => {
+                    const app = appById.get(appId)
+                    if (!app) return null
+                    return (
+                      <SortableKanbanCard key={app.id} id={app.id}>
+                        <KanbanCard
+                          application={app}
+                          isRejected={app.status === APPLICATION_STATUS.REJECTED}
+                        />
+                      </SortableKanbanCard>
+                    )
+                  })}
+                </KanbanColumn>
+              ))}
+            </div>
           </div>
-        </div>
+
+          <DragOverlay>
+            {activeApp && (
+              <div className="rotate-3 opacity-90">
+                <KanbanCard
+                  application={activeApp}
+                  isRejected={activeApp.status === APPLICATION_STATUS.REJECTED}
+                />
+              </div>
+            )}
+          </DragOverlay>
+        </DragDropProvider>
       </div>
 
       <ApplicationFormModal

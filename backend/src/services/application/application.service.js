@@ -12,4 +12,12 @@ export class ApplicationService {
       status: 'APPLIED',
     })
   }
+
+  static async update(id, userId, data) {
+    const existing = await ApplicationRepository.findById(id)
+    if (!existing || existing.userId !== userId) {
+      return null
+    }
+    return ApplicationRepository.update(id, data)
+  }
 }

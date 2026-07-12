@@ -21,6 +21,8 @@
 | **Axios** | 1 | HTTP client with interceptors |
 | **react-helmet-async** | 3 | SEO meta tags management |
 | **React Compiler** | — | Auto-memoization; do NOT use `useMemo`/`useCallback` where compiler suffices |
+| **@dnd-kit/react** | 0.5 | Drag & drop (sortable lists, kanban via `useSortable`, `useDroppable`, `DragDropProvider`) |
+| **@dnd-kit/helpers** | 0.5 | Utility helpers (`move`, `arrayMove`, `arraySwap`) for sortable state |
 
 ## Folder Structure
 

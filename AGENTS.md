@@ -9,11 +9,29 @@
 3. If the skill is NOT in `available_skills`, read it directly from `.agents/skills/<name>/SKILL.md`.
 4. If multiple skills are relevant, load all applicable skills before starting the task.
 5. Only then proceed with the task.
-6. **Do NOT stage, commit, or push** unless the user explicitly asks you to.
 
 Violating this rule will result in incorrect behavior. This instruction is non-negotiable.
 
 > **At the end of each interaction, you MUST list which skills were loaded (or read directly) during the session.**
+
+## ❌ What NOT to Do
+
+The following actions are **strictly prohibited** unless explicitly requested or required by the task:
+
+| # | Rule | Notes |
+|---|------|-------|
+| 1 | **Do NOT stage, commit, or push** | Wait for an explicit request from the user. |
+| 2 | **Do NOT skip loading the relevant skill** | Always load the matching skill before starting a task. |
+| 3 | **Do NOT create README.md or documentation files** | Only if the user explicitly asks for them. |
+| 4 | **Do NOT add comments to code** | Code should be self-documenting. |
+| 5 | **Do NOT use `cd` in bash commands** | Use the `workdir` parameter instead. |
+| 6 | **Do NOT use emojis** | Unless the user uses them first. |
+| 7 | **Do NOT create new files when existing files can be edited** | Prefer modifying existing code. |
+| 8 | **Do NOT be overly verbose** | Answer concisely; avoid unnecessary preamble or postamble. |
+| 9 | **Do NOT hardcode UI text** | Always use `useI18nStore` for any visible text. |
+| 10 | **Do NOT use `require` or `module.exports`** | ESM only (`import`/`export`). |
+| 11 | **Do NOT import directly from feature files** | Always go through barrel `index.js` / `index.ts`. |
+| 12 | **Do NOT use `any`** | Prefer `unknown` with type guards. |
 
 ## Structure
 
@@ -61,6 +79,7 @@ Run all commands from the respective subdirectory (`backend/` or `frontend/`).
 - **Tailwind v4** — use `@import "tailwindcss"` in CSS, **not** the v3 `@tailwind` directives. No `tailwind.config.*` file.
 - **React Router v7** (`react-router-dom`). Routes defined in `App.tsx`.
 - **Zustand v5** for state management, **React Hook Form v7** for forms.
+- **@dnd-kit/react** 0.5, **@dnd-kit/helpers** 0.5 — drag & drop (sortable lists, kanban).
 - UI text in **Spanish** (primary) and **English** (secondary). **Every component must use `useI18nStore`** — no hardcoded text allowed.
 
 ## Skills (`.agents/skills/`)

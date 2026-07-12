@@ -442,6 +442,44 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
 
+  /api/v1/applications/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Application UUID
+        schema:
+          type: string
+          format: uuid
+
+    patch:
+      operationId: updateApplication
+      summary: Update an application
+      description: Updates one or more fields of an application. All fields are optional. Returns 404 if the application does not exist or does not belong to the authenticated user.
+      tags:
+        - Applications
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateApplicationRequest"
+      responses:
+        "200":
+          description: Application updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicationWithCompany"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
   /api/v1/companies:
     get:
       operationId: listCompanies
@@ -657,6 +695,34 @@ components:
         - REFERRAL
         - OTHER
       description: Source where the application was found
+
+    UpdateApplicationRequest:
+      type: object
+      minProperties: 1
+      properties:
+        status:
+          $ref: "#/components/schemas/ApplicationStatus"
+        jobTitle:
+          type: string
+          minLength: 1
+        offerUrl:
+          type: string
+          format: uri
+        companyId:
+          type: string
+          format: uuid
+        category:
+          $ref: "#/components/schemas/ApplicationCategory"
+        source:
+          $ref: "#/components/schemas/ApplicationSource"
+        applicationDate:
+          type: string
+          format: date-time
+        jobDescription:
+          type: string
+        notes:
+          type: string
+          nullable: true
 
     Company:
       type: object
