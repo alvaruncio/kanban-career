@@ -1,6 +1,6 @@
 export type { RequestOptions } from './api/api'
-export type { ApplicationKanbanDTO, ApplicationsState, ApplicationCategory, ApplicationSource, CreateApplicationDTO } from './application/application'
-export { APPLICATION_STATUS, APPLICATION_CATEGORY, APPLICATION_SOURCE } from './application/application'
+export type { ApplicationKanbanDTO, ApplicationStatus, ApplicationsState, ApplicationCategory, ApplicationSource, CreateApplicationDTO } from './application/application'
+export { APPLICATION_STATUS, APPLICATION_CATEGORY, APPLICATION_SOURCE, } from './application/application'
 export type { User, LoginFormData } from './auth/auth'
 export type { Company, CompaniesState } from './company/company'
 export type { MainLayoutProps, DashboardLayoutProps } from './layout/layout'

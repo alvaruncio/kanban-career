@@ -1,0 +1,73 @@
+schema: spec-driven
+
+# Project context
+context: |
+  # KanbanCareer
+
+  SaaS that transforms job search management into a structured CRM/Kanban workflow.
+  Track applications, companies, interviews, and metrics in one place.
+
+  Domain: job application tracking, company management, interview pipeline.
+
+  ## Architecture
+
+  Monorepo with two independent packages — no root package.json.
+
+  ```
+  backend/   Express 5 + Prisma + PostgreSQL (ESM)
+  frontend/  Vite 8 + React 19 + TypeScript 6 (ESM)
+  ```
+
+  ### Backend — Layers per feature
+
+  ```
+  Controllers → Services → Repositories → Prisma
+  ```
+
+  - Express 5, Prisma 6.6, PostgreSQL (pg driver), Zod 4.4, bcrypt 5, cookie-parser, jsonwebtoken
+  - ESM only (import/export, "type": "module")
+  - Static classes with static methods for controllers, services, repositories
+  - Feature-based folders: `<layer>/<feature>/<feature>.<layer>.js`
+  - Barrel index.js per layer (cross-layer imports always go through barrel)
+  - Controllers/Repositories never call Prisma directly
+  - Zod validation: schema.safeParse() on req.body, 400 on failure, parsed result replaces input
+  - Service methods destructure only needed fields from body (e.g. `register({ name, email, password })`)
+  - Dual token auth: access token (15min, in-memory) + refresh token (30d, HTTPOnly cookie)
+  - Error handling: centralized error middleware in app.js
+
+  ### Frontend
+
+  - Vite 8, React 19, TypeScript 6 (strict, verbatimModuleSyntax, erasableSyntaxOnly)
+  - Tailwind CSS v4 (no config file, uses @import "tailwindcss"), React Router v7, Zustand v5
+  - React Hook Form v7, Zod 4.4, Axios 1, react-helmet-async 3
+  - React Compiler enabled — no useMemo/useCallback where auto-memoization suffices
+  - ESM only (import/export), no require
+  - Component-per-subfolder: each module in its own PascalCase subfolder
+  - Barrel index.ts per category — imports between siblings go through barrel
+  - Lazy imports use full internal path (not barrel)
+  - i18n via Zustand store (useI18nStore, t.key.subkey pattern)
+  - UI text in Spanish (primary) and English (secondary)
+  - Forms: Zod schema + zodResolver + generic InputForm component; types inferred with z.infer
+  - Pages/Stores → Services (business logic) → Repositories (HTTP) → Axios instance
+  - Composition over boolean props
+  - No duplicate types: infer from Zod schema, do not redeclare in interfaces/
+
+  ## DO NOT rules
+
+  - Do NOT stage, commit, or push unless explicitly asked
+  - Do NOT create README.md or documentation files unless explicitly asked
+  - Do NOT add comments to code
+  - Do NOT use cd in bash commands — use workdir parameter
+  - Do NOT use emojis
+  - Do NOT create new files when existing files can be edited
+  - Do NOT hardcode UI text — always use useI18nStore
+  - Do NOT use require or module.exports — ESM only
+  - Do NOT import directly from feature files — go through barrel index
+  - Do NOT use any — prefer unknown with type guards
+  - Do NOT be overly verbose
+
+  ## Commands
+
+  Root: docker compose up -d, docker compose up -d --build, docker compose down -v
+  Backend: npm run dev, npx prisma migrate dev, npx prisma generate, npx prisma studio
+  Frontend: npm run dev, npm run build (tsc -b then vite build), npm run lint (ESLint)
