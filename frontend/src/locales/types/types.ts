@@ -28,7 +28,28 @@ export interface Translation {
     hasAccount: string
     login: string
   }
-  dashboard: Record<string, string>
+  dashboard: {
+    title: string
+    totalApplications: string
+    activeApplications: string
+    pendingInterviews: string
+    offersReceived: string
+    responseRate: string
+    upcomingInterviews: string
+    noInterviews: string
+    recentActivity: string
+    activityDescription: string
+    pageDescription: string
+    monthlyEvolution: string
+    statusDistribution: string
+    conversionFunnel: string
+    bySource: string
+    byCategory: string
+    noData: string
+    noActivity: string
+    errorLoading: string
+    allMonths: string
+  }
   kanban: {
     title: string
     subtitle: string

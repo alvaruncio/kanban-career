@@ -36,6 +36,8 @@ tags:
     description: Application management (authenticated user's own applications)
   - name: Companies
     description: Company management (authenticated user's own companies)
+  - name: Dashboard
+    description: Dashboard metrics and aggregated statistics
 
 paths:
   /:
@@ -506,6 +508,35 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
 
+  /api/v1/dashboard/metrics:
+    get:
+      operationId: getDashboardMetrics
+      summary: Get dashboard metrics
+      description: Returns aggregated application statistics for the authenticated user. Supports optional month filtering.
+      tags:
+        - Dashboard
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: month
+          in: query
+          description: Filter by month (YYYY-MM format). When omitted, returns all-time data.
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}$'
+            example: '2026-07'
+      responses:
+        "200":
+          description: Dashboard metrics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardMetricsResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
   /api/v1/companies:
     get:
       operationId: listCompanies
@@ -898,6 +929,157 @@ components:
                   type: string
                   format: uri
                   nullable: true
+
+    StatusCount:
+      type: object
+      required:
+        - status
+        - count
+        - percentage
+      properties:
+        status:
+          $ref: "#/components/schemas/ApplicationStatus"
+        count:
+          type: integer
+        percentage:
+          type: number
+          format: float
+
+    MonthlyCount:
+      type: object
+      required:
+        - month
+        - count
+      properties:
+        month:
+          type: string
+          example: "2026-07"
+        count:
+          type: integer
+
+    SourceCount:
+      type: object
+      required:
+        - source
+        - count
+        - percentage
+      properties:
+        source:
+          $ref: "#/components/schemas/ApplicationSource"
+        count:
+          type: integer
+        percentage:
+          type: number
+          format: float
+
+    CategoryCount:
+      type: object
+      required:
+        - category
+        - count
+        - percentage
+      properties:
+        category:
+          $ref: "#/components/schemas/ApplicationCategory"
+        count:
+          type: integer
+        percentage:
+          type: number
+          format: float
+
+    ConversionFunnelEntry:
+      type: object
+      required:
+        - stage
+        - count
+        - rate
+      properties:
+        stage:
+          $ref: "#/components/schemas/ApplicationStatus"
+        count:
+          type: integer
+        rate:
+          type: number
+          format: float
+
+    RecentApplication:
+      type: object
+      required:
+        - id
+        - jobTitle
+        - companyName
+        - status
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        jobTitle:
+          type: string
+        companyName:
+          type: string
+        status:
+          $ref: "#/components/schemas/ApplicationStatus"
+        createdAt:
+          type: string
+          format: date-time
+
+    DashboardMetricsResponse:
+      type: object
+      required:
+        - totalApplications
+        - activeApplications
+        - pendingInterviews
+        - offersReceived
+        - hiredCount
+        - rejectedCount
+        - responseRate
+        - byStatus
+        - byMonth
+        - bySource
+        - byCategory
+        - conversionFunnel
+        - recentApplications
+      properties:
+        totalApplications:
+          type: integer
+        activeApplications:
+          type: integer
+        pendingInterviews:
+          type: integer
+        offersReceived:
+          type: integer
+        hiredCount:
+          type: integer
+        rejectedCount:
+          type: integer
+        responseRate:
+          type: number
+          format: float
+        byStatus:
+          type: array
+          items:
+            $ref: "#/components/schemas/StatusCount"
+        byMonth:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonthlyCount"
+        bySource:
+          type: array
+          items:
+            $ref: "#/components/schemas/SourceCount"
+        byCategory:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryCount"
+        conversionFunnel:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConversionFunnelEntry"
+        recentApplications:
+          type: array
+          items:
+            $ref: "#/components/schemas/RecentApplication"
 
     ValidationError:
       type: object

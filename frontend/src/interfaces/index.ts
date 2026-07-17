@@ -3,4 +3,5 @@ export type { ApplicationKanbanDTO, ApplicationStatus, ApplicationsState, Applic
 export { APPLICATION_STATUS, APPLICATION_CATEGORY, APPLICATION_SOURCE, } from './application/application'
 export type { User, LoginFormData } from './auth/auth'
 export type { Company, CompaniesState } from './company/company'
+export type { DashboardMetrics, StatusCount, MonthlyCount, SourceCount, CategoryCount, ConversionFunnelEntry, RecentApplication } from './dashboard/DashboardMetrics'
 export type { MainLayoutProps, DashboardLayoutProps } from './layout/layout'
