@@ -4,4 +4,8 @@ export class CompanyService {
   static async getAll(userId) {
     return CompanyRepository.findAllByUserId(userId)
   }
+
+  static async create(userId, data) {
+    return CompanyRepository.create({ ...data, userId })
+  }
 }

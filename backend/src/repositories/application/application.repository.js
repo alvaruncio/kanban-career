@@ -21,6 +21,10 @@ export class ApplicationRepository {
     return prisma.application.create({ data })
   }
 
+  static async deleteById(id) {
+    return prisma.application.delete({ where: { id } })
+  }
+
   static async update(id, data) {
     return prisma.application.update({
       where: { id },

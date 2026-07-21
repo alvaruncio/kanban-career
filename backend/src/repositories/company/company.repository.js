@@ -7,4 +7,8 @@ export class CompanyRepository {
       orderBy: { name: 'asc' },
     })
   }
+
+  static async create(data) {
+    return prisma.company.create({ data })
+  }
 }

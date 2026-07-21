@@ -13,6 +13,16 @@ export class ApplicationController {
     return res.status(201).json(application)
   }
 
+  static async delete(req, res) {
+    const userId = req.user.id
+    const { id } = req.params
+    const deleted = await ApplicationService.deleteApplication(id, userId)
+    if (!deleted) {
+      return res.status(404).json({ error: 'Candidatura no encontrada' })
+    }
+    return res.status(204).send()
+  }
+
   static async update(req, res) {
     const userId = req.user.id
     const { id } = req.params

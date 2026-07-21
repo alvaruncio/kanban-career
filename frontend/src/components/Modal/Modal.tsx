@@ -40,7 +40,7 @@ export function Modal({ open, onClose, title, children }: Props) {
         if (e.target === overlayRef.current) onClose()
       }}
     >
-      <div className="w-full max-w-[32rem] mx-gutter bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl animate-modal-enter">
+      <div className="w-full max-w-[32rem] mx-gutter bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl animate-modal-enter max-h-[85vh] overflow-y-auto">
         <div className="flex items-center justify-between px-lg pt-lg pb-sm">
           <h2 className="font-headline-md text-headline-md text-on-surface">{title}</h2>
           <button

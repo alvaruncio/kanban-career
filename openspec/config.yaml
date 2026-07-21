@@ -1,4 +1,5 @@
 schema: spec-driven
+strict_tdd: true
 
 # Project context
 context: |
@@ -15,7 +16,7 @@ context: |
 
   ```
   backend/   Express 5 + Prisma + PostgreSQL (ESM)
-  frontend/  Vite 8 + React 19 + TypeScript 6 (ESM)
+  frontend/  Vite 8 + React 19 + TypeScript 6 (ESM) + Playwright E2E
   ```
 
   ### Backend — Layers per feature
@@ -52,7 +53,21 @@ context: |
   - Composition over boolean props
   - No duplicate types: infer from Zod schema, do not redeclare in interfaces/
 
-  ## DO NOT rules
+  ### Testing — Playwright E2E
+
+  - Test runner: @playwright/test (frontend only, no backend tests yet)
+  - Page Object Model with Playwright custom fixtures via test.extend<MyFixtures>
+  - Specs in `frontend/tests/specs/` organized by feature (auth/, kanban/, validation/, routing/)
+  - Page objects in `frontend/tests/page-objects/`
+  - Helpers/fixtures in `frontend/tests/fixtures/` (auth fixture: createTestUser, deleteTestUser)
+  - Deterministic waits only — never waitForTimeout (use toBeVisible, waitForSelector, waitForURL)
+  - Test data: unique email per spec (test-${uuid()}@example.com), created/deleted via API
+  - Chromium only (no cross-browser matrix for first slice)
+  - CI runs in dedicated e2e job with PostgreSQL service + backend Express started manually
+  - ESLint ignores tests/ directory (configured in eslint.config.js)
+  - Tests tsconfig (tests/tsconfig.json) extends tsconfig.app.json with noUnusedLocals/Params disabled
+
+  ## Do NOT rules
 
   - Do NOT stage, commit, or push unless explicitly asked
   - Do NOT create README.md or documentation files unless explicitly asked
@@ -64,10 +79,46 @@ context: |
   - Do NOT use require or module.exports — ESM only
   - Do NOT import directly from feature files — go through barrel index
   - Do NOT use any — prefer unknown with type guards
+  - Do NOT use waitForTimeout in Playwright tests — use deterministic waits
+  - Do NOT use page.evaluate with dynamic import() — use API calls instead
+  - Do NOT use private readonly in constructor parameters (erasableSyntaxOnly)
   - Do NOT be overly verbose
 
   ## Commands
 
-  Root: docker compose up -d, docker compose up -d --build, docker compose down -v
-  Backend: npm run dev, npx prisma migrate dev, npx prisma generate, npx prisma studio
-  Frontend: npm run dev, npm run build (tsc -b then vite build), npm run lint (ESLint)
+  ### Docker (root)
+  - docker compose up -d              Start PostgreSQL + backend
+  - docker compose up -d --build       Rebuild and start (after dep changes)
+  - docker compose down -v             Stop and remove volumes
+
+  ### Backend (backend/)
+  - npm run dev                        Dev server (nodemon), port 3000
+  - npx prisma migrate dev             Create and apply migrations
+  - npx prisma generate                After editing schema
+  - npx prisma studio                  Prisma GUI
+
+  ### Frontend (frontend/)
+  - npm run dev                        Vite dev server (port 5173)
+  - npm run build                      tsc -b (typecheck) + vite build
+  - npm run lint                       ESLint flat config
+  - npm run test:e2e                   Playwright test (local)
+  - npm run test:ci                    Playwright test with CI reporters (html+github)
+  - npm run test:debug                 Playwright test in debug mode
+
+testing:
+  strict_tdd: true
+  frontend:
+    runner: "@playwright/test"
+    runner_type: e2e
+    config_file: frontend/playwright.config.ts
+    commands:
+      test: npm run test:e2e
+      test_ci: npm run test:ci
+      test_debug: npm run test:debug
+    test_dir: frontend/tests/specs/
+    type_checker: tsc -b
+    linter: eslint
+  backend:
+    runner: null
+    commands:
+      lint: npm run lint
