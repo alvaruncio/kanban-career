@@ -105,7 +105,7 @@ jobs:
 
             - name: Start backend server
               run: |
-                  node src/server.js &
+                  node server.js &
                   echo "BACKEND_PID=$!"
                   for i in $(seq 1 20); do
                     curl -s http://localhost:3000/health > /dev/null && echo "Backend ready" && break
