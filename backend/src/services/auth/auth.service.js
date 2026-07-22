@@ -109,6 +109,7 @@ export class AuthService {
   static async me(userId) {
     const user = await AuthRepository.findById(userId, {
       id: true, name: true, email: true, role: true, createdAt: true,
+      avatarUrl: true, bio: true, linkedinUrl: true, website: true, phone: true,
     })
     if (!user) {
       const error = new Error('Usuario no encontrado')
@@ -116,6 +117,37 @@ export class AuthService {
       throw error
     }
     return user
+  }
+
+  static async updateProfile(userId, data) {
+    const user = await AuthRepository.update(userId, data)
+    return {
+      id: user.id, name: user.name, email: user.email, role: user.role, createdAt: user.createdAt,
+      avatarUrl: user.avatarUrl, bio: user.bio, linkedinUrl: user.linkedinUrl, website: user.website, phone: user.phone,
+    }
+  }
+
+  static async updatePassword(userId, { currentPassword, newPassword }) {
+    const user = await AuthRepository.findById(userId)
+    if (!user) {
+      const error = new Error('Usuario no encontrado')
+      error.status = 401
+      throw error
+    }
+
+    const valid = await bcrypt.compare(currentPassword, user.password)
+    if (!valid) {
+      const error = new Error('La contraseña actual no es correcta')
+      error.status = 401
+      throw error
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, DEFAULTS.SALT_ROUNDS)
+    await AuthRepository.update(userId, { password: hashedPassword })
+
+    return {
+      id: user.id, name: user.name, email: user.email, role: user.role, createdAt: user.createdAt,
+    }
   }
 
   static clearCookieOptions() {

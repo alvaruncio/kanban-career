@@ -15,6 +15,20 @@ test.describe('Kanban CRUD', () => {
     userId = result.userId
     accessToken = result.accessToken
 
+    // Seed a company using the user's access token so the UI has a company to select
+    try {
+      const seededRes = await request.post('/api/v1/companies', {
+        data: { name: 'Test Company', website: 'https://test.com' },
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      if (seededRes.ok()) {
+        const seeded = await seededRes.json()
+        companyId = seeded.id
+      }
+    } catch (e) {
+      // ignore seeding errors; fallback logic exists below
+    }
+
     // Create a test company via the new POST /api/v1/companies endpoint
     const companyRes = await request.post('/api/v1/companies', {
       data: { name: 'Test Company', website: 'https://test.com' },
@@ -36,17 +50,17 @@ test.describe('Kanban CRUD', () => {
     }
   })
 
+
+  test.beforeEach(async({ page, loginPage }) => {
+    await loginPage.goto()
+    await loginPage.login(testEmail, testPassword)
+    await page.waitForURL('**/dashboard')
+  })
+
   test('should create application, display in column, and persist on reload', async ({
     page,
     kanbanBoardPage,
   }) => {
-    // Login via the page
-    await page.goto('/login')
-    await page.locator('#email').fill(testEmail)
-    await page.locator('#password').fill(testPassword)
-    await page.locator('button[type="submit"]').click()
-    await page.waitForURL('**/dashboard', { timeout: 10000 })
-
     // Navigate to kanban board
     await page.goto('/kanban')
     await kanbanBoardPage.isLoaded()
@@ -100,13 +114,6 @@ test.describe('Kanban CRUD', () => {
   })
 
   test('should drag card from APPLIED to INTERVIEW column', async ({ page, kanbanBoardPage }) => {
-    // Login
-    await page.goto('/login')
-    await page.locator('#email').fill(testEmail)
-    await page.locator('#password').fill(testPassword)
-    await page.locator('button[type="submit"]').click()
-    await page.waitForURL('**/dashboard', { timeout: 10000 })
-
     // Go to kanban
     await page.goto('/kanban')
     await kanbanBoardPage.isLoaded()

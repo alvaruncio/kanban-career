@@ -12,4 +12,8 @@ export class AuthRepository {
   static async create(data) {
     return prisma.user.create({ data })
   }
+
+  static async update(id, data) {
+    return prisma.user.update({ where: { id }, data })
+  }
 }

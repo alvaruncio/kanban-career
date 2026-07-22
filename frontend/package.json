@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test:e2e": "playwright test",
+    "test:ui": "playwright test --ui",
     "test:ci": "playwright test --reporter=html,github",
     "test:debug": "playwright test --debug",
     "test:unit": "echo 'No unit tests configured yet'",

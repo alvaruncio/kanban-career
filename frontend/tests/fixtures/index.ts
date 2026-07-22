@@ -3,12 +3,14 @@ import { LoginPage } from '../page-objects/LoginPage'
 import { RegisterPage } from '../page-objects/RegisterPage'
 import { KanbanBoardPage } from '../page-objects/KanbanBoardPage'
 import { ApplicationFormModal } from '../page-objects/ApplicationFormModal'
+import { ProfilePage } from '../page-objects/ProfilePage'
 
 interface MyFixtures {
   loginPage: LoginPage
   registerPage: RegisterPage
   kanbanBoardPage: KanbanBoardPage
   applicationFormModal: ApplicationFormModal
+  profilePage: ProfilePage
 }
 
 export const test = base.extend<MyFixtures>({
@@ -23,6 +25,9 @@ export const test = base.extend<MyFixtures>({
   },
   applicationFormModal: async ({ page }, use) => {
     await use(new ApplicationFormModal(page))
+  },
+  profilePage: async ({ page }, use) => {
+    await use(new ProfilePage(page))
   },
 })
 

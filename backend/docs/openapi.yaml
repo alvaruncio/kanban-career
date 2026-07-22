@@ -234,6 +234,43 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
 
+    patch:
+      operationId: authUpdateMe
+      summary: Update current user profile or password
+      description: |
+        Updates the authenticated user's profile or password.
+
+        - If `currentPassword` is present in the body, the request is treated as a password change.
+        - Otherwise, all profile fields are optional and at least one must be provided.
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/UpdateProfileRequest"
+                - $ref: "#/components/schemas/UpdatePasswordRequest"
+      responses:
+        "200":
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - user
+                properties:
+                  user:
+                    $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
   /api/v1/users:
     get:
       operationId: listUsers
@@ -598,10 +635,34 @@ components:
           type: string
           format: date-time
           readOnly: true
+        avatarUrl:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the user's avatar image
+        bio:
+          type: string
+          nullable: true
+          description: Short biography (max 500 characters)
+        linkedinUrl:
+          type: string
+          format: uri
+          nullable: true
+          description: LinkedIn profile URL
+        website:
+          type: string
+          format: uri
+          nullable: true
+          description: Personal or professional website URL
+        phone:
+          type: string
+          nullable: true
+          description: Contact phone number (max 20 characters)
         deletedAt:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
 
     CreateUserRequest:
       type: object
@@ -649,18 +710,63 @@ components:
         role:
           $ref: "#/components/schemas/RoleUser"
 
-    LoginRequest:
+    UpdateProfileRequest:
       type: object
-      required:
-        - email
-        - password
+      minProperties: 1
+      description: At least one field must be provided. Used when `currentPassword` is NOT present in the body.
       properties:
+        name:
+          type: string
+          minLength: 3
+          description: User display name
         email:
           type: string
           format: email
-        password:
+          description: User email address
+        avatar_url:
+          type: string
+          format: uri
+          description: URL of the user's avatar image (empty string clears the value)
+        bio:
+          type: string
+          maxLength: 500
+          description: Short biography
+        linkedin_url:
+          type: string
+          format: uri
+          description: LinkedIn profile URL (empty string clears the value)
+        website:
+          type: string
+          format: uri
+          description: Personal or professional website URL (empty string clears the value)
+        phone:
+          type: string
+          maxLength: 20
+          description: Contact phone number
+
+    UpdatePasswordRequest:
+      type: object
+      required:
+        - currentPassword
+        - newPassword
+        - confirmPassword
+      description: Used when `currentPassword` IS present in the body.
+      properties:
+        currentPassword:
           type: string
           format: password
+          description: Current password for verification
+        newPassword:
+          type: string
+          format: password
+          minLength: 8
+          description: Must contain uppercase, lowercase, digit, and symbol
+        confirmPassword:
+          type: string
+          format: password
+          description: Must match newPassword
+
+    LoginRequest:
 
     AuthResponse:
       type: object

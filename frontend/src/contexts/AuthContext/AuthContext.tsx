@@ -30,6 +30,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     restoreSession()
   }, [])
 
+  const refreshUser = async () => {
+    try {
+      const meRes = await api.get<{ user: User }>('/auth/me')
+      setUser(meRes.user)
+    } catch {
+      // ignore
+    }
+  }
+
   const login = async (email: string, password: string) => {
     const res = await api.post<{ accessToken: string; user: User }>('/auth/login', { email, password })
     setAccessToken(res.accessToken)
@@ -52,7 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, refreshUser }}>
       {children}
     </AuthContext.Provider>
   )

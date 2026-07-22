@@ -47,7 +47,7 @@ export default function Header() {
           {user ? (
             <>
               <Link
-                to="/dashboard"
+                to="/profile"
                 className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-lg px-3 py-2"
               >
                 {t.nav.profile}
@@ -97,7 +97,7 @@ export default function Header() {
             {user ? (
               <>
                 <Link
-                  to="/dashboard"
+                  to="/profile"
                   className="font-label-md text-label-md text-on-surface-variant hover:text-primary px-3 py-2 rounded-lg hover:bg-surface-container-low"
                   onClick={() => setMobileOpen(false)}
                 >

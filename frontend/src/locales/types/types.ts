@@ -97,6 +97,33 @@ export interface Translation {
     notesPlaceholder: string
   }
   language: Record<string, string>
+  profile: {
+    title: string
+    subtitle: string
+    edit: string
+    cancel: string
+    save: string
+    saving: string
+    name: string
+    email: string
+    bio: string
+    bioPlaceholder: string
+    linkedinUrl: string
+    website: string
+    phone: string
+    avatarUrl: string
+    notSet: string
+    passwordSection: string
+    currentPassword: string
+    newPassword: string
+    confirmPassword: string
+    changePassword: string
+    changingPassword: string
+    passwordSuccess: string
+    profileSaved: string
+    emailInvalid: string
+    urlInvalid: string
+  }
   common: {
     loading: string
     notFoundTitle: string

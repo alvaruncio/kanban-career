@@ -36,6 +36,13 @@ export class AuthController {
     return res.json({ user })
   }
 
+  static async updateProfile(req, res) {
+    const user = req.isPasswordUpdate
+      ? await AuthService.updatePassword(req.user.id, req.body)
+      : await AuthService.updateProfile(req.user.id, req.body)
+    return res.json({ user })
+  }
+
   static async logout(_req, res) {
     res.cookie('refreshToken', '', AuthService.clearCookieOptions())
     return res.json({ message: 'Sesión cerrada' })
