@@ -106,7 +106,8 @@ context: |
   - npm run test:debug                 Playwright test in debug mode
 
 testing:
-  strict_tdd: true
+strict_tdd: true
+tdd_cycle: red-green-refactor  # Each work unit is planned as RED (test first) → GREEN (implement) → REFACTOR (clean)
   frontend:
     runner: "@playwright/test"
     runner_type: e2e
