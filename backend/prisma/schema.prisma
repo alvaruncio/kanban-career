@@ -50,7 +50,7 @@ model User {
   email      String   @unique
   password   String
   role       RoleUser @default(USER)
-  avatarUrl  String?
+  avatarUrl  String @default("https://www.svgrepo.com/svg/335455/profile-default")
   bio        String?
   linkedinUrl String?
   website    String?

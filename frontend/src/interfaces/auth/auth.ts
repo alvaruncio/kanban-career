@@ -4,7 +4,7 @@ export interface User {
   name: string
   role: 'USER' | 'ADMIN'
   createdAt: string
-  avatarUrl?: string
+  avatarUrl: string
   bio?: string
   linkedinUrl?: string
   website?: string

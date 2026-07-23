@@ -20,3 +20,4 @@ export { ApplicationFormModal } from './ApplicationFormModal/ApplicationFormModa
 export { default as MonthFilter } from './MonthFilter/MonthFilter'
 export { default as DashboardChart } from './DashboardChart/DashboardChart'
 export { ProfileField } from './ProfileField/ProfileField'
+export { PhoneForm } from './PhoneForm/PhoneForm'

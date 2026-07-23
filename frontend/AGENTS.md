@@ -173,5 +173,6 @@ When working on frontend tasks, load the appropriate skill from `.agents/skills/
 | `frontend-design` | Visual design of components and pages |
 | `typescript-advanced-types` | Complex generics, conditional/mapped types |
 | `accessibility` | WCAG audit and improvement |
+| `playwright-best-practices` | **MANDATORY** for any test creation — E2E tests, locators, POM, fixtures, assertions, debugging, component testing, visual regression, API mocking, CI/CD |
 | `seo` | Meta tags, structured data, sitemaps |
 | `i18n-localization` | Translations, locale formatting, multi-language support |

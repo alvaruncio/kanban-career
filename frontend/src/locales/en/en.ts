@@ -179,6 +179,7 @@ export default {
     profileSaved: 'Profile updated successfully',
     emailInvalid: 'Invalid email format',
     urlInvalid: 'Invalid URL',
+    avatarFallbackText: 'User Image',
   },
   common: {
     loading: 'Loading…',

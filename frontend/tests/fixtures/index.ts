@@ -32,4 +32,15 @@ export const test = base.extend<MyFixtures>({
 })
 
 export { expect } from '@playwright/test'
+
+/* Re-export auth helpers */
 export { generateEmail, createTestUser, deleteTestUser } from './auth.fixture'
+
+/* Re-export test data factories */
+export {
+  TEST_PASSWORD,
+  TEST_USER_NAME,
+  TEST_COMPANY,
+  TEST_APPLICATION,
+  createTestUserCredentials,
+} from '../helpers/test-data'

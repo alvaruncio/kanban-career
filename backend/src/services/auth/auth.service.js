@@ -54,7 +54,7 @@ export class AuthService {
       accessToken,
       refreshToken,
       cookieOptions: this.#cookieOptions(),
-      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      user: { id: user.id, name: user.name, email: user.email, role: user.role, avatarUrl: user.avatarUrl },
     }
   }
 
@@ -80,7 +80,7 @@ export class AuthService {
       accessToken,
       refreshToken,
       cookieOptions: this.#cookieOptions(),
-      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      user: { id: user.id, name: user.name, email: user.email, role: user.role, avatarUrl: user.avatarUrl },
     }
   }
 

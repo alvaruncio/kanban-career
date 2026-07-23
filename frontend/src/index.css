@@ -114,3 +114,64 @@
 body {
   margin: 0;
 }
+
+/* ── PhoneForm (react-phone-number-input) ──────────────── */
+
+.PhoneForm {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-body-md);
+  font-size: var(--text-body-md);
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.PhoneForm:focus-within {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.PhoneForm .PhoneInputCountry {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+}
+
+.PhoneForm .PhoneInputCountryIcon {
+  width: 1.5rem;
+  height: 1rem;
+  border-radius: 2px;
+}
+
+.PhoneForm .PhoneInputCountrySelect {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.PhoneForm .PhoneInputInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--color-on-surface);
+  min-width: 0;
+}
+
+.PhoneForm .PhoneInputInput::placeholder {
+  color: var(--color-on-surface-variant);
+  opacity: 0.6;
+}

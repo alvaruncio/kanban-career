@@ -2,11 +2,7 @@ import type { Page, Locator } from '@playwright/test'
 import type { ApplicationStatus } from '../../src/interfaces'
 
 export class KanbanBoardPage {
-  private readonly page: Page
-
-  constructor(page: Page) {
-    this.page = page
-  }
+  constructor(private readonly page: Page) {}
 
   async goto(): Promise<void> {
     await this.page.goto('/kanban')

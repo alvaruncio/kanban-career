@@ -1,12 +1,7 @@
 import type { Page, Locator } from '@playwright/test'
-import { expect } from '@playwright/test'
 
 export class ProfilePage {
-  private readonly page: Page
-  
-  constructor(page: Page) {
-    this.page = page
-  }
+  constructor(private readonly page: Page) {}
 
   // ── Navigation ─────────────────────────────────────────
 
@@ -26,12 +21,8 @@ export class ProfilePage {
     return this.page.getByText(label)
   }
 
-  async expectFieldVisible(label: string): Promise<void> {
-    await expect(this.page.getByText(label)).toBeVisible()
-  }
-
-  async expectNotSetIndicator(): Promise<void> {
-    await expect(this.page.getByText(/no establecido|not set/i).first()).toBeVisible()
+  get notSetIndicator(): Locator {
+    return this.page.getByText(/no establecido|not set/i).first()
   }
 
   // ── Edit mode ──────────────────────────────────────────
@@ -64,12 +55,12 @@ export class ProfilePage {
     await this.page.getByLabel(new RegExp(label, 'i')).fill(value)
   }
 
-  async expectFieldInEditMode(label: string): Promise<void> {
-    await expect(this.page.getByLabel(new RegExp(label, 'i'))).toBeVisible()
+  fieldInEditMode(label: string): Locator {
+    return this.page.getByLabel(new RegExp(label, 'i'))
   }
 
-  async expectValidationError(message: string): Promise<void> {
-    await expect(this.page.getByText(new RegExp(message, 'i'))).toBeVisible()
+  validationError(message: string): Locator {
+    return this.page.getByText(new RegExp(message, 'i'))
   }
 
   // ── Password section ───────────────────────────────────
@@ -99,8 +90,31 @@ export class ProfilePage {
 
   // ── Notifications ──────────────────────────────────────
 
-  async expectSuccessNotification(): Promise<void> {
-    await expect(this.page.getByRole('alert').first()).toBeVisible()
+  get successNotification(): Locator {
+    const successText = /actualizado|updated|guardado|saved/i
+    return this.page.locator('[role="alert"]').filter({ hasText: successText })
+  }
+
+  // ── Avatar ─────────────────────────────────────────────
+
+  get avatarUrlField(): Locator {
+    return this.page.getByLabel(/avatar url/i)
+  }
+
+  avatarImage(src?: string): Locator {
+    if (src) {
+      return this.page.locator(`img[src="${src}"]`)
+    }
+    const fallback = this.page.locator('text=Imagen Usuario').or(this.page.locator('text=User Image'))
+    return fallback
+  }
+
+  get avatarValidationError(): Locator {
+    return this.page.getByText(/URL no válida|Invalid URL/i)
+  }
+
+  async fillAvatarUrl(url: string): Promise<void> {
+    await this.avatarUrlField.fill(url)
   }
 
   // ── URL ────────────────────────────────────────────────

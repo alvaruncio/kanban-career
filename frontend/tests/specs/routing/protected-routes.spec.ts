@@ -1,15 +1,13 @@
-import { test, expect } from '../../fixtures'
-import { generateEmail, createTestUser, deleteTestUser } from '../../fixtures/auth.fixture'
+import { test, expect, generateEmail, createTestUser, deleteTestUser, TEST_PASSWORD, TEST_USER_NAME } from '../../fixtures'
 
 test.describe('Protected Routes', () => {
   let testEmail: string
-  const testPassword = 'TestPass123!'
   let accessToken: string
   let userId: number
 
   test.beforeAll(async ({ request }) => {
     testEmail = generateEmail()
-    const result = await createTestUser(request, 'Test User', testEmail, testPassword)
+    const result = await createTestUser(request, TEST_USER_NAME, testEmail, TEST_PASSWORD)
     userId = result.userId
     accessToken = result.accessToken
   })
@@ -34,7 +32,7 @@ test.describe('Protected Routes', () => {
     await page.waitForURL('**/login', { timeout: 10000 })
 
     // Login
-    await loginPage.login(testEmail, testPassword)
+    await loginPage.login(testEmail, TEST_PASSWORD)
 
     // Should end up at dashboard
     await page.waitForURL('**/dashboard', { timeout: 10000 })

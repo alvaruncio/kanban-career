@@ -1,11 +1,7 @@
 import type { Page } from '@playwright/test'
 
 export class RegisterPage {
-  private readonly page: Page
-
-  constructor(page: Page) {
-    this.page = page
-  }
+  constructor(private readonly page: Page) {}
 
   async goto(): Promise<void> {
     await this.page.goto('/register')

@@ -123,6 +123,7 @@ export interface Translation {
     profileSaved: string
     emailInvalid: string
     urlInvalid: string
+    avatarFallbackText: string
   }
   common: {
     loading: string

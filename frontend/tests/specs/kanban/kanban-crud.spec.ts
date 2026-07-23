@@ -1,44 +1,22 @@
-import { test, expect } from '../../fixtures'
-import { generateEmail, createTestUser, deleteTestUser } from '../../fixtures/auth.fixture'
+import { test, expect, generateEmail, createTestUser, deleteTestUser, TEST_PASSWORD, TEST_USER_NAME, TEST_COMPANY, TEST_APPLICATION } from '../../fixtures'
 
 test.describe('Kanban CRUD', () => {
   let testEmail: string
-  const testPassword = 'TestPass123!'
-  const testName = 'Test User'
   let accessToken: string
   let userId: number
   let companyId: string
 
   test.beforeAll(async ({ request }) => {
     testEmail = generateEmail()
-    const result = await createTestUser(request, testName, testEmail, testPassword)
+    const result = await createTestUser(request, TEST_USER_NAME, testEmail, TEST_PASSWORD)
     userId = result.userId
     accessToken = result.accessToken
 
-    // Seed a company using the user's access token so the UI has a company to select
-    try {
-      const seededRes = await request.post('/api/v1/companies', {
-        data: { name: 'Test Company', website: 'https://test.com' },
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      if (seededRes.ok()) {
-        const seeded = await seededRes.json()
-        companyId = seeded.id
-      }
-    } catch (e) {
-      // ignore seeding errors; fallback logic exists below
-    }
-
-    // Create a test company via the new POST /api/v1/companies endpoint
+    // Seed a test company so the UI has a company to select
     const companyRes = await request.post('/api/v1/companies', {
-      data: { name: 'Test Company', website: 'https://test.com' },
+      data: { ...TEST_COMPANY },
       headers: { Authorization: `Bearer ${accessToken}` },
     })
-
-    // If POST endpoint isn't available yet, create via evaluate as fallback
-    if (!companyRes.ok()) {
-      console.warn('POST /api/v1/companies failed, seeding via store')
-    }
 
     const companyData = (await companyRes.json()) as { id: string }
     companyId = companyData.id
@@ -50,76 +28,87 @@ test.describe('Kanban CRUD', () => {
     }
   })
 
-
-  test.beforeEach(async({ page, loginPage }) => {
+  test.beforeEach(async ({ page, loginPage }) => {
     await loginPage.goto()
-    await loginPage.login(testEmail, testPassword)
+    await loginPage.login(testEmail, TEST_PASSWORD)
     await page.waitForURL('**/dashboard')
   })
 
   test('should create application, display in column, and persist on reload', async ({
     page,
     kanbanBoardPage,
+    applicationFormModal,
   }) => {
+    const titleSuffix = Date.now()
+    const jobTitle = `${TEST_APPLICATION.jobTitle} ${titleSuffix}`
+
     // Navigate to kanban board
     await page.goto('/kanban')
     await kanbanBoardPage.isLoaded()
 
-    // Click the create card button in the APPLIED column
+    // Open the create card modal
     const createButton = page.locator('button:has-text("add"), button:has-text("Crear")').first()
     await createButton.click()
 
     // Wait for the modal to appear
-    await expect(page.getByRole('heading', { name: /Nueva aplicación/i })).toBeVisible()
+    await expect(applicationFormModal.heading).toBeVisible()
 
-    // Fill the application form
-    await page.locator('#jobTitle').fill('Senior Frontend Engineer')
-    await page.locator('#offerUrl').fill('https://example.com/job/123')
-
-    // Select the company we created in beforeAll
-    await page.locator('#companyId').selectOption(companyId)
-
-    // Select category
-    await page.locator('#category').selectOption('FRONTEND')
-
-    // Select source
-    await page.locator('#source').selectOption('LINKEDIN')
-
-    // Fill application date
+    // Fill the application form using the page object
     const today = new Date().toISOString().split('T')[0]
-    await page.locator('#applicationDate').fill(today)
-
-    // Fill description
-    await page.locator('#jobDescription').fill('Frontend developer position with React')
+    await applicationFormModal.fillApplicationForm({
+      jobTitle,
+      companyId,
+      category: TEST_APPLICATION.category,
+      source: TEST_APPLICATION.source,
+      applicationDate: today,
+      offerUrl: TEST_APPLICATION.offerUrl,
+      jobDescription: TEST_APPLICATION.jobDescription,
+    })
 
     // Submit the form
-    await page.locator('button[type="submit"]').click()
+    await applicationFormModal.submit()
 
     // Wait for modal to close — the modal disappears when the API call succeeds
-    await expect(page.getByRole('heading', { name: /Nueva aplicación/i })).not.toBeVisible({ timeout: 10000 })
+    await applicationFormModal.waitForClose()
 
-    // Verify the card appears in the APPLIED column
-    const appliedCards = await kanbanBoardPage.getColumnApps('APPLIED')
-    expect(appliedCards.length).toBeGreaterThan(0)
+    // Wait for the card to appear in the APPLIED column by its title
+    await expect(page.getByText(jobTitle).first()).toBeVisible({ timeout: 10000 })
 
     // Reload and verify persistence
     await page.reload()
     await kanbanBoardPage.isLoaded()
 
-    // Wait for cards to be rendered after data fetch
-    await page.waitForSelector('[data-column-id="APPLIED"] [data-draggable-id]', { timeout: 10000 })
-
-    const appliedCardsAfterReload = await kanbanBoardPage.getColumnApps('APPLIED')
-    expect(appliedCardsAfterReload.length).toBeGreaterThan(0)
+    await expect(page.getByText(jobTitle).first()).toBeVisible({ timeout: 10000 })
   })
 
-  test('should drag card from APPLIED to INTERVIEW column', async ({ page, kanbanBoardPage }) => {
-    // Go to kanban
+  test('should drag card from APPLIED to INTERVIEW column', async ({ page, request, kanbanBoardPage }) => {
+    const titleSuffix = Date.now()
+    const jobTitle = `${TEST_APPLICATION.jobTitle} ${titleSuffix}`
+    const today = new Date().toISOString().split('T')[0]
+
+    // Create an application via API so the drag test is self-sufficient
+    const appRes = await request.post('/api/v1/applications', {
+      data: {
+        jobTitle,
+        companyId,
+        category: TEST_APPLICATION.category,
+        source: TEST_APPLICATION.source,
+        applicationDate: today,
+        offerUrl: TEST_APPLICATION.offerUrl,
+        jobDescription: TEST_APPLICATION.jobDescription,
+      },
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+    expect(appRes.ok()).toBeTruthy()
+    const appData = (await appRes.json()) as { id: string }
+    const appId = appData.id
+
+    // Navigate to kanban board
     await page.goto('/kanban')
     await kanbanBoardPage.isLoaded()
 
-    // Wait for the card to be rendered (fetchApplications completes asynchronously)
-    await page.waitForSelector('[data-column-id="APPLIED"] [data-draggable-id]', { timeout: 10000 })
+    // Wait for the specific card we created to appear
+    await expect(page.getByText(jobTitle).first()).toBeVisible({ timeout: 15000 })
 
     // Get the card in APPLIED column
     const appliedCards = await kanbanBoardPage.getColumnApps('APPLIED')
@@ -128,7 +117,7 @@ test.describe('Kanban CRUD', () => {
     // Get the first card's draggable id
     const firstCard = appliedCards[0]
     const draggableId = await firstCard.getAttribute('data-draggable-id')
-    expect(draggableId).toBeTruthy()
+    expect(draggableId).toBe(appId)
 
     // Drag the card from APPLIED to INTERVIEW
     await kanbanBoardPage.dragCard(draggableId!, 'INTERVIEW')

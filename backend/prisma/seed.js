@@ -29,6 +29,10 @@ async function main() {
       email: 'alvaro@kanbancareer.com',
       password: hashedPassword,
       role: 'USER',
+      bio: 'Desarrollador full stack apasionado por React y TypeScript.',
+      linkedinUrl: 'https://linkedin.com/in/alvarogarcia',
+      website: 'https://alvarogarcia.dev',
+      phone: '+34612345678',
     },
   })
 

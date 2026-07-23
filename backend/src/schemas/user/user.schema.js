@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js'
 import { RULES } from '../../shared/index.js'
 
 export const createUserSchema = z.object({
@@ -29,10 +30,18 @@ export const updateProfileSchema = z.object({
   bio: z.string().max(500, 'Máximo 500 caracteres').optional(),
   linkedin_url: z.string().url('URL no válida').optional().or(z.literal('')),
   website: z.string().url('URL no válida').optional().or(z.literal('')),
-  phone: z.string().max(20, 'Máximo 20 caracteres').optional(),
+  phone: z.string().refine(
+    (v) => v === '' || isValidPhoneNumber(v),
+    'Teléfono no válido',
+  ).optional(),
 }).refine(data => Object.keys(data).length > 0, {
   message: 'Debe enviar al menos un campo para actualizar',
-})
+}).transform(({ avatar_url, linkedin_url, phone, ...rest }) => ({
+  ...rest,
+  ...(avatar_url !== undefined && { avatarUrl: avatar_url }),
+  ...(linkedin_url !== undefined && { linkedinUrl: linkedin_url }),
+  ...(phone !== undefined && { phone: phone === '' ? '' : parsePhoneNumber(phone).number }),
+}))
 
 export const updatePasswordSchema = z.object({
   currentPassword: z.string().min(1, 'La contraseña actual es obligatoria'),

@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useI18nStore } from '../../stores'
 import { ProfileService } from '../../services'
 import { useAuth } from '../../contexts'
-import { InputForm, PageMeta, LoadingSkeleton, ProfileField } from '../../components'
+import { InputForm, PageMeta, LoadingSkeleton, ProfileField, PhoneForm } from '../../components'
 import { profileSchema, passwordSchema } from '../../models'
 import type { ProfileFormData, PasswordFormData } from '../../models'
 import type { User } from '../../interfaces'
+
+const DEFAULT_AVATAR_URL = 'https://www.svgrepo.com/svg/335455/profile-default'
 
 export default function ProfilePage() {
   const { t } = useI18nStore()
@@ -17,6 +19,8 @@ export default function ProfilePage() {
   const [changingPassword, setChangingPassword] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [showAvatarFallback, setShowAvatarFallback] = useState(false)
+  const avatarImgRef = useRef<HTMLImageElement>(null)
 
   const profileForm = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -24,9 +28,10 @@ export default function ProfilePage() {
       name: '',
       email: '',
       bio: '',
-      linkedinUrl: '',
+      linkedin_url: '',
       website: '',
       phone: '',
+      avatar_url: '',
     },
   })
 
@@ -45,9 +50,10 @@ export default function ProfilePage() {
         name: authUser.name,
         email: authUser.email,
         bio: authUser.bio ?? '',
-        linkedinUrl: authUser.linkedinUrl ?? '',
+        linkedin_url: authUser.linkedinUrl ?? '',
         website: authUser.website ?? '',
         phone: authUser.phone ?? '',
+        avatar_url: authUser.avatarUrl ?? '',
       })
     }
   }, [authUser, profileForm])
@@ -79,13 +85,15 @@ export default function ProfilePage() {
   }
 
   const handleEdit = () => {
+    setShowAvatarFallback(false)
     profileForm.reset({
       name: user.name,
       email: user.email,
       bio: user.bio ?? '',
-      linkedinUrl: user.linkedinUrl ?? '',
+      linkedin_url: user.linkedinUrl ?? '',
       website: user.website ?? '',
       phone: user.phone ?? '',
+      avatar_url: user.avatarUrl ?? '',
     })
     setIsEditing(true)
     setSuccessMessage(null)
@@ -93,29 +101,31 @@ export default function ProfilePage() {
   }
 
   const handleCancel = () => {
-    profileForm.reset({
-      name: user.name,
-      email: user.email,
-      bio: user.bio ?? '',
-      linkedinUrl: user.linkedinUrl ?? '',
-      website: user.website ?? '',
-      phone: user.phone ?? '',
-    })
-    setIsEditing(false)
-    setSuccessMessage(null)
-    setErrorMessage(null)
-  }
-
-  const handleProfileSubmit = async (data: ProfileFormData) => {
-    setSaving(true)
-    setSuccessMessage(null)
-    setErrorMessage(null)
-    try {
-      await ProfileService.updateProfile(data)
-      // Refresh global auth user so the component re-renders with updated data
-      await refreshUser()
-      setSuccessMessage(t.profile.profileSaved)
+      profileForm.reset({
+        name: user.name,
+        email: user.email,
+        bio: user.bio ?? '',
+        linkedin_url: user.linkedinUrl ?? '',
+        website: user.website ?? '',
+        phone: user.phone ?? '',
+        avatar_url: user.avatarUrl ?? '',
+      })
       setIsEditing(false)
+      setSuccessMessage(null)
+      setErrorMessage(null)
+    }
+
+    const handleProfileSubmit = async (data: ProfileFormData) => {
+      setSaving(true)
+      setSuccessMessage(null)
+      setErrorMessage(null)
+      try {
+        await ProfileService.updateProfile(data)
+        // Refresh global auth user so the component re-renders with updated data
+        await refreshUser()
+        setSuccessMessage(t.profile.profileSaved)
+        setIsEditing(false)
+        setShowAvatarFallback(false)
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : 'Error al guardar')
     } finally {
@@ -194,11 +204,10 @@ export default function ProfilePage() {
               error={profileForm.formState.errors.bio}
             />
             <InputForm
-              name="linkedinUrl"
+              name="linkedin_url"
               control={profileForm.control}
               label={t.profile.linkedinUrl}
-              placeholder="https://linkedin.com/in/..."
-              error={profileForm.formState.errors.linkedinUrl}
+              error={profileForm.formState.errors.linkedin_url}
             />
             <InputForm
               name="website"
@@ -207,12 +216,18 @@ export default function ProfilePage() {
               placeholder="https://..."
               error={profileForm.formState.errors.website}
             />
-            <InputForm
+            <PhoneForm
               name="phone"
               control={profileForm.control}
               label={t.profile.phone}
-              type="tel"
               error={profileForm.formState.errors.phone}
+            />
+            <InputForm
+              name="avatar_url"
+              control={profileForm.control}
+              label={t.profile.avatarUrl}
+              placeholder="https://..."
+              error={profileForm.formState.errors.avatar_url}
             />
             <div className="flex items-center gap-md pt-sm">
               <button
@@ -234,6 +249,29 @@ export default function ProfilePage() {
           </form>
         ) : (
           <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg space-y-lg">
+            <div className="flex mb-lg">
+              {showAvatarFallback ? (
+                <div className="w-24 h-24 rounded-full bg-surface-container-high flex items-center justify-center">
+                  <span className="material-symbols-outlined text-4xl text-on-surface-variant">person</span>
+                </div>
+              ) : (
+                <img
+                  ref={avatarImgRef}
+                  src={user.avatarUrl || DEFAULT_AVATAR_URL}
+                  alt={t.profile.avatarFallbackText}
+                  className="w-24 h-24 rounded-full object-cover"
+                  onError={() => {
+                    const img = avatarImgRef.current
+                    if (!img) return
+                    if (img.src !== DEFAULT_AVATAR_URL) {
+                      img.src = DEFAULT_AVATAR_URL
+                    } else {
+                      setShowAvatarFallback(true)
+                    }
+                  }}
+                />
+              )}
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-lg items-start">
               <ProfileField label={t.profile.name} value={user.name} />
               <ProfileField label={t.profile.email} value={user.email} />

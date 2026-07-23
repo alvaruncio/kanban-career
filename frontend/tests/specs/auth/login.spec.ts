@@ -1,30 +1,26 @@
-import { test, expect } from '../../fixtures'
-import { generateEmail, createTestUser } from '../../fixtures/auth.fixture'
+import { test, expect, generateEmail, createTestUser, deleteTestUser, TEST_PASSWORD, TEST_USER_NAME } from '../../fixtures'
 
 test.describe('Login', () => {
   let testEmail: string
-  const testPassword = 'TestPass123!'
   let accessToken: string
   let userId: number
 
   test.beforeAll(async ({ request }) => {
     testEmail = generateEmail()
-    const result = await createTestUser(request, 'Test User', testEmail, testPassword)
+    const result = await createTestUser(request, TEST_USER_NAME, testEmail, TEST_PASSWORD)
     userId = result.userId
     accessToken = result.accessToken
   })
 
   test.afterAll(async ({ request }) => {
     if (userId && accessToken) {
-      await request.delete(`/api/v1/users/${userId}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }).catch(() => {})
+      await deleteTestUser(request, userId, accessToken).catch(() => {})
     }
   })
 
   test('should login with valid credentials and redirect to dashboard', async ({ page, loginPage }) => {
     await loginPage.goto()
-    await loginPage.login(testEmail, testPassword)
+    await loginPage.login(testEmail, TEST_PASSWORD)
 
     await page.waitForURL('**/dashboard', { timeout: 10000 })
     expect(page.url()).toContain('/dashboard')

@@ -122,5 +122,6 @@ Skills are auto-discovered by OpenCode when working inside this repo. The agent 
 | `frontend-design` | Visual design of components and pages with distinctive identity | [`SKILL.md`](.agents/skills/frontend-design/SKILL.md) |
 | `typescript-advanced-types` | Advanced types (generics, conditional, mapped types) | [`SKILL.md`](.agents/skills/typescript-advanced-types/SKILL.md) |
 | `accessibility` | WCAG accessibility audit and improvement | [`SKILL.md`](.agents/skills/accessibility/SKILL.md) |
+| `playwright-best-practices` | E2E tests with Playwright — locators, POM, fixtures, assertions, debugging, component testing, visual regression, API mocking, CI/CD | [`SKILL.md`](.agents/skills/playwright-best-practices/SKILL.md) |
 | `seo` | Meta tags, structured data, sitemaps, search optimization | [`SKILL.md`](.agents/skills/seo/SKILL.md) |
 | `i18n-localization` | Internationalization (i18n), translations, locale formatting, multi-language support | [`SKILL.md`](.agents/skills/i18n-localization/SKILL.md) |
