@@ -16,8 +16,8 @@ const STATUS_BADGE_COLORS: Record<string, string> = {
   APPLIED: 'bg-primary-container text-primary',
   INTERVIEW: 'bg-tertiary-container text-tertiary',
   OFFER: 'bg-secondary-container text-secondary',
-  HIRED: 'bg-green-100 text-green-700',
-  REJECTED: 'bg-red-100 text-red-700',
+  HIRED: 'bg-secondary-container text-secondary',
+  REJECTED: 'bg-error-container text-error',
 }
 
 function getRelativeTime(dateStr: string, locale: string): string {
@@ -67,7 +67,7 @@ export default function DashboardPage() {
       <>
         <PageMeta title="Dashboard" description="Panel de control de métricas" />
         <div className="flex items-center justify-center min-h-[400px]">
-          <p className="font-body-md text-body-md text-red-500">{error}</p>
+          <p className="font-body-md text-body-md text-error">{error}</p>
         </div>
       </>
     )

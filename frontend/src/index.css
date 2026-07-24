@@ -175,3 +175,41 @@ body {
   color: var(--color-on-surface-variant);
   opacity: 0.6;
 }
+
+/* ── Kanban scroll areas ────────────────────────── */
+
+.kanban-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-outline-variant) transparent;
+}
+
+.kanban-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.kanban-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.kanban-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--color-outline-variant);
+  border-radius: 3px;
+}
+
+.kanban-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-outline);
+}
+
+/* ── Reduce motion ──────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -25,7 +25,7 @@ export default function HeroSection() {
             />
           </div>
           <button
-            className="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-all shadow-md active:scale-95 whitespace-nowrap"
+            className="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-md active:scale-95 whitespace-nowrap"
             type="submit"
           >
             {t.hero.startFree}
@@ -34,7 +34,7 @@ export default function HeroSection() {
         <p className="font-label-sm text-label-sm text-on-surface-variant">{t.hero.noCard}</p>
       </div>
       <div className="flex-1 w-full relative">
-        <div className="relative bg-surface-container-low border border-outline-variant rounded-xl shadow-lg p-md overflow-hidden" style={{ minHeight: 420 }}>
+        <div className="relative bg-surface-container-low border border-outline-variant rounded-xl shadow-lg p-md overflow-hidden min-h-[420px]">
           <div className="absolute inset-0 bg-gradient-to-br from-surface-bright/50 to-surface-dim/20 pointer-events-none" />
           <div className="flex gap-md h-full overflow-x-auto relative z-10 pb-2">
             <div className="w-64 flex-shrink-0 flex flex-col gap-sm">

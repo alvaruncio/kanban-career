@@ -161,7 +161,7 @@ export default function ProfilePage() {
           {!isEditing && (
             <button
               onClick={handleEdit}
-              className="flex items-center gap-2 bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-all shadow-sm active:scale-95"
+              className="flex items-center gap-2 bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-sm active:scale-95"
             >
               <span className="material-symbols-outlined text-lg">edit</span>
               {t.profile.edit}
@@ -170,13 +170,13 @@ export default function ProfilePage() {
         </div>
 
         {successMessage && (
-          <div className="bg-green-100 text-green-700 font-body-md text-body-md px-lg py-md rounded-lg" role="alert">
+          <div className="bg-secondary-container text-secondary font-body-md text-body-md px-lg py-md rounded-lg" role="alert">
             {successMessage}
           </div>
         )}
 
         {errorMessage && (
-          <div className="bg-red-100 text-red-700 font-body-md text-body-md px-lg py-md rounded-lg" role="alert">
+          <div className="bg-error-container text-error font-body-md text-body-md px-lg py-md rounded-lg" role="alert">
             {errorMessage}
           </div>
         )}
@@ -233,7 +233,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-all shadow-sm active:scale-95 disabled:opacity-50"
+className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-sm active:scale-95 disabled:opacity-50"
               >
                 {saving ? t.profile.saving : t.profile.save}
               </button>
@@ -311,7 +311,7 @@ export default function ProfilePage() {
             <button
               type="submit"
               disabled={changingPassword}
-              className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-all shadow-sm active:scale-95 disabled:opacity-50"
+              className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-sm active:scale-95 disabled:opacity-50"
             >
               {changingPassword ? t.profile.changingPassword : t.profile.changePassword}
             </button>

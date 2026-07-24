@@ -62,7 +62,7 @@ export default function Header() {
           ) : (
             <Link
               to="/register"
-              className="ml-2 bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-all shadow-sm active:scale-95"
+              className="ml-2 bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-sm active:scale-95"
             >
               {t.nav.register}
             </Link>

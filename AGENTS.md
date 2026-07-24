@@ -125,3 +125,4 @@ Skills are auto-discovered by OpenCode when working inside this repo. The agent 
 | `playwright-best-practices` | E2E tests with Playwright — locators, POM, fixtures, assertions, debugging, component testing, visual regression, API mocking, CI/CD | [`SKILL.md`](.agents/skills/playwright-best-practices/SKILL.md) |
 | `seo` | Meta tags, structured data, sitemaps, search optimization | [`SKILL.md`](.agents/skills/seo/SKILL.md) |
 | `i18n-localization` | Internationalization (i18n), translations, locale formatting, multi-language support | [`SKILL.md`](.agents/skills/i18n-localization/SKILL.md) |
+| `hallmark` | Anti-AI-slop design: greenfield pages, audits, redesigns, design extraction from URLs/screenshots | [`SKILL.md`](.agents/skills/hallmark/SKILL.md) |

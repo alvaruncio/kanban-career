@@ -9,12 +9,13 @@ interface StatCardProps {
 
 export default function StatCard({ label, value, color, children }: StatCardProps) {
   return (
-    <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm">
-      <div className={`w-10 h-10 ${color} rounded-lg flex items-center justify-center mb-sm`}>
-        <span className="text-on-primary font-label-md text-label-md">{value}</span>
+    <div className="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+      <div className={`h-1 ${color}`} />
+      <div className="p-md pt-sm">
+        <p className="font-headline-md text-headline-md text-on-surface">{value}</p>
+        <p className="font-body-sm text-body-sm text-on-surface-variant mt-xs">{label}</p>
+        {children}
       </div>
-      <p className="font-body-sm text-body-sm text-on-surface-variant">{label}</p>
-      {children}
     </div>
   )
 }

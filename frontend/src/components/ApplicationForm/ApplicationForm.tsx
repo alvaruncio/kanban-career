@@ -154,14 +154,14 @@ export function ApplicationForm({
         <button
           type="button"
           onClick={onCancel}
-          className="px-6 py-3 font-label-md text-label-md text-on-surface-variant border border-outline-variant rounded-lg hover:bg-surface-container transition-all"
+          className="px-6 py-3 font-label-md text-label-md text-on-surface-variant border border-outline-variant rounded-lg hover:bg-surface-container transition-colors"
         >
           {cancelLabel}
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-6 py-3 font-label-md text-label-md text-on-primary bg-primary rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-all shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-6 py-3 font-label-md text-label-md text-on-primary bg-primary rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? t.common.loading : submitLabel}
         </button>

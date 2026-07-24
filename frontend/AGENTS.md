@@ -176,3 +176,4 @@ When working on frontend tasks, load the appropriate skill from `.agents/skills/
 | `playwright-best-practices` | **MANDATORY** for any test creation — E2E tests, locators, POM, fixtures, assertions, debugging, component testing, visual regression, API mocking, CI/CD |
 | `seo` | Meta tags, structured data, sitemaps |
 | `i18n-localization` | Translations, locale formatting, multi-language support |
+| `hallmark` | Anti-AI-slop design: greenfield pages, audits, redesigns, design extraction from URLs/screenshots |

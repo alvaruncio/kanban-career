@@ -19,7 +19,7 @@ export default function NotFoundPage() {
           </p>
           <Link
             to="/"
-            className="inline-flex bg-primary text-on-primary font-label-md text-label-md px-lg py-md rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-all shadow-md active:scale-95"
+            className="inline-flex bg-primary text-on-primary font-label-md text-label-md px-lg py-md rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-md active:scale-95"
           >
             {t.common.backToHome}
           </Link>
