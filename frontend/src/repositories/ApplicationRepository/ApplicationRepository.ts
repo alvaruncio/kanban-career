@@ -7,6 +7,10 @@ export class ApplicationRepository {
     return api.get<ApplicationKanbanDTO[]>('/applications')
   }
 
+  static async findById(id: string): Promise<ApplicationKanbanDTO> {
+    return api.get<ApplicationKanbanDTO>(`/applications/${id}`)
+  }
+
   static async create(data: ApplicationFormData): Promise<ApplicationKanbanDTO> {
     return api.post<ApplicationKanbanDTO>('/applications', data)
   }

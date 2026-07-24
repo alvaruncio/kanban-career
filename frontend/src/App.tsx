@@ -8,6 +8,7 @@ import { LandingPage, LoginPage, RegisterPage, NotFoundPage } from './pages'
 const DashboardPage = lazy(() => import('./pages/DashboardPage/DashboardPage'))
 const KanbanPage = lazy(() => import('./pages/KanbanPage/KanbanPage'))
 const ProfilePage = lazy(() => import('./pages/ProfilePage/ProfilePage'))
+const ApplicationDetailPage = lazy(() => import('./pages/ApplicationDetailPage/ApplicationDetailPage'))
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout><DashboardPage /></DashboardLayout></ProtectedRoute>} />
           <Route path="/kanban" element={<ProtectedRoute><DashboardLayout><KanbanPage /></DashboardLayout></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><DashboardLayout><ProfilePage /></DashboardLayout></ProtectedRoute>} />
+          <Route path="/application/:id" element={<ProtectedRoute><DashboardLayout><ApplicationDetailPage /></DashboardLayout></ProtectedRoute>} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

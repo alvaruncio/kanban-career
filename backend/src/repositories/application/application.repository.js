@@ -2,7 +2,14 @@ import { prisma } from '../../shared/index.js'
 
 export class ApplicationRepository {
   static async findById(id) {
-    return prisma.application.findUnique({ where: { id } })
+    return prisma.application.findUnique({
+      where: { id },
+      include: {
+        company: {
+          select: { id: true, name: true, website: true },
+        },
+      },
+    })
   }
 
   static async findAllByUserId(userId) {

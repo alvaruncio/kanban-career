@@ -125,6 +125,52 @@ export interface Translation {
     urlInvalid: string
     avatarFallbackText: string
   }
+  applicationDetail: {
+    title: string
+    subtitle: string
+    edit: string
+    cancel: string
+    save: string
+    saving: string
+    backToKanban: string
+    jobTitle: string
+    companyName: string
+    selectCompany: string
+    status: string
+    category: string
+    source: string
+    applicationDate: string
+    offerUrl: string
+    jobDescription: string
+    notes: string
+    createdAt: string
+    updatedAt: string
+    saved: string
+    saveError: string
+    fetchError: string
+    notFound: string
+    statuses: {
+      applied: string
+      interview: string
+      offer: string
+      hired: string
+      rejected: string
+    }
+    sources: {
+      linkedin: string
+      infojobs: string
+      indeed: string
+      tecnoempleo: string
+      companyWebsite: string
+      referral: string
+      other: string
+    }
+    categories: {
+      frontend: string
+      backend: string
+      fullStack: string
+    }
+  }
   common: {
     loading: string
     notFoundTitle: string

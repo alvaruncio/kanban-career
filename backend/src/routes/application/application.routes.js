@@ -6,6 +6,7 @@ import { validateCreateApplication, validateUpdateApplication } from '../../vali
 export const applicationsRouter = Router()
 
 applicationsRouter.get('/', requireAuth, ApplicationController.getAll)
+applicationsRouter.get('/:id', requireAuth, ApplicationController.getById)
 applicationsRouter.post('/', requireAuth, validateCreateApplication, ApplicationController.create)
 applicationsRouter.patch('/:id', requireAuth, validateUpdateApplication, ApplicationController.update)
 applicationsRouter.delete('/:id', requireAuth, ApplicationController.delete)

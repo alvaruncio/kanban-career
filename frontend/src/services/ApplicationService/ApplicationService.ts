@@ -7,6 +7,10 @@ export class ApplicationService {
     return ApplicationRepository.findAll()
   }
 
+  static async getById(id: string): Promise<ApplicationKanbanDTO> {
+    return ApplicationRepository.findById(id)
+  }
+
   static async create(data: ApplicationFormData): Promise<ApplicationKanbanDTO> {
     return ApplicationRepository.create(data)
   }

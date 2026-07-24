@@ -7,6 +7,16 @@ export class ApplicationController {
     return res.json(data)
   }
 
+  static async getById(req, res) {
+    const userId = req.user.id
+    const { id } = req.params
+    const application = await ApplicationService.getById(id, userId)
+    if (!application) {
+      return res.status(404).json({ error: 'Candidatura no encontrada' })
+    }
+    return res.json(application)
+  }
+
   static async create(req, res) {
     const userId = req.user.id
     const application = await ApplicationService.create({ userId, ...req.body })
