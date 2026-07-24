@@ -27,7 +27,7 @@ export default function KanbanPage() {
   useEffect(() => {
     fetchApplications()
     fetchCompanies()
-  }, [])
+  }, [fetchApplications, fetchCompanies])
 
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedMonth, setSelectedMonth] = useState('')

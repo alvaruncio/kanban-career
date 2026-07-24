@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -83,23 +83,16 @@ export default function ApplicationDetailPage() {
     },
   })
 
-  const fetchApplication = useCallback(async () => {
-    if (!id) return
-    setIsLoading(true)
-    setFetchError(null)
-    try {
-      const app = await ApplicationService.getById(id)
-      setApplication(app)
-    } catch {
-      setFetchError(t.applicationDetail.notFound)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [id, t.applicationDetail.notFound])
-
   useEffect(() => {
-    fetchApplication()
-  }, [fetchApplication])
+    if (!id) return
+    ApplicationService.getById(id)
+      .then(app => {
+        setApplication(app)
+        setFetchError(null)
+      })
+      .catch(() => setFetchError(t.applicationDetail.notFound))
+      .finally(() => setIsLoading(false))
+  }, [id, t.applicationDetail.notFound])
 
   useEffect(() => {
     if (application && isEditing) {
