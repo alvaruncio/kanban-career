@@ -5,6 +5,8 @@ import { KanbanBoardPage } from '../page-objects/KanbanBoardPage'
 import { ApplicationFormModal } from '../page-objects/ApplicationFormModal'
 import { ProfilePage } from '../page-objects/ProfilePage'
 import { ApplicationDetailPage } from '../page-objects/ApplicationDetailPage'
+import { CompaniesListPage } from '../page-objects/CompaniesListPage'
+import { CompaniesDetailPage } from '../page-objects/CompaniesDetailPage'
 
 interface MyFixtures {
   loginPage: LoginPage
@@ -13,6 +15,8 @@ interface MyFixtures {
   applicationFormModal: ApplicationFormModal
   profilePage: ProfilePage
   applicationDetailPage: ApplicationDetailPage
+  companiesListPage: CompaniesListPage
+  companiesDetailPage: CompaniesDetailPage
 }
 
 export const test = base.extend<MyFixtures>({
@@ -33,6 +37,12 @@ export const test = base.extend<MyFixtures>({
   },
   applicationDetailPage: async ({ page }, use) => {
     await use(new ApplicationDetailPage(page))
+  },
+  companiesListPage: async ({ page }, use) => {
+    await use(new CompaniesListPage(page))
+  },
+  companiesDetailPage: async ({ page }, use) => {
+    await use(new CompaniesDetailPage(page))
   },
 })
 

@@ -12,3 +12,6 @@ export type { ProfileFormData } from './profileSchema/profileSchema'
 
 export { passwordSchema } from './passwordSchema/passwordSchema'
 export type { PasswordFormData } from './passwordSchema/passwordSchema'
+
+export { companySchema } from './companySchema/companySchema'
+export type { CompanyFormData } from './companySchema/companySchema'

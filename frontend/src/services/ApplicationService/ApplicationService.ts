@@ -11,6 +11,10 @@ export class ApplicationService {
     return ApplicationRepository.findById(id)
   }
 
+  static async getByCompanyId(companyId: string): Promise<ApplicationKanbanDTO[]> {
+    return ApplicationRepository.findByCompanyId(companyId)
+  }
+
   static async create(data: ApplicationFormData): Promise<ApplicationKanbanDTO> {
     return ApplicationRepository.create(data)
   }

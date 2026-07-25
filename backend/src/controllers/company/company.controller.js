@@ -12,4 +12,24 @@ export class CompanyController {
     const company = await CompanyService.create(userId, req.body)
     return res.status(201).json(company)
   }
+
+  static async getById(req, res) {
+    const userId = req.user.id
+    const { id } = req.params
+    const company = await CompanyService.getById(id, userId)
+    if (!company) {
+      return res.status(404).json({ error: 'Compañía no encontrada' })
+    }
+    return res.json(company)
+  }
+
+  static async update(req, res) {
+    const userId = req.user.id
+    const { id } = req.params
+    const company = await CompanyService.update(id, userId, req.body)
+    if (!company) {
+      return res.status(404).json({ error: 'Compañía no encontrada' })
+    }
+    return res.json(company)
+  }
 }

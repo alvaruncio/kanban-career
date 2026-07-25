@@ -1,8 +1,8 @@
 import { ApplicationRepository } from '../../repositories/index.js'
 
 export class ApplicationService {
-  static async getAll(userId) {
-    return ApplicationRepository.findAllByUserId(userId)
+  static async getAll(userId, filters = {}) {
+    return ApplicationRepository.findAllByUserId(userId, filters)
   }
 
   static async create({ userId, ...input }) {

@@ -139,6 +139,7 @@ export async function apiRequest<T>(endpoint: string, options: RequestOptions = 
       url: endpoint,
       method: options.method ?? 'GET',
       data: options.body,
+      params: options.params,
       ...(options.headers ? { headers: options.headers } : {}),
     })
     return response.data as T
@@ -148,7 +149,7 @@ export async function apiRequest<T>(endpoint: string, options: RequestOptions = 
 }
 
 export const api = {
-  get: <T>(endpoint: string) => apiRequest<T>(endpoint),
+  get: <T>(endpoint: string, options?: RequestOptions) => apiRequest<T>(endpoint, options),
   post: <T>(endpoint: string, body: unknown) => apiRequest<T>(endpoint, { method: 'POST', body }),
   put: <T>(endpoint: string, body: unknown) => apiRequest<T>(endpoint, { method: 'PUT', body }),
   patch: <T>(endpoint: string, body: unknown) => apiRequest<T>(endpoint, { method: 'PATCH', body }),

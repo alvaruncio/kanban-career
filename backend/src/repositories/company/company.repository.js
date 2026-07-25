@@ -8,7 +8,20 @@ export class CompanyRepository {
     })
   }
 
+  static async findById(id) {
+    return prisma.company.findFirst({
+      where: { id, deletedAt: null },
+    })
+  }
+
   static async create(data) {
     return prisma.company.create({ data })
+  }
+
+  static async update(id, data) {
+    return prisma.company.update({
+      where: { id },
+      data,
+    })
   }
 }

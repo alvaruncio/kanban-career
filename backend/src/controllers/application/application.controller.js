@@ -3,7 +3,8 @@ import { ApplicationService } from '../../services/index.js'
 export class ApplicationController {
   static async getAll(req, res) {
     const userId = req.user.id
-    const data = await ApplicationService.getAll(userId)
+    const filters = { companyId: req.query.companyId, month: req.query.month }
+    const data = await ApplicationService.getAll(userId, filters)
     return res.json(data)
   }
 

@@ -12,9 +12,15 @@ export class ApplicationRepository {
     })
   }
 
-  static async findAllByUserId(userId) {
+  static async findAllByUserId(userId, filters = {}) {
+    const where = { userId, ...ApplicationRepository._buildMonthFilter(filters.month) }
+
+    if (filters.companyId) {
+      where.companyId = filters.companyId
+    }
+
     return prisma.application.findMany({
-      where: { userId },
+      where,
       include: {
         company: {
           select: { id: true, name: true, website: true },

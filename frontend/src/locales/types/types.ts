@@ -1,5 +1,17 @@
 export interface Translation {
-  nav: Record<string, string>
+  nav: {
+    dashboard: string
+    kanban: string
+    applications: string
+    companies: string
+    features: string
+    pricing: string
+    login: string
+    register: string
+    menu: string
+    profile: string
+    logout: string
+  }
   footer: Record<string, string>
   hero: Record<string, string>
   pricing: Record<string, string>
@@ -170,6 +182,31 @@ export interface Translation {
       backend: string
       fullStack: string
     }
+  }
+  companies: {
+    title: string
+    pageDescription: string
+    create: string
+    edit: string
+    save: string
+    cancel: string
+    saving: string
+    saved: string
+    saveError: string
+    fetchError: string
+    createdAt: string
+    updatedAt: string
+    backToCompanies: string
+    noCompanies: string
+    relatedApplications: string
+    viewApplication: string
+    noRelatedApplications: string
+    name: string
+    website: string
+    linkedinUrl: string
+    description: string
+    newCompany: string
+    retry: string
   }
   common: {
     loading: string
