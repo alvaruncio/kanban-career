@@ -15,9 +15,12 @@ export default function CompanyDetailPage() {
   const [isSaving, setIsSaving] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [saveError, setSaveError] = useState<string | null>(null)
-  const [relatedApplications, setRelatedApplications] = useState<ApplicationKanbanDTO[] | null>(null)
-  const [relatedAppsLoading, setRelatedAppsLoading] = useState(true)
-  const [relatedAppsError, setRelatedAppsError] = useState<string | null>(null)
+  // Related apps: single state + derived loading to avoid sync setState in effect
+  const [relatedAppsData, setRelatedAppsData] = useState<{
+    applications: ApplicationKanbanDTO[] | null
+    error: string | null
+  }>({ applications: null, error: null })
+  const relatedAppsLoading = relatedAppsData.applications === null && relatedAppsData.error === null
 
   // Fetch company on mount/id change (A→B stale data guard: store resets company to null)
   useEffect(() => {
@@ -28,17 +31,15 @@ export default function CompanyDetailPage() {
   // Fetch related applications
   useEffect(() => {
     if (!id) return
-    setRelatedAppsLoading(true)
-    setRelatedAppsError(null)
+    let cancelled = false
     ApplicationService.getByCompanyId(id)
       .then(apps => {
-        setRelatedApplications(apps)
-        setRelatedAppsLoading(false)
+        if (!cancelled) setRelatedAppsData({ applications: apps, error: null })
       })
       .catch(() => {
-        setRelatedAppsError(t.companies.fetchError)
-        setRelatedAppsLoading(false)
+        if (!cancelled) setRelatedAppsData({ applications: null, error: t.companies.fetchError })
       })
+    return () => { cancelled = true }
   }, [id, t.companies.fetchError])
 
   // Auto-dismiss flash messages
@@ -239,21 +240,21 @@ export default function CompanyDetailPage() {
                 </div>
               )}
 
-              {relatedAppsError && !relatedAppsLoading && (
+              {relatedAppsData.error && !relatedAppsLoading && (
                 <p className="font-body-md text-body-md text-error">
-                  {relatedAppsError}
+                  {relatedAppsData.error}
                 </p>
               )}
 
-              {!relatedAppsLoading && !relatedAppsError && relatedApplications && relatedApplications.length === 0 && (
+              {!relatedAppsLoading && !relatedAppsData.error && relatedAppsData.applications && relatedAppsData.applications.length === 0 && (
                 <p className="font-body-md text-body-md text-on-surface-variant">
                   {cd.noRelatedApplications}
                 </p>
               )}
 
-              {!relatedAppsLoading && !relatedAppsError && relatedApplications && relatedApplications.length > 0 && (
+              {!relatedAppsLoading && !relatedAppsData.error && relatedAppsData.applications && relatedAppsData.applications.length > 0 && (
                 <div className="space-y-sm">
-                  {relatedApplications.map((app) => (
+                  {relatedAppsData.applications.map((app) => (
                     <Link
                       key={app.id}
                       to={`/application/${app.id}`}
