@@ -35,7 +35,13 @@ export default function LoginPage() {
   return (
     <>
       <PageMeta title="Iniciar sesión" description="Accede a tu cuenta de KanbanCareer para gestionar tus candidaturas." />
-      <div className="min-h-screen flex items-center justify-center bg-surface px-gutter">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
+      >
+        Saltar al contenido principal
+      </a>
+      <main id="main-content" className="min-h-screen flex items-center justify-center bg-surface px-gutter">
       <div className="w-full max-w-[28rem] bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-md">
         <div className="text-center mb-lg">
           <h1 className="font-headline-md text-headline-md text-on-surface mb-1">{t.login.title}</h1>
@@ -77,7 +83,7 @@ export default function LoginPage() {
           <Link to="/register" className="text-primary hover:underline">{t.login.register}</Link>
         </p>
       </div>
-    </div>
+    </main>
     </>
   )
 }

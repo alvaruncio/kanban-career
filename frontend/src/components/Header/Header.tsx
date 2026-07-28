@@ -27,13 +27,13 @@ export default function Header() {
   }
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 h-16">
+    <header className="fixed inset-x-0 top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 h-16">
       <div className="h-full px-xl flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 flex-shrink-0">
+        <Link to="/" className="flex items-center gap-2 flex-shrink-0" aria-label="Ir a inicio">
           <img alt="KanbanCareer Logo" className="h-8 w-auto" src="/logo.png" />
         </Link>
 
-        <div className="hidden md:flex items-center gap-1">
+        <nav aria-label="Navegación principal" className="hidden md:flex items-center gap-1">
           {(user ? AUTH_LINKS : PUBLIC_LINKS).map(link => (
             <Link
               key={link.to}
@@ -67,7 +67,7 @@ export default function Header() {
               {t.nav.register}
             </Link>
           )}
-        </div>
+        </nav>
 
         <div className="flex items-center gap-2 md:hidden">
           <LanguageSelector />
@@ -122,6 +122,6 @@ export default function Header() {
           </div>
         </div>
       )}
-    </nav>
+    </header>
   )
 }

@@ -69,16 +69,23 @@ export default function CompaniesPage() {
 
         {/* Card grid */}
         {!isLoading && !error && companies.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-lg">
+          <section aria-label="Tarjetas de compañías" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-lg">
             {companies.map((company: Company) => (
-              <button
+              <article
                 key={company.id}
-                type="button"
-                onClick={() => navigate(`/companies/${company.id}`)}
-                className="text-left bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm p-lg hover:shadow-md hover:border-primary transition-shadow transition-colors active:scale-[0.99]"
+                className="relative bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm p-lg hover:shadow-md hover:border-primary transition-shadow transition-colors"
               >
                 <h3 className="font-headline-md text-headline-md text-on-surface mb-sm">
-                  {company.name}
+                  <a
+                    href={`/companies/${company.id}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      navigate(`/companies/${company.id}`)
+                    }}
+                    className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:rounded-lg after:absolute after:inset-0"
+                  >
+                    {company.name}
+                  </a>
                 </h3>
                 {company.description && (
                   <p className="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-sm">
@@ -90,9 +97,9 @@ export default function CompaniesPage() {
                     {company.website}
                   </p>
                 )}
-              </button>
+              </article>
             ))}
-          </div>
+          </section>
         )}
       </div>
 

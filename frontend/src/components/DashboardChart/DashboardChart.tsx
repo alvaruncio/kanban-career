@@ -64,7 +64,7 @@ export default function DashboardChart({ title, type, data, dataKey, xAxisKey, c
   return (
     <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
       <h3 className="font-headline-md text-headline-md text-on-surface mb-md">{title}</h3>
-      <div className="h-64">
+      <div className="h-64" role="img" aria-label={`Gráfico: ${title}`}>
         <ResponsiveContainer width="100%" height="100%">
           {type === 'pie' || type === 'donut' ? (
             <PieChart>

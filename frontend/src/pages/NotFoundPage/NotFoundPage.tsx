@@ -8,7 +8,13 @@ export default function NotFoundPage() {
   return (
     <>
       <PageMeta title={t.common.notFoundTitle} description={t.common.notFoundDescription} />
-      <div className="min-h-screen flex items-center justify-center bg-surface">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
+      >
+        Saltar al contenido principal
+      </a>
+      <main id="main-content" className="min-h-screen flex items-center justify-center bg-surface">
         <div className="text-center px-gutter py-xl w-full max-w-[32rem]">
           <p className="font-mono-sm text-mono-sm text-primary font-semibold mb-sm">404</p>
           <h1 className="font-headline-lg text-headline-lg text-on-surface mb-md">
@@ -24,7 +30,7 @@ export default function NotFoundPage() {
             {t.common.backToHome}
           </Link>
         </div>
-      </div>
+      </main>
     </>
   )
 }

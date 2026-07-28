@@ -9,9 +9,12 @@ interface Props {
 
 export function Modal({ open, onClose, title, children }: Props) {
   const overlayRef = useRef<HTMLDivElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     if (open) {
+      previousFocusRef.current = document.activeElement as HTMLElement
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
@@ -26,8 +29,45 @@ export function Modal({ open, onClose, title, children }: Props) {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
+    const handleTabTrap = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !dialogRef.current) return
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+      if (focusable.length === 0) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+
+    // Focus first focusable element inside modal
+    requestAnimationFrame(() => {
+      const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+      if (focusable && focusable.length > 0) {
+        focusable[0].focus()
+      }
+    })
+
     document.addEventListener('keydown', handleEsc)
-    return () => document.removeEventListener('keydown', handleEsc)
+    document.addEventListener('keydown', handleTabTrap)
+    return () => {
+      document.removeEventListener('keydown', handleEsc)
+      document.removeEventListener('keydown', handleTabTrap)
+      // Restore focus
+      previousFocusRef.current?.focus()
+    }
   }, [open, onClose])
 
   if (!open) return null
@@ -36,13 +76,19 @@ export function Modal({ open, onClose, title, children }: Props) {
     <div
       ref={overlayRef}
       className="fixed inset-0 z-50 flex items-center justify-center bg-surface/60 backdrop-blur-sm transition-opacity"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
       onClick={(e) => {
         if (e.target === overlayRef.current) onClose()
       }}
     >
-      <div className="w-full max-w-[32rem] mx-gutter bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl animate-modal-enter max-h-[85vh] overflow-y-auto">
+      <div
+        ref={dialogRef}
+        className="w-full max-w-[32rem] mx-gutter bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl animate-modal-enter max-h-[85vh] overflow-y-auto"
+      >
         <div className="flex items-center justify-between px-lg pt-lg pb-sm">
-          <h2 className="font-headline-md text-headline-md text-on-surface">{title}</h2>
+          <h2 id="modal-title" className="font-headline-md text-headline-md text-on-surface">{title}</h2>
           <button
             type="button"
             onClick={onClose}

@@ -21,6 +21,8 @@ export function InputForm<T extends FieldValues>({
 onFocus,
   onBlur,
 }: Props<T>) {
+  const errorId = `${name}-error`
+
   return (
     <div className="flex flex-col gap-sm">
       <label className="font-label-md text-label-md text-on-surface" htmlFor={name}>
@@ -36,6 +38,7 @@ onFocus,
             placeholder={placeholder}
             className="w-full px-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             aria-invalid={!!error}
+            aria-describedby={error ? errorId : undefined}
             {...field}
             onFocus={() => onFocus?.()}
             onBlur={() => { field.onBlur(); onBlur?.() }}
@@ -43,7 +46,7 @@ onFocus,
         )}
       />
       {error && (
-        <p className="font-body-sm text-body-sm text-error" role="alert">
+        <p id={errorId} className="font-body-sm text-body-sm text-error" role="alert">
           {error.message}
         </p>
       )}

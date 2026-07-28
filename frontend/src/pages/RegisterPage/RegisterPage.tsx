@@ -48,7 +48,13 @@ export default function RegisterPage() {
   return (
     <>
       <PageMeta title="Crear cuenta" description="Regístrate en KanbanCareer y empieza a organizar tu búsqueda de empleo." />
-      <div className="min-h-screen flex items-center justify-center bg-surface px-gutter">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
+      >
+        Saltar al contenido principal
+      </a>
+      <main id="main-content" className="min-h-screen flex items-center justify-center bg-surface px-gutter">
       <div className="w-full max-w-[28rem] bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-md">
         <div className="text-center mb-lg">
           <h1 className="font-headline-md text-headline-md text-on-surface mb-1">{t.register.title}</h1>
@@ -94,8 +100,11 @@ export default function RegisterPage() {
                   const met = req.test(passwordValue)
                   return (
                     <div key={req.key} className="flex items-center gap-1.5 font-body-sm text-body-sm">
-                      <span className={met ? 'text-secondary' : 'text-error'}>{met ? '✓' : '✗'}</span>
-                      <span className={met ? 'text-secondary' : 'text-error'}>{req.label}</span>
+                      <span aria-hidden="true" className={met ? 'text-secondary' : 'text-error'}>{met ? '✓' : '✗'}</span>
+                      <span className={met ? 'text-secondary' : 'text-error'}>
+                        <span className="sr-only">{met ? 'Cumplido' : 'Pendiente'}</span>
+                        {req.label}
+                      </span>
                     </div>
                   )
                 })}
@@ -124,7 +133,7 @@ export default function RegisterPage() {
           <Link to="/login" className="text-primary hover:underline">{t.register.login}</Link>
         </p>
       </div>
-    </div>
+    </main>
     </>
   )
 }

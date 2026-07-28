@@ -12,12 +12,12 @@ export class CompaniesListPage {
   }
 
   get companyCards(): Locator {
-    // Each card is a <button> element with an <h3> inside
-    return this.page.locator('button').filter({ has: this.page.locator('h3') })
+    // Each card is an <article> element with an <h3> inside
+    return this.page.locator('article').filter({ has: this.page.locator('h3') })
   }
 
   companyCard(name: string): Locator {
-    return this.page.locator('button').filter({ hasText: name })
+    return this.page.locator('article').filter({ hasText: name })
   }
 
   get emptyState(): Locator {

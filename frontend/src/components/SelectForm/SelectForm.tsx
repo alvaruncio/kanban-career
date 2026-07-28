@@ -22,6 +22,8 @@ export function SelectForm<T extends FieldValues>({
   error,
   placeholder,
 }: Props<T>) {
+  const errorId = `${name}-error`
+
   return (
     <div className="flex flex-col gap-sm">
       <label className="font-label-md text-label-md text-on-surface" htmlFor={name}>
@@ -36,6 +38,7 @@ export function SelectForm<T extends FieldValues>({
               id={name}
               className="w-full px-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none"
               aria-invalid={!!error}
+              aria-describedby={error ? errorId : undefined}
               {...field}
             >
               {placeholder && <option value="">{placeholder}</option>}
@@ -47,14 +50,14 @@ export function SelectForm<T extends FieldValues>({
             </select>
           )}
         />
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">
+        <span aria-hidden="true" className="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
       </div>
       {error && (
-        <p className="font-body-sm text-body-sm text-error" role="alert">
+        <p id={errorId} className="font-body-sm text-body-sm text-error" role="alert">
           {error.message}
         </p>
       )}

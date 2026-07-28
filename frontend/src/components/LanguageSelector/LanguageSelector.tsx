@@ -33,7 +33,7 @@ export default function LanguageSelector() {
         aria-expanded={open}
         aria-label={t.language[locale]}
       >
-        <span className="text-base leading-none">{FLAGS[locale]}</span>
+        <span aria-hidden="true" className="text-base leading-none">{FLAGS[locale]}</span>
         <span className="hidden sm:inline">{t.language[locale]}</span>
       </button>
 
@@ -57,7 +57,7 @@ export default function LanguageSelector() {
               role="option"
               aria-selected={loc === locale}
             >
-              <span className="text-base leading-none">{FLAGS[loc]}</span>
+              <span aria-hidden="true" className="text-base leading-none">{FLAGS[loc]}</span>
               {t.language[loc]}
             </button>
           ))}

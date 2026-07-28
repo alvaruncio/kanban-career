@@ -17,10 +17,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <div className="min-h-screen bg-surface text-on-surface font-body-md antialiased overflow-x-hidden">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg"
+      >
+        Saltar al contenido principal
+      </a>
       <Header />
       <div className="flex pt-16">
-        <aside className="hidden md:flex flex-col w-60 border-r border-outline-variant/30 bg-surface-container-low min-h-[calc(100vh-4rem)] p-md gap-xs">
-          {SIDEBAR_LINKS.map(link => {
+        <aside aria-label="Menú lateral" className="hidden md:flex flex-col w-60 border-r border-outline-variant/30 bg-surface-container-low min-h-[calc(100vh-4rem)] p-md gap-xs">
+          <nav aria-label="Navegación del panel" className="flex flex-col gap-xs">
+            {SIDEBAR_LINKS.map(link => {
             const isActive = location.pathname === link.to
             return (
               <Link
@@ -37,8 +44,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               </Link>
             )
           })}
+          </nav>
         </aside>
-        <main className="flex-1 p-lg">
+        <main id="main-content" className="flex-1 p-lg">
           {children}
         </main>
       </div>

@@ -9,7 +9,7 @@ interface PricingCardProps {
 
 export default function PricingCard({ title, recommended = false, recommendedLabel, children }: PricingCardProps) {
   return (
-    <div
+    <article
       className={`flex-1 bg-surface-container-lowest rounded-xl p-lg flex flex-col relative ${
         recommended
           ? 'border-2 border-primary shadow-md'
@@ -25,6 +25,6 @@ export default function PricingCard({ title, recommended = false, recommendedLab
       <div className="flex-1 flex items-center justify-center py-xl">
         {children}
       </div>
-    </div>
+    </article>
   )
 }

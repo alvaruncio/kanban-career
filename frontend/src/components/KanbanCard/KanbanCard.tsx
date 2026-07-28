@@ -59,11 +59,21 @@ export default function KanbanCard({ application, isRejected }: KanbanCardProps)
     navigate(`/application/${application.id}`)
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      navigate(`/application/${application.id}`)
+    }
+  }
+
   return (
-    <div
+    <article
+      tabIndex={0}
+      role="link"
       className={`bg-surface p-md rounded-lg shadow-sm border border-outline-variant hover:border-primary transition-colors cursor-pointer ${isRejected ? 'opacity-75' : ''}`}
       onPointerDown={handlePointerDown}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
     >
       <div className="flex justify-between items-start mb-sm">
         <span className={`text-xs font-label-sm ${style.bg} ${style.text} px-xs py-[2px] rounded`}>
@@ -93,6 +103,6 @@ export default function KanbanCard({ application, isRejected }: KanbanCardProps)
           {t.kanban.viewOffer}
         </a>
       </div>
-    </div>
+    </article>
   )
 }

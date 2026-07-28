@@ -118,7 +118,8 @@ export default function KanbanPage() {
               <input
                 className="pl-xl pr-md py-xs rounded-full border border-outline-variant bg-surface text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-64"
                 placeholder={t.kanban.searchPlaceholder}
-                type="text"
+                type="search"
+                aria-label={t.kanban.searchPlaceholder}
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
               />

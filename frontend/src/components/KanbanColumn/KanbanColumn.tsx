@@ -22,9 +22,10 @@ export default function KanbanColumn({ id, label, count, color, showCreateButton
   })
 
   return (
-    <div
+    <section
       ref={ref}
       data-column-id={id}
+      aria-label={label}
       className={`w-80 flex-shrink-0 flex flex-col max-h-full bg-surface-container-lowest rounded-xl border shadow-sm transition-colors ${isDropTarget ? 'border-primary bg-primary-container/10' : 'border-outline-variant'}`}
       style={{ minWidth: 320 }}
     >
@@ -55,6 +56,6 @@ export default function KanbanColumn({ id, label, count, color, showCreateButton
           </div>
         )}
       </div>
-    </div>
+    </section>
   )
 }

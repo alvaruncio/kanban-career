@@ -18,7 +18,7 @@ export default function Footer() {
         <div className="flex items-center gap-2">
           <span className="font-headline-md text-headline-md font-bold text-primary">KanbanCareer</span>
         </div>
-        <div className="flex flex-wrap justify-center gap-x-lg gap-y-sm font-label-sm text-label-sm">
+        <nav aria-label="Enlaces del pie de página" className="flex flex-wrap justify-center gap-x-lg gap-y-sm font-label-sm text-label-sm">
           {FOOTER_LINKS.map(link => (
             <Link
               key={link.to}
@@ -28,7 +28,7 @@ export default function Footer() {
               {link.label}
             </Link>
           ))}
-        </div>
+        </nav>
         <p className="font-body-sm text-body-sm text-on-surface-variant">&copy; 2026 KanbanCareer. {t.footer.copyright}</p>
       </div>
     </footer>
