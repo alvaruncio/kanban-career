@@ -165,3 +165,4 @@ When working on the backend, load the appropriate skill from the root `.agents/s
 | `prisma-client-api` | Write CRUD queries, filters, transactions |
 | `prisma-cli` | Run migrations, generate client, studio |
 | `openapi-spec-generation` | Maintain OpenAPI spec |
+| `vitest` | Write and run unit/integration tests with Vitest, mocking, coverage, supertest for HTTP testing |

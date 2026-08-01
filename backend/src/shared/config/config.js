@@ -15,4 +15,5 @@ export const config = {
   corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:5173',
   nodeEnv: process.env.NODE_ENV || 'development',
   databaseUrl: process.env.DATABASE_URL || 'postgresql://kanbancareer:kanbancareer@localhost:5432/kanbancareer',
+  logLevel: process.env.PINO_LOG_LEVEL || 'info',
 }

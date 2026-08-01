@@ -1,3 +1,12 @@
 # Local documentation
 docs/Redocly.md
 redoc-static.html
+
+# Vitest artifacts
+.vitest/
+
+# Coverage reports
+coverage/
+
+# Log files
+logs/

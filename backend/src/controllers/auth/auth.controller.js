@@ -2,7 +2,9 @@ import { AuthService } from '../../services/index.js'
 
 export class AuthController {
   static async register(req, res) {
+    req.log?.info?.({ event: 'auth:register:start', email: req.body.email })
     const result = await AuthService.register(req.body)
+    req.log?.info?.({ event: 'auth:register:complete', userId: result.user.id })
     res.cookie('refreshToken', result.refreshToken, result.cookieOptions)
     return res.status(201).json({
       accessToken: result.accessToken,
@@ -12,6 +14,7 @@ export class AuthController {
 
   static async login(req, res) {
     const { email, password } = req.body
+    req.log?.info?.({ event: 'auth:login:attempt', email })
     const result = await AuthService.login(email, password)
     res.cookie('refreshToken', result.refreshToken, result.cookieOptions)
     return res.json({

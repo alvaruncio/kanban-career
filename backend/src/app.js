@@ -1,8 +1,11 @@
 import express from 'express'
 import cors from 'cors'
 import { api } from './routes/index.js'
+import { httpLogger } from './shared/index.js'
 
 const app = express()
+
+app.use(httpLogger)
 
 /*
 
@@ -65,11 +68,17 @@ MIDDLEWARES DE MANEJO DE ERRORES
 
 */
 
-app.use((err, _req, res, _next) => {
-  console.error(err.stack)
+export const errorHandler = (err, req, res, _next) => {
+  if (req.log) {
+    req.log.error(err)
+  } else {
+    console.error(err.stack)
+  }
   return res.status(err.status ?? 500).json({
     error: process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message,
   })
-})
+}
+
+app.use(errorHandler)
 
 export default app

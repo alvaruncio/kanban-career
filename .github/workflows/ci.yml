@@ -28,7 +28,8 @@ jobs:
             - name: Run lint
               run: npm run lint
 
-        # AÑADIR PASO PARA EJECUTAR TEST UNITARIOS CUANDO SE CREEN
+            - name: Run unit tests
+              run: npm run test:run
 
     frontend:
         runs-on: ubuntu-24.04

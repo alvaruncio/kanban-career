@@ -107,6 +107,7 @@ Skills are auto-discovered by OpenCode when working inside this repo. The agent 
 | `prisma-client-api` | Write CRUD queries with Prisma Client, filters, transactions, relations | [`SKILL.md`](.agents/skills/prisma-client-api/SKILL.md) |
 | `prisma-postgres` | Provision Prisma Postgres (cloud) database | [`SKILL.md`](.agents/skills/prisma-postgres/SKILL.md) |
 | `openapi-spec-generation` | Generate and maintain OpenAPI 3.1 specifications, API docs, SDK generation, contract validation | [`SKILL.md`](.agents/skills/openapi-spec-generation/SKILL.md) |
+| `vitest` | Write and run unit/integration tests with Vitest, mocking, coverage, supertest for HTTP testing | [`SKILL.md`](.agents/skills/vitest/SKILL.md) |
 
 ### For the frontend
 

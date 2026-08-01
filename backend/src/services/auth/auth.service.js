@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { AuthRepository } from '../../repositories/index.js'
-import { config } from '../../shared/index.js'
-import { DEFAULTS, AUTH } from '../../shared/index.js'
+import { config, logger, DEFAULTS, AUTH } from '../../shared/index.js'
 
 export class AuthService {
   static #generateAccessToken(user) {
@@ -87,6 +86,7 @@ export class AuthService {
   static async refresh(token) {
     try {
       const payload = jwt.verify(token, config.jwtSecret)
+      logger.info({ event: 'auth:refresh:attempt', userId: payload.id })
       const user = await AuthRepository.findById(payload.id)
       if (!user) {
         const error = new Error('Usuario no encontrado')
@@ -94,6 +94,7 @@ export class AuthService {
         throw error
       }
 
+      logger.info({ event: 'auth:refresh:success', userId: payload.id })
       return {
         accessToken: this.#generateAccessToken(user),
         refreshToken: this.#generateRefreshToken(user),
@@ -145,6 +146,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(newPassword, DEFAULTS.SALT_ROUNDS)
     await AuthRepository.update(userId, { password: hashedPassword })
 
+    logger.info({ event: 'auth:password:updated', userId })
     return {
       id: user.id, name: user.name, email: user.email, role: user.role, createdAt: user.createdAt,
     }
