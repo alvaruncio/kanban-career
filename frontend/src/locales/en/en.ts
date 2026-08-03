@@ -145,6 +145,310 @@ export default {
     es: 'Spanish',
     en: 'English',
   },
+  legal: {
+    privacy: {
+      title: 'Privacy Policy',
+      description: 'Learn how KanbanCareer collects, uses, and protects your personal information.',
+      effectiveDate: 'Effective date: August 3, 2026',
+      intro: {
+        heading: 'Summary',
+        summaryPoints: [
+          {
+            term: 'What we collect',
+            text: 'the data you provide when creating your account and the usage data from the service.',
+          },
+          {
+            term: 'How we use it',
+            text: 'to provide the service, show your metrics, and improve the product. We never sell your personal information.',
+          },
+          {
+            term: 'How we protect it',
+            text: 'with encryption and technical and organizational measures, sharing data only with providers bound by confidentiality.',
+          },
+          {
+            term: 'Your rights',
+            text: 'you can request access, correction, or deletion of your data at any time.',
+          },
+        ],
+      },
+      tocTitle: 'Table of Contents',
+      chapters: [
+        {
+          id: 'informacion-que-recopilamos',
+          title: '1. Information we collect',
+          subsections: [
+            {
+              title: '1.1 Data you provide',
+              body: [
+                'We collect the data you provide when creating your account, such as your name, email address, and the applications, companies, and contact details you add to your board.',
+              ],
+            },
+            {
+              title: '1.2 Usage data',
+              body: ['We also collect usage data, such as the pages you visit and the features you use.'],
+            },
+          ],
+        },
+        {
+          id: 'uso-de-la-informacion',
+          title: '2. How we use your information',
+          body: [
+            'We use your information to provide the service, manage your account, show your metrics and boards, and improve the product experience. We never sell your personal information to third parties.',
+          ],
+        },
+        {
+          id: 'almacenamiento-y-seguridad',
+          title: '3. Storage and security',
+          body: [
+            'Your data is stored securely on servers with encryption in transit and at rest. We apply reasonable technical and organizational measures to protect your information from unauthorized access.',
+          ],
+        },
+        {
+          id: 'compartir-informacion',
+          title: '4. Sharing information',
+          subsections: [
+            {
+              title: '4.1 Infrastructure providers',
+              body: [
+                'We only share your information with infrastructure providers that help us operate the service and that are bound by confidentiality obligations.',
+              ],
+            },
+            {
+              title: '4.2 No advertising',
+              body: ['We never share your data for advertising purposes.'],
+            },
+          ],
+        },
+        {
+          id: 'cookies-y-tecnologias-similares',
+          title: '5. Cookies and similar technologies',
+          body: [
+            'We use local storage in your browser to remember preferences such as the interface language. You can clear this data from your browser settings at any time.',
+          ],
+        },
+        {
+          id: 'retencion-de-datos',
+          title: '6. Data retention',
+          body: [
+            'We keep your information while your account is active. If you delete your account, your personal data is permanently removed within a reasonable period, unless we are legally required to keep it.',
+          ],
+        },
+        {
+          id: 'tus-derechos',
+          title: '7. Your rights',
+          body: [
+            'You can request access, correction, or deletion of your personal data at any time by writing to our support team. Exercising these rights does not affect the lawfulness of prior processing.',
+          ],
+        },
+        {
+          id: 'cambios-en-esta-politica',
+          title: '8. Changes to this policy',
+          body: [
+            'We may update this policy to reflect changes in the service or in legislation. The current version is always published on this page with its update date.',
+          ],
+        },
+      ],
+    },
+    terms: {
+      title: 'Terms of Service',
+      description: 'The terms and conditions that govern your use of KanbanCareer.',
+      effectiveDate: 'Effective date: August 3, 2026',
+      intro: {
+        heading: 'Summary',
+        summaryPoints: [
+          {
+            term: 'Acceptance',
+            text: 'by creating an account or using KanbanCareer you accept these terms.',
+          },
+          {
+            term: 'Use of the service',
+            text: 'organize your job search lawfully and respectfully.',
+          },
+          {
+            term: 'Your responsibility',
+            text: 'you are responsible for keeping your credentials confidential and for the activity on your account.',
+          },
+          {
+            term: 'Cancellation',
+            text: 'you can delete your account at any time and we may suspend accounts that breach these terms.',
+          },
+        ],
+      },
+      tocTitle: 'Table of Contents',
+      chapters: [
+        {
+          id: 'aceptacion-de-los-terminos',
+          title: '1. Acceptance of the terms',
+          body: [
+            'By creating an account or using KanbanCareer you accept these terms. If you do not agree with them, you must not use the service.',
+          ],
+        },
+        {
+          id: 'uso-del-servicio',
+          title: '2. Use of the service',
+          body: [
+            'KanbanCareer lets you organize your job search with boards, applications, and metrics. The service must be used lawfully and respectfully towards other users.',
+          ],
+        },
+        {
+          id: 'cuentas-de-usuario',
+          title: '3. User accounts',
+          subsections: [
+            {
+              title: '3.1 Credential confidentiality',
+              body: [
+                'You are responsible for keeping your credentials confidential and for all activity that happens on your account.',
+              ],
+            },
+            {
+              title: '3.2 Truthful information',
+              body: ['You must provide truthful information when registering.'],
+            },
+          ],
+        },
+        {
+          id: 'propiedad-intelectual',
+          title: '4. Intellectual property',
+          body: [
+            'The software, brand, and content of KanbanCareer belong to their owners. By using the service you acquire no rights over them.',
+          ],
+        },
+        {
+          id: 'conducta-prohibida',
+          title: '5. Prohibited conduct',
+          body: ['It is forbidden to:'],
+          list: [
+            'attempt to access other accounts',
+            'interfere with the operation of the service',
+            'extract data through automated means',
+            'use the service for unlawful purposes',
+          ],
+        },
+        {
+          id: 'limitacion-de-responsabilidad',
+          title: '6. Limitation of liability',
+          body: [
+            'The service is provided as is, without guarantees of continuous availability. KanbanCareer is not liable for indirect damages arising from the use or inability to use the service.',
+          ],
+        },
+        {
+          id: 'cancelacion-y-suspension',
+          title: '7. Cancellation and suspension',
+          body: [
+            'You can delete your account at any time from your profile. We may suspend or cancel accounts that breach these terms, with notice when reasonably possible.',
+          ],
+        },
+        {
+          id: 'cambios-en-los-terminos',
+          title: '8. Changes to the terms',
+          body: [
+            'We may amend these terms periodically. We will notify you of relevant changes, and continued use of the service after an update implies acceptance.',
+          ],
+        },
+      ],
+    },
+    support: {
+      title: 'Support',
+      description: 'Find answers to the most common questions or get in touch with our support team.',
+      effectiveDate: 'Effective date: August 3, 2026',
+      intro: {
+        heading: 'Summary',
+        summaryPoints: [
+          {
+            term: 'Email support',
+            text: 'our team answers queries within a maximum of two business days.',
+          },
+          {
+            term: 'Help center',
+            text: 'most questions about accounts, boards, and metrics are already answered in the FAQ.',
+          },
+          {
+            term: 'Support hours',
+            text: 'Monday to Friday; weekend queries are answered on the next business day.',
+          },
+          {
+            term: 'Privacy',
+            text: 'the data you share with support is treated confidentially.',
+          },
+        ],
+      },
+      tocTitle: 'Table of Contents',
+      chapters: [
+        {
+          id: 'como-funciona-el-soporte',
+          title: '1. How support works',
+          body: [
+            'Our team answers email queries within a maximum of two business days. Include all relevant information so we can help you faster.',
+          ],
+        },
+        {
+          id: 'centro-de-ayuda',
+          title: '2. Help center',
+          body: [
+            'Before writing to us, check the frequently asked questions on this page: most questions about accounts, boards, and metrics are already answered there.',
+          ],
+        },
+        {
+          id: 'informar-de-un-problema',
+          title: '3. Reporting a problem',
+          body: [
+            'If you find a bug, describe what you were doing when it happened and what you expected to happen. This information lets us reproduce the issue and fix it.',
+          ],
+        },
+        {
+          id: 'sugerencias-y-comentarios',
+          title: '4. Suggestions and feedback',
+          body: [
+            'We value your ideas for improving KanbanCareer. Write to us with your suggestions and we will review them together with the rest of the user requests.',
+          ],
+        },
+        {
+          id: 'horario-de-atencion',
+          title: '5. Support hours',
+          body: [
+            'We handle queries from Monday to Friday, excluding holidays. Queries sent over the weekend are answered on the next business day.',
+          ],
+        },
+        {
+          id: 'privacidad-de-tus-consultas',
+          title: '6. Privacy of your queries',
+          body: [
+            'The data you share with support is treated confidentially and used only to resolve your query, in accordance with our privacy policy.',
+          ],
+        },
+      ],
+      faqTitle: 'FAQ',
+      faq: [
+        {
+          heading: 'Is KanbanCareer free?',
+          body: 'Yes, you can create an account and manage your job search for free. Paid plans add advanced features, but basic usage is free.',
+        },
+        {
+          heading: 'How do I create an account?',
+          body: 'Click the "Get Started" button on the home page, fill in the registration form with your name, email, and password, and confirm your account to begin.',
+        },
+        {
+          heading: 'How do I reset my password?',
+          body: 'Use the password recovery option on the login screen. You will receive a link to set a new password.',
+        },
+        {
+          heading: 'How is my data deleted?',
+          body: 'You can delete your account from your profile. When you do, your applications, companies, and personal data are permanently removed.',
+        },
+        {
+          heading: 'What happens to my data if I cancel my plan?',
+          body: 'Your data stays intact. You only lose access to the paid plan features and can resubscribe whenever you want.',
+        },
+      ],
+      contactTitle: 'Contact',
+      emailLabel: 'Support email',
+      contactEmail: 'support@kanbancareer.com',
+      hoursLabel: 'Hours',
+      hoursValue: 'Monday to Friday, 9:00 AM – 2:00 PM',
+      responseLabel: 'Response time',
+      responseValue: 'within 24–48 business hours',
+    },
+  },
   applicationForm: {
     title: 'New application',
     submit: 'Create',

@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './contexts'
 import { MainLayout, DashboardLayout } from './layouts'
 import { ProtectedRoute, LoadingSkeleton } from './components'
-import { LandingPage, LoginPage, RegisterPage, NotFoundPage } from './pages'
+import { LandingPage, LoginPage, RegisterPage, NotFoundPage, PrivacyPage, TermsPage, SupportPage } from './pages'
 
 const DashboardPage = lazy(() => import('./pages/DashboardPage/DashboardPage'))
 const KanbanPage = lazy(() => import('./pages/KanbanPage/KanbanPage'))
@@ -21,6 +21,9 @@ function App() {
           <Route path="/" element={<MainLayout><LandingPage /></MainLayout>} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/privacy" element={<MainLayout><PrivacyPage /></MainLayout>} />
+          <Route path="/terms" element={<MainLayout><TermsPage /></MainLayout>} />
+          <Route path="/support" element={<MainLayout><SupportPage /></MainLayout>} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout><DashboardPage /></DashboardLayout></ProtectedRoute>} />
           <Route path="/kanban" element={<ProtectedRoute><DashboardLayout><KanbanPage /></DashboardLayout></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><DashboardLayout><ProfilePage /></DashboardLayout></ProtectedRoute>} />

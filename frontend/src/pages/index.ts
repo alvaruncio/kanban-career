@@ -8,3 +8,6 @@ export { default as ApplicationDetailPage } from './ApplicationDetailPage/Applic
 export { default as RegisterPage } from './RegisterPage/RegisterPage'
 export { default as CompaniesPage } from './CompaniesPage/CompaniesPage'
 export { default as CompanyDetailPage } from './CompanyDetailPage/CompanyDetailPage'
+export { default as PrivacyPage } from './PrivacyPage/PrivacyPage'
+export { default as TermsPage } from './TermsPage/TermsPage'
+export { default as SupportPage } from './SupportPage/SupportPage'

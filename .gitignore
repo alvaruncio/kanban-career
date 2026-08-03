@@ -39,3 +39,6 @@ Thumbs.db
 # OpenCode auto-generated
 skills-lock.json
 **/skills-lock.json
+
+# Gentle AI local artifacts
+.atl/

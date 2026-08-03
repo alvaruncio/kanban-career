@@ -145,6 +145,312 @@ export default {
     es: 'Español',
     en: 'Inglés',
   },
+  legal: {
+    privacy: {
+      title: 'Política de Privacidad',
+      description: 'Conoce cómo KanbanCareer recopila, utiliza y protege tu información personal.',
+      effectiveDate: 'En vigor: 3 de agosto de 2026',
+      intro: {
+        heading: 'Resumen',
+        summaryPoints: [
+          {
+            term: 'Qué recopilamos',
+            text: 'los datos que nos proporcionas al crear tu cuenta y los datos de uso del servicio.',
+          },
+          {
+            term: 'Cómo los usamos',
+            text: 'para prestarte el servicio, mostrar tus métricas y mejorar el producto. Nunca vendemos tu información personal.',
+          },
+          {
+            term: 'Cómo los protegemos',
+            text: 'con cifrado y medidas técnicas y organizativas, y solo los compartimos con proveedores sujetos a confidencialidad.',
+          },
+          {
+            term: 'Tus derechos',
+            text: 'puedes solicitar acceso, corrección o eliminación de tus datos en cualquier momento.',
+          },
+        ],
+      },
+      tocTitle: 'Índice',
+      chapters: [
+        {
+          id: 'informacion-que-recopilamos',
+          title: '1. Información que recopilamos',
+          subsections: [
+            {
+              title: '1.1 Datos que nos proporcionas',
+              body: [
+                'Recopilamos los datos que nos proporcionas al crear tu cuenta, como tu nombre, correo electrónico y las candidaturas, empresas e información de contacto que introduces en tu tablero.',
+              ],
+            },
+            {
+              title: '1.2 Datos de uso',
+              body: [
+                'También recopilamos datos de uso, como las páginas que visitas y las funciones que utilizas.',
+              ],
+            },
+          ],
+        },
+        {
+          id: 'uso-de-la-informacion',
+          title: '2. Uso de la información',
+          body: [
+            'Utilizamos tu información para prestarte el servicio, gestionar tu cuenta, mostrarte tus métricas y tableros, y mejorar la experiencia del producto. No vendemos tu información personal a terceros.',
+          ],
+        },
+        {
+          id: 'almacenamiento-y-seguridad',
+          title: '3. Almacenamiento y seguridad',
+          body: [
+            'Tus datos se almacenan de forma segura en servidores con cifrado en tránsito y en reposo. Aplicamos medidas técnicas y organizativas razonables para proteger tu información frente a accesos no autorizados.',
+          ],
+        },
+        {
+          id: 'compartir-informacion',
+          title: '4. Compartir información',
+          subsections: [
+            {
+              title: '4.1 Proveedores de infraestructura',
+              body: [
+                'Solo compartimos tu información con proveedores de infraestructura que nos ayudan a operar el servicio y que están sujetos a obligaciones de confidencialidad.',
+              ],
+            },
+            {
+              title: '4.2 Sin fines publicitarios',
+              body: ['Nunca compartimos tus datos con fines publicitarios.'],
+            },
+          ],
+        },
+        {
+          id: 'cookies-y-tecnologias-similares',
+          title: '5. Cookies y tecnologías similares',
+          body: [
+            'Utilizamos almacenamiento local en tu navegador para recordar preferencias como el idioma de la interfaz. Puedes borrar estos datos desde los ajustes de tu navegador en cualquier momento.',
+          ],
+        },
+        {
+          id: 'retencion-de-datos',
+          title: '6. Retención de datos',
+          body: [
+            'Conservamos tu información mientras tu cuenta esté activa. Si eliminas tu cuenta, tus datos personales se borran de forma definitiva en un plazo razonable, salvo obligación legal de conservarlos.',
+          ],
+        },
+        {
+          id: 'tus-derechos',
+          title: '7. Tus derechos',
+          body: [
+            'Puedes solicitar acceso, corrección o eliminación de tus datos personales en cualquier momento escribiendo a nuestro equipo de soporte. Ejercer estos derechos no afecta a la legalidad del tratamiento previo.',
+          ],
+        },
+        {
+          id: 'cambios-en-esta-politica',
+          title: '8. Cambios en esta política',
+          body: [
+            'Podemos actualizar esta política para reflejar cambios en el servicio o en la legislación. La versión vigente se publica siempre en esta página con su fecha de actualización.',
+          ],
+        },
+      ],
+    },
+    terms: {
+      title: 'Términos del Servicio',
+      description: 'Los términos y condiciones que rigen el uso de KanbanCareer.',
+      effectiveDate: 'En vigor: 3 de agosto de 2026',
+      intro: {
+        heading: 'Resumen',
+        summaryPoints: [
+          {
+            term: 'Aceptación',
+            text: 'al crear una cuenta o utilizar KanbanCareer aceptas estos términos.',
+          },
+          {
+            term: 'Uso del servicio',
+            text: 'organiza tu búsqueda de empleo con un uso lícito y respetuoso.',
+          },
+          {
+            term: 'Tu responsabilidad',
+            text: 'eres responsable de mantener la confidencialidad de tus credenciales y de la actividad de tu cuenta.',
+          },
+          {
+            term: 'Cancelación',
+            text: 'puedes eliminar tu cuenta en cualquier momento y podemos suspender cuentas que incumplan estos términos.',
+          },
+        ],
+      },
+      tocTitle: 'Índice',
+      chapters: [
+        {
+          id: 'aceptacion-de-los-terminos',
+          title: '1. Aceptación de los términos',
+          body: [
+            'Al crear una cuenta o utilizar KanbanCareer aceptas estos términos. Si no estás de acuerdo con ellos, no debes utilizar el servicio.',
+          ],
+        },
+        {
+          id: 'uso-del-servicio',
+          title: '2. Uso del servicio',
+          body: [
+            'KanbanCareer te permite organizar tu búsqueda de empleo mediante tableros, candidaturas y métricas. El uso del servicio debe ser lícito y respetuoso con el resto de usuarios.',
+          ],
+        },
+        {
+          id: 'cuentas-de-usuario',
+          title: '3. Cuentas de usuario',
+          subsections: [
+            {
+              title: '3.1 Confidencialidad de las credenciales',
+              body: [
+                'Eres responsable de mantener la confidencialidad de tus credenciales y de toda la actividad que ocurra en tu cuenta.',
+              ],
+            },
+            {
+              title: '3.2 Información veraz',
+              body: ['Debes proporcionar información veraz al registrarte.'],
+            },
+          ],
+        },
+        {
+          id: 'propiedad-intelectual',
+          title: '4. Propiedad intelectual',
+          body: [
+            'El software, la marca y los contenidos de KanbanCareer son propiedad de sus titulares. No adquieres ningún derecho sobre ellos por el hecho de utilizar el servicio.',
+          ],
+        },
+        {
+          id: 'conducta-prohibida',
+          title: '5. Conducta prohibida',
+          body: ['Queda prohibido:'],
+          list: [
+            'intentar acceder a cuentas ajenas',
+            'interferir con el funcionamiento del servicio',
+            'extraer datos de forma automatizada',
+            'usar el servicio con fines ilícitos',
+          ],
+        },
+        {
+          id: 'limitacion-de-responsabilidad',
+          title: '6. Limitación de responsabilidad',
+          body: [
+            'El servicio se proporciona tal cual, sin garantías de disponibilidad continua. KanbanCareer no será responsable de daños indirectos derivados del uso o la imposibilidad de uso del servicio.',
+          ],
+        },
+        {
+          id: 'cancelacion-y-suspension',
+          title: '7. Cancelación y suspensión',
+          body: [
+            'Puedes eliminar tu cuenta en cualquier momento desde tu perfil. Podemos suspender o cancelar cuentas que incumplan estos términos, previa notificación cuando sea razonable.',
+          ],
+        },
+        {
+          id: 'cambios-en-los-terminos',
+          title: '8. Cambios en los términos',
+          body: [
+            'Podemos modificar estos términos periódicamente. Te avisaremos de los cambios relevantes y el uso continuado del servicio tras la actualización implica su aceptación.',
+          ],
+        },
+      ],
+    },
+    support: {
+      title: 'Soporte',
+      description: 'Encuentra respuestas a las preguntas más frecuentes o contacta con nuestro equipo de soporte.',
+      effectiveDate: 'En vigor: 3 de agosto de 2026',
+      intro: {
+        heading: 'Resumen',
+        summaryPoints: [
+          {
+            term: 'Respuesta por correo',
+            text: 'nuestro equipo responde las consultas en un plazo máximo de dos días laborables.',
+          },
+          {
+            term: 'Centro de ayuda',
+            text: 'la mayoría de dudas sobre cuentas, tableros y métricas están resueltas en las preguntas frecuentes.',
+          },
+          {
+            term: 'Horario de atención',
+            text: 'de lunes a viernes; las consultas del fin de semana se responden el siguiente día laborable.',
+          },
+          {
+            term: 'Privacidad',
+            text: 'los datos que compartes con soporte se tratan de forma confidencial.',
+          },
+        ],
+      },
+      tocTitle: 'Índice',
+      chapters: [
+        {
+          id: 'como-funciona-el-soporte',
+          title: '1. Cómo funciona el soporte',
+          body: [
+            'Nuestro equipo responde las consultas por correo electrónico en un plazo máximo de dos días laborables. Incluye toda la información relevante para ayudarte más rápido.',
+          ],
+        },
+        {
+          id: 'centro-de-ayuda',
+          title: '2. Centro de ayuda',
+          body: [
+            'Antes de escribirnos, consulta las preguntas frecuentes de esta página: la mayoría de dudas sobre cuentas, tableros y métricas ya están resueltas allí.',
+          ],
+        },
+        {
+          id: 'informar-de-un-problema',
+          title: '3. Informar de un problema',
+          body: [
+            'Si encuentras un error, descríbenos qué hacías cuando ocurrió y qué esperabas que pasase. Esta información nos permite reproducir el problema y corregirlo.',
+          ],
+        },
+        {
+          id: 'sugerencias-y-comentarios',
+          title: '4. Sugerencias y comentarios',
+          body: [
+            'Valoramos tus ideas para mejorar KanbanCareer. Escríbenos con tus sugerencias y las revisaremos junto al resto de peticiones de los usuarios.',
+          ],
+        },
+        {
+          id: 'horario-de-atencion',
+          title: '5. Horario de atención',
+          body: [
+            'Atendemos consultas de lunes a viernes, excepto festivos. Las consultas enviadas durante el fin de semana se responden el siguiente día laborable.',
+          ],
+        },
+        {
+          id: 'privacidad-de-tus-consultas',
+          title: '6. Privacidad de tus consultas',
+          body: [
+            'Los datos que compartes con soporte se tratan de forma confidencial y se utilizan únicamente para resolver tu consulta, conforme a nuestra política de privacidad.',
+          ],
+        },
+      ],
+      faqTitle: 'Preguntas Frecuentes',
+      faq: [
+        {
+          heading: '¿KanbanCareer es gratis?',
+          body: 'Sí, puedes crear una cuenta y gestionar tu búsqueda de empleo de forma gratuita. Los planes de pago añaden funciones avanzadas, pero el uso básico es gratuito.',
+        },
+        {
+          heading: '¿Cómo creo una cuenta?',
+          body: 'Pulsa el botón "Empezar" en la página principal, completa el formulario de registro con tu nombre, correo y contraseña, y confirma tu cuenta para empezar.',
+        },
+        {
+          heading: '¿Cómo restauro mi contraseña?',
+          body: 'En la pantalla de inicio de sesión utiliza la opción de recuperación de contraseña. Recibirás un enlace para establecer una nueva contraseña.',
+        },
+        {
+          heading: '¿Cómo se eliminan mis datos?',
+          body: 'Puedes eliminar tu cuenta desde tu perfil. Al hacerlo, tus candidaturas, empresas y datos personales se borran de forma definitiva.',
+        },
+        {
+          heading: '¿Qué ocurre con mis datos si cancelo mi plan?',
+          body: 'Tus datos se conservan intactos. Solo pierdes el acceso a las funciones del plan de pago y puedes volver a contratarlo cuando quieras.',
+        },
+      ],
+      contactTitle: 'Contacto',
+      emailLabel: 'Email de soporte',
+      contactEmail: 'support@kanbancareer.com',
+      hoursLabel: 'Horario',
+      hoursValue: 'Lunes a viernes de 9:00 a 14:00',
+      responseLabel: 'Tiempo de respuesta',
+      responseValue: 'en 24–48 horas laborables',
+    },
+  },
   applicationForm: {
     title: 'Nueva aplicación',
     submit: 'Crear',

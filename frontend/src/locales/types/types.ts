@@ -1,3 +1,51 @@
+export interface LegalSection {
+  heading: string
+  body: string
+}
+
+export interface LegalSummaryPoint {
+  term: string
+  text: string
+}
+
+export interface LegalSubsection {
+  title: string
+  body: readonly string[]
+}
+
+export interface LegalChapter {
+  id: string
+  title: string
+  intro?: readonly string[]
+  subsections?: readonly LegalSubsection[]
+  body?: readonly string[]
+  list?: readonly string[]
+}
+
+export interface LegalPageContent {
+  title: string
+  description: string
+  effectiveDate: string
+  intro: {
+    heading: string
+    summaryPoints: readonly LegalSummaryPoint[]
+  }
+  tocTitle: string
+  chapters: readonly LegalChapter[]
+}
+
+export interface LegalSupportContent extends LegalPageContent {
+  faqTitle: string
+  faq: readonly LegalSection[]
+  contactTitle: string
+  emailLabel: string
+  contactEmail: string
+  hoursLabel: string
+  hoursValue: string
+  responseLabel: string
+  responseValue: string
+}
+
 export interface Translation {
   nav: {
     dashboard: string
@@ -109,6 +157,11 @@ export interface Translation {
     notesPlaceholder: string
   }
   language: Record<string, string>
+  legal: {
+    privacy: LegalPageContent
+    terms: LegalPageContent
+    support: LegalSupportContent
+  }
   profile: {
     title: string
     subtitle: string
